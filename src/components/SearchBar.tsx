@@ -1,8 +1,12 @@
 import { Component } from 'react';
 
-interface Props {}
+interface Props {
+  title?: string;
+}
 
-interface State {}
+interface State {
+  title?: string;
+}
 
 class SearchBar extends Component<Props, State> {
   constructor(props: Props) {

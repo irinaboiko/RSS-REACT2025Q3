@@ -7,14 +7,7 @@ interface Props {
   loading: boolean;
 }
 
-interface State {}
-
-class ResultList extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {};
-  }
-
+class ResultList extends Component<Props> {
   render() {
     const { people, loading } = this.props;
 

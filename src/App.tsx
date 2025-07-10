@@ -4,15 +4,13 @@ import { Component } from 'react';
 import { fetchPeople } from './utils/api.ts';
 import type { Person } from './types/person.ts';
 
-interface Props {}
-
 interface AppState {
   people: Person[];
   loading: boolean;
 }
 
-class App extends Component<Props, AppState> {
-  constructor(props: Props) {
+class App extends Component<object, AppState> {
+  constructor(props: object) {
     super(props);
     this.state = {
       people: [],
