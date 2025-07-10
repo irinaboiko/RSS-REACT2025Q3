@@ -1,27 +1,36 @@
+import { Component } from 'react';
+
+import Header from './components/Header.tsx';
 import SearchBar from './components/SearchBar.tsx';
 import ResultList from './components/ResultLists.tsx';
-import { Component } from 'react';
+
 import { fetchPeople } from './utils/api.ts';
-import type { Person } from './types/person.ts';
+import { getSearchQuery, setSearchQuery } from './utils/localStorage.ts';
+import type { PersonPreview } from './types/person.ts';
 
 interface AppState {
-  people: Person[];
+  people: PersonPreview[];
   loading: boolean;
+  searchQuery: string;
 }
 
-class App extends Component<object, AppState> {
-  constructor(props: object) {
-    super(props);
-    this.state = {
-      people: [],
-      loading: false,
-    };
-  }
+class App extends Component {
+  state: AppState = {
+    people: [],
+    loading: false,
+    searchQuery: getSearchQuery(),
+  };
 
   componentDidMount(): void {
-    this.setState({ loading: true });
+    this.handleSearch(this.state.searchQuery);
+  }
 
-    fetchPeople('')
+  handleSearch = (query: string) => {
+    const trimmedQuery = query.trim();
+    setSearchQuery(trimmedQuery);
+    this.setState({ loading: true, searchQuery: trimmedQuery });
+
+    fetchPeople(trimmedQuery)
       .then((results) => {
         this.setState({ people: results, loading: false });
       })
@@ -29,16 +38,17 @@ class App extends Component<object, AppState> {
         console.error(error);
         this.setState({ loading: false });
       });
-  }
+  };
 
   render() {
-    const { people, loading } = this.state;
+    const { people, loading, searchQuery } = this.state;
 
     return (
-      <>
-        <SearchBar />
+      <div className="h-screen">
+        <Header />
+        <SearchBar onSearch={this.handleSearch} searchQuery={searchQuery} />
         <ResultList people={people} loading={loading} />
-      </>
+      </div>
     );
   }
 }

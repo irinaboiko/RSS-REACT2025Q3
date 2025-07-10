@@ -4,9 +4,8 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  padding: 2rem;
 }
 
 .person-card {
-  @apply m-1 flex h-20 flex-col items-center justify-center rounded-md border-1 border-zinc-400 p-2 transition duration-200 hover:text-blue-700;
+  @apply m-1 flex flex-col items-start justify-center rounded-md border-1 border-zinc-400 p-2 text-left break-words transition duration-200 hover:text-blue-700;
 }
