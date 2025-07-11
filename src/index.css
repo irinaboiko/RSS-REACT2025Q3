@@ -1,0 +1,23 @@
+@import 'tailwindcss';
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.person-card {
+  @apply flex flex-col items-start justify-center rounded-md border-1 border-zinc-400 p-2 text-left break-words transition duration-200 hover:text-cyan-600;
+}
+
+.btn {
+  @apply cursor-pointer rounded px-4 py-2 transition;
+}
+
+.btn-cyan {
+  @apply bg-cyan-600 text-white hover:bg-cyan-700;
+}
+
+.btn-rose {
+  @apply bg-rose-600 text-white hover:bg-rose-700;
+}
