@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import type { PersonPreview } from '../types/person.ts';
+import type { PersonPreview } from '../../types/person.ts';
 
 interface Props {
   person: PersonPreview;

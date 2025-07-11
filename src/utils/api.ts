@@ -11,7 +11,8 @@ export async function fetchPeople(search: string): Promise<PersonPreview[]> {
   const response: Response = await fetch(url);
 
   if (!response.ok) {
-    throw new Error(`API error: ${response.status}`);
+    const message = `Api error ${response.status}: ${response.statusText}`;
+    throw new Error(message);
   }
 
   const data: PeopleResponse = await response.json();

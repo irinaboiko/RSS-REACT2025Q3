@@ -1,7 +1,7 @@
 import { Component } from 'react';
 
-import Loader from './Loader.tsx';
-import PersonPreviewCard from './PersonPreviewCard.tsx';
+import Loader from './ui/Loader.tsx';
+import PersonPreviewCard from './ui/PersonPreviewCard.tsx';
 
 import type { PersonPreview } from '../types/person.ts';
 
@@ -15,13 +15,13 @@ class ResultList extends Component<Props> {
     const { people, loading } = this.props;
 
     return (
-      <div className="h-full px-5 py-4">
-        {!loading && people?.length !== 0 && <h2>Search Result</h2>}
-
+      <>
         {loading && <Loader />}
 
+        {!loading && people?.length !== 0 && <h2>Search Result</h2>}
+
         {!loading && people?.length === 0 && (
-          <p className="text-2xl">
+          <p className="text-2xl font-thin">
             No results found. Please try a different search.
           </p>
         )}
@@ -31,7 +31,7 @@ class ResultList extends Component<Props> {
             <PersonPreviewCard key={person.uid} person={person} />
           ))}
         </div>
-      </div>
+      </>
     );
   }
 }
