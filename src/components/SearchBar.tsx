@@ -26,18 +26,15 @@ class SearchBar extends Component<Props, State> {
 
   render() {
     return (
-      <form className="search-bar flex gap-2 p-4" onSubmit={this.handleSubmit}>
+      <form className="search-bar flex gap-2" onSubmit={this.handleSubmit}>
         <input
           type="text"
           value={this.state.searchQuery}
           onChange={this.handleChange}
           placeholder="Search for Star Wars people..."
-          className="flex-1 rounded border px-3 py-2"
+          className="flex-1 rounded border-1 border-zinc-400 px-3 py-2"
         />
-        <button
-          type="submit"
-          className="rounded bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700"
-        >
+        <button type="submit" className="btn btn-cyan">
           Search
         </button>
       </form>

@@ -12,15 +12,15 @@ class PersonPreviewCard extends Component<Props> {
     return (
       <div className="person-card min-w-[200px] flex-1 basis-[300px]">
         <p>
-          <span className="text-gray-400">id: </span>
+          <span className="font-thin">id: </span>
           {person.uid}
         </p>
         <p>
-          <span className="text-gray-400">person name: </span>
+          <span className="font-thin">person name: </span>
           {person.name}
         </p>
         <p>
-          <span className="text-gray-400">find details at: </span>
+          <span className="font-thin">find details at: </span>
           {person.url}
         </p>
       </div>

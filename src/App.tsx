@@ -3,7 +3,8 @@ import { Component } from 'react';
 import Header from './components/Header.tsx';
 import SearchBar from './components/SearchBar.tsx';
 import ResultList from './components/ResultLists.tsx';
-import ApiErrorMessage from './components/ui/ApiErrorMessage.tsx';
+import ApiErrorMessage from './error/ApiErrorMessage.tsx';
+import SimulateErrorButton from './components/ui/SimulateErrorButton.tsx';
 
 import { fetchPeople } from './utils/api.ts';
 import { getSearchQuery, setSearchQuery } from './utils/localStorage.ts';
@@ -14,6 +15,7 @@ interface AppState {
   loading: boolean;
   searchQuery: string;
   error: string | null;
+  simulatedError: boolean;
 }
 
 class App extends Component {
@@ -22,6 +24,7 @@ class App extends Component {
     loading: false,
     searchQuery: getSearchQuery(),
     error: null,
+    simulatedError: false,
   };
 
   componentDidMount(): void {
@@ -38,25 +41,34 @@ class App extends Component {
         this.setState({ people: results, loading: false });
       })
       .catch((error) => {
-        console.log(error);
         this.setState({ loading: false, error: error.message });
       });
   };
 
   render() {
-    const { people, loading, searchQuery, error } = this.state;
+    const { people, loading, searchQuery, error, simulatedError } = this.state;
+
+    if (simulatedError) {
+      throw new Error('I crashed!');
+    }
 
     return (
-      <div className="h-screen">
+      <div className="flex h-screen flex-col px-5 py-4">
         <Header />
         <SearchBar onSearch={this.handleSearch} searchQuery={searchQuery} />
 
-        <div className="h-[calc(100%-118px)] px-5 py-4">
+        <div className="grow pt-4">
           {error ? (
             <ApiErrorMessage errorMessage={error} />
           ) : (
             <ResultList people={people} loading={loading} />
           )}
+        </div>
+
+        <div>
+          <SimulateErrorButton
+            onClick={() => this.setState({ simulatedError: true })}
+          />
         </div>
       </div>
     );
