@@ -3,7 +3,10 @@ import { Component } from 'react';
 class Loader extends Component {
   render() {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-sky-300/10 backdrop-blur-[1px]">
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center bg-sky-300/10 backdrop-blur-[1px]"
+        data-testid="loader"
+      >
         <div
           role="status"
           className="absolute top-2/4 left-1/2 -translate-x-1/2 -translate-y-1/2"

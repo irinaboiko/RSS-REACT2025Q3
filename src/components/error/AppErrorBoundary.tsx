@@ -1,4 +1,5 @@
-import { Component, type ErrorInfo, type ReactNode } from 'react';
+import { Component } from 'react';
+import type { ErrorInfo, ReactNode } from 'react';
 
 interface Props {
   children?: ReactNode;
@@ -28,11 +29,14 @@ class AppErrorBoundary extends Component<Props, State> {
 
     if (hasError) {
       return (
-        <div className="flex h-screen flex-col items-center justify-center gap-4 p-4">
+        <div
+          className="flex h-screen flex-col items-center justify-center gap-4 p-4"
+          data-testid="app-fallback"
+        >
           <img
             src="/images/errorboundary.png"
             alt="Error Illustration"
-            className="h-[200px]"
+            className="h-48"
           />
           <h2 className="mb-2 text-3xl font-bold text-rose-600">
             Oh, no! What you&apos;ve done?

@@ -3,11 +3,12 @@ import { Component } from 'react';
 import Header from './components/Header.tsx';
 import SearchBar from './components/SearchBar.tsx';
 import ResultList from './components/ResultLists.tsx';
-import ApiErrorMessage from './error/ApiErrorMessage.tsx';
+import ApiErrorMessage from './components/error/ApiErrorMessage.tsx';
 import SimulateErrorButton from './components/ui/SimulateErrorButton.tsx';
 
 import { fetchPeople } from './utils/api.ts';
 import { getSearchQuery, setSearchQuery } from './utils/localStorage.ts';
+
 import type { PersonPreview } from './types/person.ts';
 
 interface AppState {
@@ -22,12 +23,14 @@ class App extends Component {
   state: AppState = {
     people: [],
     loading: false,
-    searchQuery: getSearchQuery(),
+    searchQuery: '',
     error: null,
     simulatedError: false,
   };
 
   componentDidMount(): void {
+    this.setState({ searchQuery: getSearchQuery() });
+
     this.handleSearch(this.state.searchQuery);
   }
 
@@ -45,6 +48,10 @@ class App extends Component {
       });
   };
 
+  handleQueryChange = (query: string) => {
+    this.setState({ searchQuery: query });
+  };
+
   render() {
     const { people, loading, searchQuery, error, simulatedError } = this.state;
 
@@ -55,7 +62,11 @@ class App extends Component {
     return (
       <div className="flex h-screen flex-col px-5 py-4">
         <Header />
-        <SearchBar onSearch={this.handleSearch} searchQuery={searchQuery} />
+        <SearchBar
+          onSearch={this.handleSearch}
+          searchQuery={searchQuery}
+          onChange={this.handleQueryChange}
+        />
 
         <div className="grow pt-4">
           {error ? (
