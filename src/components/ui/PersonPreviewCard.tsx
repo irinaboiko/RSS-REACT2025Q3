@@ -10,7 +10,10 @@ class PersonPreviewCard extends Component<Props> {
     const { person } = this.props;
 
     return (
-      <div className="person-card min-w-[200px] flex-1 basis-[300px]">
+      <div
+        className="person-card min-w-[200px] flex-1 basis-[300px]"
+        data-testid="person-preview-card"
+      >
         <p>
           <span className="font-thin">id: </span>
           {person.uid}

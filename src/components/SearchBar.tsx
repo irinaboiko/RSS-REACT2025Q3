@@ -1,40 +1,42 @@
-import { type ChangeEvent, Component, type FormEvent } from 'react';
+import { Component } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 
 interface Props {
   onSearch: (query: string) => void;
   searchQuery: string;
+  onChange: (query: string) => void;
 }
 
-interface State {
-  searchQuery: string;
-}
-
-class SearchBar extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { searchQuery: this.props.searchQuery || '' };
-  }
-
+class SearchBar extends Component<Props> {
   handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ searchQuery: e.target.value });
+    this.props.onChange(e.target.value);
   };
 
   handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    this.props.onSearch(this.state.searchQuery);
+    this.props.onSearch(this.props.searchQuery.trim());
   };
 
   render() {
     return (
-      <form className="search-bar flex gap-2" onSubmit={this.handleSubmit}>
+      <form
+        className="search-bar flex gap-2"
+        onSubmit={this.handleSubmit}
+        data-testid="search-form"
+      >
         <input
           type="text"
-          value={this.state.searchQuery}
+          value={this.props.searchQuery}
           onChange={this.handleChange}
           placeholder="Search for Star Wars people..."
           className="flex-1 rounded border-1 border-zinc-400 px-3 py-2"
+          data-testid="search-input"
         />
-        <button type="submit" className="btn btn-cyan">
+        <button
+          type="submit"
+          className="btn btn-cyan"
+          data-testid="search-button"
+        >
           Search
         </button>
       </form>

@@ -1,15 +1,18 @@
 import { Component } from 'react';
 
 interface Props {
-  errorMessage: string;
+  errorMessage?: string;
 }
 
 class ApiErrorMessage extends Component<Props> {
   render() {
-    const { errorMessage } = this.props;
+    const { errorMessage = 'Unknown error occurred' } = this.props;
     return (
-      <div className="flex h-full flex-col items-center justify-center gap-4">
-        <img src="/images/error.png" alt="Error" className="h-[80px]" />
+      <div
+        className="flex h-full flex-col items-center justify-center gap-4"
+        data-testid="api-error-message"
+      >
+        <img src="/images/error.png" alt="Error" className="h-20" />
         <h2 className="text-xl font-bold text-rose-600">
           Oops! An Error Occurred.
         </h2>
