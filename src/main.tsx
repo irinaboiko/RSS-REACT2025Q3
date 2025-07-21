@@ -1,8 +1,8 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
-import App from './App.tsx';
-import AppErrorBoundary from './components/error/AppErrorBoundary.tsx';
+import { App } from '@/App';
+import { AppErrorBoundary } from '@/components/error/AppErrorBoundary';
 
 import './index.css';
 

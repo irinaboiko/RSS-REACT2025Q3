@@ -2,9 +2,9 @@ import '@testing-library/jest-dom/vitest';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 
-import PersonPreviewCard from './PersonPreviewCard.tsx';
+import { PersonPreviewCard } from '@/components/ui/PersonPreviewCard';
 
-import { lukeSkywalker } from '../../__tests__/mocks/peopleMocks.ts';
+import { lukeSkywalker } from '@/__tests__/mocks/peopleMocks';
 
 describe('PersonPreviewCard', () => {
   it('displays person card correctly', () => {

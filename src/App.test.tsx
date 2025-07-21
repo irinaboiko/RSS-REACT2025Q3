@@ -2,11 +2,11 @@ import '@testing-library/jest-dom/vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest';
 
-import App from './App.tsx';
+import { App } from '@/App';
 
-import { getSearchQuery } from './utils/localStorage.ts';
+import { getSearchQuery } from './utils/localStorage';
 
-import { TEST_IDS, SEARCH_QUERIES } from './__tests__/testConstants.ts';
+import { TEST_IDS, SEARCH_QUERIES } from './__tests__/testConstants';
 
 const { LOADER, SEARCH_FORM, SEARCH_INPUT } = TEST_IDS;
 const { lukeSearchQuery } = SEARCH_QUERIES;
@@ -26,7 +26,7 @@ vi.mock('./utils/localStorage.ts', () => ({
   setSearchQuery: vi.fn(),
 }));
 
-const mockedFetchPeople = (await import('./utils/api.ts'))
+const mockedFetchPeople = (await import('./utils/api'))
   .fetchPeople as unknown as ReturnType<typeof vi.fn>;
 
 describe('App', () => {

@@ -2,10 +2,10 @@ import '@testing-library/jest-dom/vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest';
 
-import AppErrorBoundary from './AppErrorBoundary';
-import { BrokenComponent } from '../../__tests__/BrockenComponents.tsx';
+import { AppErrorBoundary } from '@/components/error/AppErrorBoundary';
+import { BrokenComponent } from '@/__tests__/BrockenComponents';
 
-import { TEST_IDS } from '../../__tests__/testConstants.ts';
+import { TEST_IDS } from '@/__tests__/testConstants';
 
 const { APP_FALLBACK } = TEST_IDS;
 

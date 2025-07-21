@@ -2,12 +2,12 @@ import '@testing-library/jest-dom/vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import { describe, it, expect, afterEach } from 'vitest';
 
-import ResultList from './ResultLists.tsx';
+import { ResultList } from '@/components/ResultLists';
 
-import type { PersonPreview } from '../types/person.ts';
+import type { PersonPreview } from '@/types/person';
 
-import { lukeSkywalker, c3po } from '../__tests__/mocks/peopleMocks.ts';
-import { TEST_IDS, MESSAGES } from '../__tests__/testConstants.ts';
+import { lukeSkywalker, c3po } from '@/__tests__/mocks/peopleMocks';
+import { TEST_IDS, MESSAGES } from '@/__tests__/testConstants';
 
 const { LOADER, PERSON_PREVIEW_CARD } = TEST_IDS;
 const { noSearchResults } = MESSAGES;

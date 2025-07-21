@@ -1,17 +1,11 @@
-import { Component } from 'react';
-
 interface Props {
   onClick: () => void;
 }
 
-class SimulateErrorButton extends Component<Props> {
-  render() {
-    return (
-      <button className="btn btn-rose" onClick={this.props.onClick}>
-        Throw Simulated Error
-      </button>
-    );
-  }
-}
-
-export default SimulateErrorButton;
+export const SimulateErrorButton = (props: Props) => {
+  return (
+    <button className="btn btn-rose" onClick={props.onClick}>
+      Throw Simulated Error
+    </button>
+  );
+};

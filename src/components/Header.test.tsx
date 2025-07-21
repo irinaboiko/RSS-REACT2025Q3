@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/vitest';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 
-import Header from './Header.tsx';
+import { Header } from '@/components/Header';
 
 describe('Header', () => {
   it('renders the heading element', () => {

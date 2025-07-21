@@ -2,15 +2,15 @@ import '@testing-library/jest-dom/vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { describe, it, expect, afterEach, vi } from 'vitest';
 
-import SearchBar from './SearchBar.tsx';
+import { SearchBar } from '@/components/SearchBar';
 
 import {
   clearSearchQuery,
   getSearchQuery,
   setSearchQuery,
-} from '../utils/localStorage.ts';
+} from '@/utils/localStorage';
 
-import { TEST_IDS, SEARCH_QUERIES } from '../__tests__/testConstants.ts';
+import { TEST_IDS, SEARCH_QUERIES } from '@/__tests__/testConstants';
 
 const { SEARCH_FORM, SEARCH_INPUT, SEARCH_BUTTON } = TEST_IDS;
 const { lukeSearchQuery, lukeSearchQueryWithWhitespaces } = SEARCH_QUERIES;

@@ -2,9 +2,9 @@ import '@testing-library/jest-dom/vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import { describe, it, expect, afterEach } from 'vitest';
 
-import ApiErrorMessage from './ApiErrorMessage.tsx';
+import { ApiErrorMessage } from '@/components/error/ApiErrorMessage';
 
-import { TEST_IDS, MESSAGES } from '../../__tests__/testConstants.ts';
+import { TEST_IDS, MESSAGES } from '@/__tests__/testConstants';
 
 const { API_ERROR_MESSAGE } = TEST_IDS;
 const { error, unknownError } = MESSAGES;

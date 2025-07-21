@@ -1,13 +1,13 @@
 import { Component } from 'react';
 
-import Header from './components/Header.tsx';
-import SearchBar from './components/SearchBar.tsx';
-import ResultList from './components/ResultLists.tsx';
-import ApiErrorMessage from './components/error/ApiErrorMessage.tsx';
-import SimulateErrorButton from './components/ui/SimulateErrorButton.tsx';
+import { Header } from '@/components/Header';
+import { SearchBar } from '@/components/SearchBar';
+import { ResultList } from '@/components/ResultLists';
+import { ApiErrorMessage } from '@/components/error/ApiErrorMessage';
+import { SimulateErrorButton } from '@/components/ui/SimulateErrorButton';
 
-import { fetchPeople } from './utils/api.ts';
-import { getSearchQuery, setSearchQuery } from './utils/localStorage.ts';
+import { fetchPeople } from './utils/api';
+import { getSearchQuery, setSearchQuery } from './utils/localStorage';
 
 import type { PersonPreview } from './types/person.ts';
 
@@ -19,7 +19,7 @@ interface AppState {
   simulatedError: boolean;
 }
 
-class App extends Component {
+export class App extends Component {
   state: AppState = {
     people: [],
     loading: false,
@@ -85,5 +85,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;
