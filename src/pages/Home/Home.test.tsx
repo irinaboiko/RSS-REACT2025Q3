@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest';
 
-import { App } from '@/App';
+import { Home } from '@/pages/Home';
 
 import { getSearchQueryFromLocalStorage } from '@/utils/localStorage';
 
@@ -11,7 +11,7 @@ import { TEST_IDS, SEARCH_QUERIES } from '@/__tests__/testConstants';
 const { LOADER, SEARCH_FORM, SEARCH_INPUT } = TEST_IDS;
 const { lukeSearchQuery } = SEARCH_QUERIES;
 
-vi.mock('./utils/api.ts', () => ({
+vi.mock('@/api', () => ({
   fetchPeople: vi.fn().mockResolvedValue([
     {
       uid: '1',
@@ -21,15 +21,10 @@ vi.mock('./utils/api.ts', () => ({
   ]),
 }));
 
-vi.mock('./utils/localStorage.ts', () => ({
-  getSearchQueryFromLocalStorage: vi.fn(() => lukeSearchQuery),
-  setSearchQueryToLocalStorage: vi.fn(),
-}));
-
-const mockedFetchPeople = (await import('./utils/api'))
+const mockedFetchPeople = (await import('@/api'))
   .fetchPeople as unknown as ReturnType<typeof vi.fn>;
 
-describe('App', () => {
+describe('Home', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -39,7 +34,7 @@ describe('App', () => {
   });
 
   it('renders Header, SearchBar, ResultList and SimulateErrorButton', async () => {
-    render(<App />);
+    render(<Home />);
 
     const header = screen.getByRole('heading', { level: 1 });
     expect(header).toBeInTheDocument();
@@ -55,7 +50,12 @@ describe('App', () => {
   });
 
   it('renders Header and SearchBar with initial searchQuery', async () => {
-    render(<App />);
+    vi.doMock('@/utils/localStorage', () => ({
+      getSearchQueryFromLocalStorage: vi.fn(() => ''),
+      setSearchQueryToLocalStorage: vi.fn(),
+    }));
+
+    render(<Home />);
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
       /people from the star wars universe/i
     );
@@ -63,20 +63,25 @@ describe('App', () => {
   });
 
   it('displays result list after successful fetch', async () => {
-    render(<App />);
+    render(<Home />);
     const person = await screen.findByText('Luke Skywalker');
     expect(person).toBeInTheDocument();
   });
 
   it('shows error message when fetch fails', async () => {
     mockedFetchPeople.mockRejectedValueOnce(new Error('Network error'));
-    render(<App />);
+    render(<Home />);
     const error = await screen.findByText(/network error/i);
     expect(error).toBeInTheDocument();
   });
 
   it('saves search term to localStorage', () => {
-    render(<App />);
+    vi.doMock('@/utils/localStorage', () => ({
+      getSearchQueryFromLocalStorage: vi.fn(() => lukeSearchQuery),
+      setSearchQueryToLocalStorage: vi.fn(),
+    }));
+
+    render(<Home />);
 
     const input = screen.getByTestId(SEARCH_INPUT);
     const searchForm = screen.getByTestId(SEARCH_FORM);
@@ -93,7 +98,7 @@ describe('App', () => {
       return new Promise(() => {});
     });
 
-    render(<App />);
+    render(<Home />);
 
     const loader = await screen.findByTestId(LOADER);
     expect(loader).toBeInTheDocument();

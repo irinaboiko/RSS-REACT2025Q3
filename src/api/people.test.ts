@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 
-import { fetchPeople } from '@/utils/api';
+import { fetchPeople } from '@/api';
 
 import {
   mockApiResponseWithoutSearchQuery,

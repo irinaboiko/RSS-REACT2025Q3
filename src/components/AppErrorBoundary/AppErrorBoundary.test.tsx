@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest';
 
-import { AppErrorBoundary } from '@/components/error/AppErrorBoundary';
+import { AppErrorBoundary } from '@/components/AppErrorBoundary';
 import { BrokenComponent } from '@/__tests__/BrockenComponents';
 
 import { TEST_IDS } from '@/__tests__/testConstants';

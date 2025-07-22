@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import { describe, it, expect, afterEach } from 'vitest';
 
-import { ApiErrorMessage } from '@/components/error/ApiErrorMessage';
+import { ApiErrorMessage } from '@/components/ApiErrorMessage';
 
 import { TEST_IDS, MESSAGES } from '@/__tests__/testConstants';
 

@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { describe, it, expect, afterEach, vi } from 'vitest';
 
-import { SimulateErrorButton } from '@/components/ui/SimulateErrorButton';
+import { SimulateErrorButton } from '@/components/SimulateErrorButton';
 
 describe('SimulateErrorButton', () => {
   afterEach(() => {

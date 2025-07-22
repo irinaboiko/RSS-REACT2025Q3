@@ -3,18 +3,18 @@ import { useEffect, useState } from 'react';
 import { Header } from '@/components/Header';
 import { SearchBar } from '@/components/SearchBar';
 import { ResultList } from '@/components/ResultLists';
-import { ApiErrorMessage } from '@/components/error/ApiErrorMessage';
-import { SimulateErrorButton } from '@/components/ui/SimulateErrorButton';
+import { ApiErrorMessage } from '@/components/ApiErrorMessage';
+import { SimulateErrorButton } from '@/components/SimulateErrorButton';
 
-import { fetchPeople } from './utils/api';
+import { fetchPeople } from '@/api';
 import {
   getSearchQueryFromLocalStorage,
   setSearchQueryToLocalStorage,
-} from './utils/localStorage';
+} from '@/utils/localStorage';
 
-import type { PersonPreview } from './types/person.ts';
+import type { PersonPreview } from '@/types/person';
 
-export const App = () => {
+export const Home = () => {
   const [people, setPeople] = useState<PersonPreview[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -22,16 +22,15 @@ export const App = () => {
   const [simulatedError, setSimulatedError] = useState(false);
 
   useEffect(() => {
-    setSearchQuery(getSearchQueryFromLocalStorage());
-
-    handleSearch();
+    const storedQuery = getSearchQueryFromLocalStorage();
+    setSearchQuery(storedQuery);
+    performSearch(storedQuery);
   }, []);
 
-  const handleSearch = () => {
-    const trimmedQuery = searchQuery.trim();
+  const performSearch = (query: string) => {
+    const trimmedQuery = query.trim();
     setSearchQueryToLocalStorage(trimmedQuery);
     setLoading(true);
-    setSearchQuery(trimmedQuery);
     setError(null);
 
     fetchPeople(trimmedQuery)
@@ -49,6 +48,10 @@ export const App = () => {
     setSearchQuery(query);
   };
 
+  const handleSearchClick = () => {
+    performSearch(searchQuery);
+  };
+
   if (simulatedError) {
     throw new Error('I crashed!');
   }
@@ -57,7 +60,7 @@ export const App = () => {
     <div className="flex h-screen flex-col px-5 py-4">
       <Header />
       <SearchBar
-        onSearch={handleSearch}
+        onSearch={handleSearchClick}
         searchQuery={searchQuery}
         onChange={handleQueryChange}
       />

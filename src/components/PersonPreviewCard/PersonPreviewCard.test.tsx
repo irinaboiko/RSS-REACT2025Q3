@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/vitest';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 
-import { PersonPreviewCard } from '@/components/ui/PersonPreviewCard';
+import { PersonPreviewCard } from '@/components/PersonPreviewCard';
 
 import { lukeSkywalker } from '@/__tests__/mocks/peopleMocks';
 

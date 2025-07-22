@@ -1,5 +1,5 @@
-import { Loader } from '@/components/ui/Loader';
-import { PersonPreviewCard } from '@/components/ui/PersonPreviewCard';
+import { Loader } from '@/components/Loader';
+import { PersonPreviewCard } from '@/components/PersonPreviewCard';
 
 import type { PersonPreview } from '@/types/person';
 
