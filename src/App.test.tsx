@@ -4,9 +4,9 @@ import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest';
 
 import { App } from '@/App';
 
-import { getSearchQuery } from './utils/localStorage';
+import { getSearchQueryFromLocalStorage } from '@/utils/localStorage';
 
-import { TEST_IDS, SEARCH_QUERIES } from './__tests__/testConstants';
+import { TEST_IDS, SEARCH_QUERIES } from '@/__tests__/testConstants';
 
 const { LOADER, SEARCH_FORM, SEARCH_INPUT } = TEST_IDS;
 const { lukeSearchQuery } = SEARCH_QUERIES;
@@ -22,8 +22,8 @@ vi.mock('./utils/api.ts', () => ({
 }));
 
 vi.mock('./utils/localStorage.ts', () => ({
-  getSearchQuery: vi.fn(() => lukeSearchQuery),
-  setSearchQuery: vi.fn(),
+  getSearchQueryFromLocalStorage: vi.fn(() => lukeSearchQuery),
+  setSearchQueryToLocalStorage: vi.fn(),
 }));
 
 const mockedFetchPeople = (await import('./utils/api'))
@@ -84,7 +84,7 @@ describe('App', () => {
     fireEvent.change(input, { target: { value: lukeSearchQuery } });
     fireEvent.submit(searchForm);
 
-    const searchQueryFromLS: string = getSearchQuery();
+    const searchQueryFromLS: string = getSearchQueryFromLocalStorage();
     expect(searchQueryFromLS).toEqual(lukeSearchQuery);
   });
 

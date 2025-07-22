@@ -1,12 +1,12 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import {
-  clearSearchQuery,
-  getSearchQuery,
+  clearSearchQueryFromLocalStorage,
+  getSearchQueryFromLocalStorage,
   SEARCH_KEY,
-  setSearchQuery,
+  setSearchQueryToLocalStorage,
 } from './localStorage';
 
-import { SEARCH_QUERIES } from '../__tests__/testConstants.ts';
+import { SEARCH_QUERIES } from '@/__tests__/testConstants';
 
 const { lukeSearchQuery, darthSearchQuery } = SEARCH_QUERIES;
 
@@ -16,30 +16,30 @@ describe('localStorage utils', () => {
   });
 
   it('populates search query in localStorage', () => {
-    setSearchQuery(lukeSearchQuery);
-    expect(getSearchQuery()).toBe(lukeSearchQuery);
+    setSearchQueryToLocalStorage(lukeSearchQuery);
+    expect(getSearchQueryFromLocalStorage()).toBe(lukeSearchQuery);
   });
 
   it('clears search query from localStorage', () => {
-    setSearchQuery(lukeSearchQuery);
-    clearSearchQuery();
+    setSearchQueryToLocalStorage(lukeSearchQuery);
+    clearSearchQueryFromLocalStorage();
 
     expect(localStorage.getItem(SEARCH_KEY)).toBeNull();
   });
 
   it('returns empty string when nothing is stored', () => {
-    expect(getSearchQuery()).toBe('');
+    expect(getSearchQueryFromLocalStorage()).toBe('');
   });
 
   it('returns empty string when empty string is stored', () => {
-    setSearchQuery('');
-    expect(getSearchQuery()).toBe('');
+    setSearchQueryToLocalStorage('');
+    expect(getSearchQueryFromLocalStorage()).toBe('');
   });
 
   it('overwrites existing search query', () => {
-    setSearchQuery(lukeSearchQuery);
-    setSearchQuery(darthSearchQuery);
+    setSearchQueryToLocalStorage(lukeSearchQuery);
+    setSearchQueryToLocalStorage(darthSearchQuery);
 
-    expect(getSearchQuery()).toBe(darthSearchQuery);
+    expect(getSearchQueryFromLocalStorage()).toBe(darthSearchQuery);
   });
 });

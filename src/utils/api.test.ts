@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 
-import { fetchPeople } from './api.ts';
+import { fetchPeople } from '@/utils/api';
 
 import {
   mockApiResponseWithoutSearchQuery,
@@ -8,9 +8,9 @@ import {
   expectedPeopleWithoutSearchQuery,
   expectedPeopleWithSearchQuery,
   mockApiResponseWithInvalidSearchQuery,
-} from '../__tests__/mocks/apiMocks.ts';
+} from '@/__tests__/mocks/apiMocks';
 
-import { SEARCH_QUERIES, MESSAGES } from '../__tests__/testConstants.ts';
+import { SEARCH_QUERIES, MESSAGES } from '@/__tests__/testConstants';
 
 const { lukeSearchQuery, invalidSearchQuery } = SEARCH_QUERIES;
 const { apiBadRequest } = MESSAGES;

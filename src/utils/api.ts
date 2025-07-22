@@ -1,5 +1,5 @@
-import type { FullPerson, PersonPreview } from '../types/person.ts';
-import type { PeopleResponse } from '../types/api.ts';
+import type { FullPerson, PersonPreview } from '@/types/person';
+import type { PeopleResponse } from '@/types/api';
 
 const BASE_URL = 'https://swapi.tech/api';
 

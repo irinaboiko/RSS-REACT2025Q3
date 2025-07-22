@@ -5,9 +5,9 @@ import { describe, it, expect, afterEach, vi } from 'vitest';
 import { SearchBar } from '@/components/SearchBar';
 
 import {
-  clearSearchQuery,
-  getSearchQuery,
-  setSearchQuery,
+  clearSearchQueryFromLocalStorage,
+  getSearchQueryFromLocalStorage,
+  setSearchQueryToLocalStorage,
 } from '@/utils/localStorage';
 
 import { TEST_IDS, SEARCH_QUERIES } from '@/__tests__/testConstants';
@@ -63,8 +63,8 @@ describe('SearchBar', () => {
   });
 
   it('shows empty input when no saved term exists', () => {
-    clearSearchQuery();
-    const searchQueryFromLS: string = getSearchQuery();
+    clearSearchQueryFromLocalStorage();
+    const searchQueryFromLS: string = getSearchQueryFromLocalStorage();
 
     render(
       <SearchBar
@@ -79,8 +79,8 @@ describe('SearchBar', () => {
   });
 
   it('displays previously saved search term from localStorage on mount', () => {
-    setSearchQuery(lukeSearchQuery);
-    const searchQueryFromLS: string = getSearchQuery();
+    setSearchQueryToLocalStorage(lukeSearchQuery);
+    const searchQueryFromLS: string = getSearchQueryFromLocalStorage();
 
     render(
       <SearchBar

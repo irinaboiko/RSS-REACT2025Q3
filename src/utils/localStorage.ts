@@ -1,13 +1,13 @@
 export const SEARCH_KEY = 'searchQuery';
 
-export const clearSearchQuery = (): void => {
+export const clearSearchQueryFromLocalStorage = (): void => {
   localStorage.removeItem(SEARCH_KEY);
 };
 
-export const getSearchQuery = (): string => {
+export const getSearchQueryFromLocalStorage = (): string => {
   return localStorage.getItem(SEARCH_KEY) || '';
 };
 
-export const setSearchQuery = (query: string): void => {
+export const setSearchQueryToLocalStorage = (query: string): void => {
   localStorage.setItem(SEARCH_KEY, query);
 };
