@@ -33,33 +33,18 @@ describe('Home', () => {
     cleanup();
   });
 
-  it('renders Header, SearchBar, ResultList and SimulateErrorButton', async () => {
+  it('renders SearchBar', async () => {
     render(<Home />);
-
-    const header = screen.getByRole('heading', { level: 1 });
-    expect(header).toBeInTheDocument();
 
     const searchBar = screen.getByTestId(SEARCH_FORM);
     expect(searchBar).toBeInTheDocument();
+  });
+
+  it('renders ResultList', async () => {
+    render(<Home />);
 
     const resultHeader = await screen.findByText(/search result/i);
     expect(resultHeader).toBeInTheDocument();
-
-    const simulateErrorButton = screen.getByText(/throw simulated error/i);
-    expect(simulateErrorButton).toBeInTheDocument();
-  });
-
-  it('renders Header and SearchBar with initial searchQuery', async () => {
-    vi.doMock('@/utils/localStorage', () => ({
-      getSearchQueryFromLocalStorage: vi.fn(() => ''),
-      setSearchQueryToLocalStorage: vi.fn(),
-    }));
-
-    render(<Home />);
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-      /people from the star wars universe/i
-    );
-    expect(screen.getByTestId('search-input')).toHaveValue('');
   });
 
   it('displays result list after successful fetch', async () => {

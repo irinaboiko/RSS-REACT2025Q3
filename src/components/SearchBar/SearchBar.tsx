@@ -32,7 +32,7 @@ export const SearchBar = (props: Props) => {
       />
       <button
         type="submit"
-        className="btn btn-cyan"
+        className="btn btn-gray"
         data-testid="search-button"
       >
         Search

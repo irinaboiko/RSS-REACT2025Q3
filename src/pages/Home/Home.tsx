@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import { Header } from '@/components/Header';
 import { SearchBar } from '@/components/SearchBar';
 import { ResultList } from '@/components/ResultLists';
 import { ApiErrorMessage } from '@/components/ApiErrorMessage';
-import { SimulateErrorButton } from '@/components/SimulateErrorButton';
 
 import { fetchPeople } from '@/api';
 import {
@@ -19,7 +17,6 @@ export const Home = () => {
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [error, setError] = useState(null);
-  const [simulatedError, setSimulatedError] = useState(false);
 
   useEffect(() => {
     const storedQuery = getSearchQueryFromLocalStorage();
@@ -52,13 +49,8 @@ export const Home = () => {
     performSearch(searchQuery);
   };
 
-  if (simulatedError) {
-    throw new Error('I crashed!');
-  }
-
   return (
-    <div className="flex h-screen flex-col px-5 py-4">
-      <Header />
+    <>
       <SearchBar
         onSearch={handleSearchClick}
         searchQuery={searchQuery}
@@ -72,10 +64,6 @@ export const Home = () => {
           <ResultList people={people} loading={loading} />
         )}
       </div>
-
-      <div>
-        <SimulateErrorButton onClick={() => setSimulatedError(true)} />
-      </div>
-    </div>
+    </>
   );
 };

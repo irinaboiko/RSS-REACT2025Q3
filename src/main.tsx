@@ -1,7 +1,8 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router';
 
-import { Home } from '@/pages/Home';
+import { AppRoutes } from '@/routes/AppRoutes';
 import { AppErrorBoundary } from '@/components/AppErrorBoundary';
 
 import './index.css';
@@ -11,8 +12,10 @@ if (!container) throw new Error('Root container not found');
 
 createRoot(container).render(
   <StrictMode>
-    <AppErrorBoundary>
-      <Home />
-    </AppErrorBoundary>
+    <BrowserRouter>
+      <AppErrorBoundary>
+        <AppRoutes />
+      </AppErrorBoundary>
+    </BrowserRouter>
   </StrictMode>
 );

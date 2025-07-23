@@ -34,18 +34,16 @@ export class AppErrorBoundary extends Component<Props, State> {
           data-testid="app-fallback"
         >
           <img
-            src="/images/errorboundary.png"
+            src="/images/error-boundary-bb8.webp"
             alt="Error Illustration"
             className="h-48"
           />
-          <h2 className="mb-2 text-3xl font-bold text-rose-600">
-            Oh, no! What you&apos;ve done?
+          <h2 className="mb-2 text-3xl font-bold text-red-600">
+            Oh, no! Our shields are down.
           </h2>
-          <p className="text-lg font-thin">
-            Just kidding! The error was simulated successfully.
-          </p>
+          <p className="text-lg">Something went wrong.</p>
           <button
-            className="btn btn-cyan"
+            className="btn btn-gray"
             onClick={() => window.location.reload()}
           >
             Refresh Page
