@@ -1,14 +1,11 @@
 import '@testing-library/jest-dom/vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
-import { describe, it, expect, afterEach, vi } from 'vitest';
+import { describe, it, expect, afterEach, vi, beforeEach } from 'vitest';
+import { renderHook } from '@testing-library/react';
 
 import { SearchBar } from '@/components/SearchBar';
 
-import {
-  clearSearchQueryFromLocalStorage,
-  getSearchQueryFromLocalStorage,
-  setSearchQueryToLocalStorage,
-} from '@/utils/localStorage';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 
 import { TEST_IDS, SEARCH_QUERIES } from '@/__tests__/testConstants';
 
@@ -16,6 +13,10 @@ const { SEARCH_FORM, SEARCH_INPUT, SEARCH_BUTTON } = TEST_IDS;
 const { lukeSearchQuery, lukeSearchQueryWithWhitespaces } = SEARCH_QUERIES;
 
 describe('SearchBar', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
   afterEach(() => {
     cleanup();
   });
@@ -63,15 +64,12 @@ describe('SearchBar', () => {
   });
 
   it('shows empty input when no saved term exists', () => {
-    clearSearchQueryFromLocalStorage();
-    const searchQueryFromLS: string = getSearchQueryFromLocalStorage();
+    const { result } = renderHook(() => useLocalStorage());
+
+    const value = result.current.getSearchQueryFromLocalStorage();
 
     render(
-      <SearchBar
-        onSearch={() => {}}
-        searchQuery={searchQueryFromLS}
-        onChange={() => {}}
-      />
+      <SearchBar onSearch={() => {}} searchQuery={value} onChange={() => {}} />
     );
 
     const searchInput = screen.getByTestId(SEARCH_INPUT);
@@ -79,8 +77,11 @@ describe('SearchBar', () => {
   });
 
   it('displays previously saved search term from localStorage on mount', () => {
-    setSearchQueryToLocalStorage(lukeSearchQuery);
-    const searchQueryFromLS: string = getSearchQueryFromLocalStorage();
+    const { result } = renderHook(() => useLocalStorage());
+
+    result.current.setSearchQueryToLocalStorage(lukeSearchQuery);
+    const searchQueryFromLS: string =
+      result.current.getSearchQueryFromLocalStorage();
 
     render(
       <SearchBar

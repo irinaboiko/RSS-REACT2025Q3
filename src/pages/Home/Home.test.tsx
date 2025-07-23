@@ -1,10 +1,11 @@
 import '@testing-library/jest-dom/vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest';
+import { renderHook } from '@testing-library/react';
 
 import { Home } from '@/pages/Home';
 
-import { getSearchQueryFromLocalStorage } from '@/utils/localStorage';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 
 import { TEST_IDS, SEARCH_QUERIES } from '@/__tests__/testConstants';
 
@@ -66,6 +67,8 @@ describe('Home', () => {
       setSearchQueryToLocalStorage: vi.fn(),
     }));
 
+    const { result } = renderHook(() => useLocalStorage());
+
     render(<Home />);
 
     const input = screen.getByTestId(SEARCH_INPUT);
@@ -74,8 +77,8 @@ describe('Home', () => {
     fireEvent.change(input, { target: { value: lukeSearchQuery } });
     fireEvent.submit(searchForm);
 
-    const searchQueryFromLS: string = getSearchQueryFromLocalStorage();
-    expect(searchQueryFromLS).toEqual(lukeSearchQuery);
+    const value: string = result.current.getSearchQueryFromLocalStorage();
+    expect(value).toBe(lukeSearchQuery);
   });
 
   it('shows loader when loading is true', async () => {

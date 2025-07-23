@@ -5,11 +5,7 @@ import { ResultList } from '@/components/ResultLists';
 import { ApiErrorMessage } from '@/components/ApiErrorMessage';
 
 import { fetchPeople } from '@/api';
-import {
-  getSearchQueryFromLocalStorage,
-  setSearchQueryToLocalStorage,
-} from '@/utils/localStorage';
-
+import { useLocalStorage } from '@/hooks';
 import type { PersonPreview } from '@/types/person';
 
 export const Home = () => {
@@ -17,6 +13,9 @@ export const Home = () => {
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [error, setError] = useState(null);
+
+  const { getSearchQueryFromLocalStorage, setSearchQueryToLocalStorage } =
+    useLocalStorage();
 
   useEffect(() => {
     const storedQuery = getSearchQueryFromLocalStorage();
