@@ -27,6 +27,10 @@
   @apply text-yellow-600 underline;
 }
 
-.pending-link {
-  @apply text-yellow-600 underline;
+.text-accent {
+  @apply font-bold text-yellow-500;
+}
+
+.link-accent {
+  @apply text-yellow-500 underline hover:text-yellow-700;
 }
