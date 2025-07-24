@@ -23,7 +23,11 @@ describe('SearchBar', () => {
 
   it('renders search input and search button', () => {
     render(
-      <SearchBar searchQuery={''} onSearch={() => {}} onChange={() => {}} />
+      <SearchBar
+        inputValue={''}
+        onInputChange={() => {}}
+        onFormSubmit={() => {}}
+      />
     );
 
     const searchInput = screen.getByTestId(SEARCH_INPUT);
@@ -37,7 +41,11 @@ describe('SearchBar', () => {
     const handleChange = vi.fn();
 
     render(
-      <SearchBar searchQuery="" onSearch={() => {}} onChange={handleChange} />
+      <SearchBar
+        inputValue=""
+        onInputChange={handleChange}
+        onFormSubmit={() => {}}
+      />
     );
 
     const input = screen.getByTestId(SEARCH_INPUT);
@@ -51,9 +59,9 @@ describe('SearchBar', () => {
 
     render(
       <SearchBar
-        searchQuery={lukeSearchQuery}
-        onSearch={handleSearch}
-        onChange={() => {}}
+        inputValue={lukeSearchQuery}
+        onInputChange={() => {}}
+        onFormSubmit={handleSearch}
       />
     );
 
@@ -69,7 +77,11 @@ describe('SearchBar', () => {
     const value = result.current.getSearchQueryFromLocalStorage();
 
     render(
-      <SearchBar onSearch={() => {}} searchQuery={value} onChange={() => {}} />
+      <SearchBar
+        inputValue={value}
+        onInputChange={() => {}}
+        onFormSubmit={() => {}}
+      />
     );
 
     const searchInput = screen.getByTestId(SEARCH_INPUT);
@@ -85,9 +97,9 @@ describe('SearchBar', () => {
 
     render(
       <SearchBar
-        onSearch={() => {}}
-        searchQuery={searchQueryFromLS}
-        onChange={() => {}}
+        inputValue={searchQueryFromLS}
+        onInputChange={() => {}}
+        onFormSubmit={() => {}}
       />
     );
 
@@ -100,9 +112,9 @@ describe('SearchBar', () => {
 
     render(
       <SearchBar
-        searchQuery={lukeSearchQueryWithWhitespaces}
-        onSearch={handleSearch}
-        onChange={() => {}}
+        inputValue={lukeSearchQueryWithWhitespaces}
+        onInputChange={() => {}}
+        onFormSubmit={handleSearch}
       />
     );
 

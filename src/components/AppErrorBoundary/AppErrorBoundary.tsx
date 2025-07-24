@@ -23,6 +23,11 @@ export class AppErrorBoundary extends Component<Props, State> {
     console.error('Uncaught error:', error, errorInfo);
   }
 
+  handleRefreshPage() {
+    localStorage.clear();
+    window.location.reload();
+  }
+
   render() {
     const { hasError } = this.state;
     const { children } = this.props;
@@ -42,10 +47,7 @@ export class AppErrorBoundary extends Component<Props, State> {
             Oh, no! Our shields are down.
           </h2>
           <p className="text-lg">Something went wrong.</p>
-          <button
-            className="btn btn-gray"
-            onClick={() => window.location.reload()}
-          >
+          <button className="btn btn-gray" onClick={this.handleRefreshPage}>
             Refresh Page
           </button>
         </div>

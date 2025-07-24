@@ -1,5 +1,5 @@
-import type { PersonPreview } from '../../types/person.ts';
-import type { PeopleResponse, SearchPeopleResponse } from '../../types/api.ts';
+import type { FullPerson, PersonPreview } from '@/types/person';
+import type { PeopleResponse, SearchPeopleResponse } from '@/types/api';
 
 import {
   beruWhitesunLars,
@@ -8,11 +8,12 @@ import {
   darthVader,
   leiaOrgana,
   lukeSkywalker,
+  lukeSkywalkerDetails,
   obiWanKenobi,
   owenLars,
   r2d2,
   r5d4,
-} from './peopleMocks.ts';
+} from '@/__tests__/mocks/peopleMocks';
 
 export const mockApiResponseWithoutSearchQuery: PeopleResponse = {
   message: 'ok',
@@ -75,7 +76,18 @@ export const mockApiResponseWithSearchQuery: SearchPeopleResponse = {
 
 export const expectedPeopleWithSearchQuery: PersonPreview[] = [lukeSkywalker];
 
-export const mockApiResponseWithInvalidSearchQuery = {
+export const mockApiResponseWithInvalidSearchQuery: {
+  message: string;
+  result: PersonPreview[];
+} = {
   message: 'ok',
   result: [],
+};
+
+export const mockPersonDetailsResponse: {
+  message: string;
+  result: FullPerson;
+} = {
+  message: 'ok',
+  result: lukeSkywalkerDetails,
 };

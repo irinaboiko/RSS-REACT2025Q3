@@ -12,7 +12,7 @@ export const ResultList = (props: Props) => {
   const { people, loading } = props;
 
   return (
-    <>
+    <div className="grow">
       {loading && <Loader />}
 
       {!loading && (
@@ -27,12 +27,12 @@ export const ResultList = (props: Props) => {
               </div>
             </>
           ) : (
-            <p className="text-2xl font-thin">
+            <p className="text-xl">
               No results found. Please try a different search.
             </p>
           )}
         </>
       )}
-    </>
+    </div>
   );
 };

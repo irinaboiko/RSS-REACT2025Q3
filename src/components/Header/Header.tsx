@@ -23,7 +23,7 @@ export const Header = () => {
         <NavLink
           to={ROUTES.ABOUT}
           className={({ isActive }) =>
-            isActive ? 'active-link' : 'hover:text-yellow-600 hover:underline'
+            `link text-xl ${isActive && 'link-active'}`
           }
         >
           About

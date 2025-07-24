@@ -1,19 +1,35 @@
 import '@testing-library/jest-dom/vitest';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest';
-import { renderHook } from '@testing-library/react';
+import { MemoryRouter, Route, Routes } from 'react-router';
 
 import { Home } from '@/pages/Home';
 
-import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { fetchAllPeople, fetchSearchedPeople } from '@/api';
 
 import { TEST_IDS, SEARCH_QUERIES } from '@/__tests__/testConstants';
 
-const { LOADER, SEARCH_FORM, SEARCH_INPUT } = TEST_IDS;
+const { SEARCH_FORM, SEARCH_INPUT } = TEST_IDS;
 const { lukeSearchQuery } = SEARCH_QUERIES;
 
 vi.mock('@/api', () => ({
-  fetchPeople: vi.fn().mockResolvedValue([
+  fetchAllPeople: vi.fn().mockResolvedValue({
+    data: [
+      {
+        uid: '1',
+        name: 'Luke Skywalker',
+        url: 'https://swapi.tech/api/people/1',
+      },
+    ],
+    totalPages: 3,
+  }),
+  fetchSearchedPeople: vi.fn().mockResolvedValue([
     {
       uid: '1',
       name: 'Luke Skywalker',
@@ -22,10 +38,23 @@ vi.mock('@/api', () => ({
   ]),
 }));
 
-const mockedFetchPeople = (await import('@/api'))
-  .fetchPeople as unknown as ReturnType<typeof vi.fn>;
+vi.mock('@/hooks/useLocalStorage', () => ({
+  useLocalStorage: () => ({
+    getSearchQueryFromLocalStorage: () => '',
+    setSearchQueryToLocalStorage: vi.fn(),
+  }),
+}));
 
-describe('Home', () => {
+const renderHome = (route: string = '/?page=1') =>
+  render(
+    <MemoryRouter initialEntries={[route]}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </MemoryRouter>
+  );
+
+describe('Home page', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -35,60 +64,47 @@ describe('Home', () => {
   });
 
   it('renders SearchBar', async () => {
-    render(<Home />);
-
-    const searchBar = screen.getByTestId(SEARCH_FORM);
-    expect(searchBar).toBeInTheDocument();
+    renderHome();
+    expect(screen.getByTestId(SEARCH_FORM)).toBeInTheDocument();
   });
 
-  it('renders ResultList', async () => {
-    render(<Home />);
+  it('calls fetchAllPeople with current page on mount', async () => {
+    renderHome('/?page=2');
 
-    const resultHeader = await screen.findByText(/search result/i);
-    expect(resultHeader).toBeInTheDocument();
+    await waitFor(() => {
+      expect(fetchAllPeople).toHaveBeenCalledWith(2);
+    });
   });
 
-  it('displays result list after successful fetch', async () => {
-    render(<Home />);
-    const person = await screen.findByText('Luke Skywalker');
-    expect(person).toBeInTheDocument();
+  it('renders search result from API', async () => {
+    renderHome();
+    expect(await screen.findByText('Luke Skywalker')).toBeInTheDocument();
   });
 
-  it('shows error message when fetch fails', async () => {
-    mockedFetchPeople.mockRejectedValueOnce(new Error('Network error'));
-    render(<Home />);
-    const error = await screen.findByText(/network error/i);
-    expect(error).toBeInTheDocument();
-  });
-
-  it('saves search term to localStorage', () => {
-    vi.doMock('@/utils/localStorage', () => ({
-      getSearchQueryFromLocalStorage: vi.fn(() => lukeSearchQuery),
-      setSearchQueryToLocalStorage: vi.fn(),
-    }));
-
-    const { result } = renderHook(() => useLocalStorage());
-
-    render(<Home />);
+  it('submits search and calls fetchSearchedPeople', async () => {
+    renderHome();
 
     const input = screen.getByTestId(SEARCH_INPUT);
-    const searchForm = screen.getByTestId(SEARCH_FORM);
+    const form = screen.getByTestId(SEARCH_FORM);
 
     fireEvent.change(input, { target: { value: lukeSearchQuery } });
-    fireEvent.submit(searchForm);
+    fireEvent.submit(form);
 
-    const value: string = result.current.getSearchQueryFromLocalStorage();
-    expect(value).toBe(lukeSearchQuery);
+    await waitFor(() => {
+      expect(fetchSearchedPeople).toHaveBeenCalledWith(lukeSearchQuery);
+    });
   });
 
-  it('shows loader when loading is true', async () => {
-    mockedFetchPeople.mockImplementation(() => {
-      return new Promise(() => {});
-    });
+  it('renders error message on fetchAllPeople error', async () => {
+    vi.mocked(fetchAllPeople).mockRejectedValueOnce(new Error('API failure'));
+    renderHome();
 
-    render(<Home />);
+    expect(await screen.findByText(/api failure/i)).toBeInTheDocument();
+  });
 
-    const loader = await screen.findByTestId(LOADER);
-    expect(loader).toBeInTheDocument();
+  it('renders correct pagination totalPages and currentPage', async () => {
+    renderHome('/?page=3');
+    expect(await screen.findByText('Luke Skywalker')).toBeInTheDocument();
+    expect(screen.getByText('3')).toBeInTheDocument(); // зависит от пагинации
   });
 });

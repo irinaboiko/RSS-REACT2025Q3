@@ -1,21 +1,21 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 
-import { fetchPeople } from '@/api';
+import { fetchAllPeople, fetchSearchedPeople, fetchPersonDetails } from '@/api';
 
 import {
   mockApiResponseWithoutSearchQuery,
   mockApiResponseWithSearchQuery,
-  expectedPeopleWithoutSearchQuery,
-  expectedPeopleWithSearchQuery,
   mockApiResponseWithInvalidSearchQuery,
+  mockPersonDetailsResponse,
 } from '@/__tests__/mocks/apiMocks';
 
 import { SEARCH_QUERIES, MESSAGES } from '@/__tests__/testConstants';
+import { lukeSkywalker } from '@/__tests__/mocks/peopleMocks';
 
 const { lukeSearchQuery, invalidSearchQuery } = SEARCH_QUERIES;
 const { apiBadRequest } = MESSAGES;
 
-describe('api', () => {
+describe('people API', () => {
   let mockFetch: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
@@ -27,67 +27,96 @@ describe('api', () => {
     vi.unstubAllGlobals();
   });
 
-  it('fetches data with empty search term', async () => {
-    mockFetch.mockResolvedValueOnce({
-      ok: true,
-      json: vi.fn().mockResolvedValue(mockApiResponseWithoutSearchQuery),
+  describe('fetchAllPeople', () => {
+    it('fetches all people', async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: vi.fn().mockResolvedValue(mockApiResponseWithoutSearchQuery),
+      });
+
+      const result = await fetchAllPeople();
+
+      expect(fetch).toHaveBeenCalledWith(
+        'https://swapi.tech/api/people?page=1&limit=10'
+      );
+      expect(result).toEqual({
+        data: mockApiResponseWithoutSearchQuery.results,
+        totalPages: mockApiResponseWithoutSearchQuery.total_pages,
+      });
     });
 
-    const result = await fetchPeople('');
+    it('throws an error if response is not ok', async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: false,
+        status: 400,
+        statusText: 'Bad Request',
+      });
 
-    expect(fetch).toHaveBeenCalledWith('https://swapi.tech/api/people/');
-    expect(result).toEqual(expectedPeopleWithoutSearchQuery);
+      await expect(fetchAllPeople()).rejects.toThrow(apiBadRequest);
+    });
   });
 
-  it('fetches data with search term', async () => {
-    mockFetch.mockResolvedValueOnce({
-      ok: true,
-      json: vi.fn().mockResolvedValue(mockApiResponseWithSearchQuery),
+  describe('fetchSearchedPeople', () => {
+    it('fetches and maps search result correctly', async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: vi.fn().mockResolvedValue(mockApiResponseWithSearchQuery),
+      });
+
+      const result = await fetchSearchedPeople(lukeSearchQuery);
+
+      expect(fetch).toHaveBeenCalledWith(
+        'https://swapi.tech/api/people?name=luke'
+      );
+      expect(result).toEqual([lukeSkywalker]);
     });
 
-    const result = await fetchPeople(lukeSearchQuery);
+    it('returns empty array if search result is undefined', async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: vi.fn().mockResolvedValue(mockApiResponseWithInvalidSearchQuery),
+      });
 
-    expect(fetch).toHaveBeenCalledWith(
-      'https://swapi.tech/api/people/?name=luke'
-    );
-    expect(result).toEqual(expectedPeopleWithSearchQuery);
+      const result = await fetchSearchedPeople(invalidSearchQuery);
+
+      expect(fetch).toHaveBeenCalledWith(
+        'https://swapi.tech/api/people?name=invalid'
+      );
+      expect(result).toEqual([]);
+    });
+
+    it('throws an error if response is not ok', async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: false,
+        status: 400,
+        statusText: 'Bad Request',
+      });
+
+      await expect(fetchSearchedPeople('fail')).rejects.toThrow(apiBadRequest);
+    });
   });
 
-  it('returns empty array for invalid search term', async () => {
-    mockFetch.mockResolvedValueOnce({
-      ok: true,
-      json: vi.fn().mockResolvedValue(mockApiResponseWithInvalidSearchQuery),
+  describe('fetchPersonDetails', () => {
+    it('fetches and returns person details', async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: vi.fn().mockResolvedValue(mockPersonDetailsResponse),
+      });
+
+      const result = await fetchPersonDetails(1);
+
+      expect(fetch).toHaveBeenCalledWith('https://swapi.tech/api/people/1');
+      expect(result).toEqual(mockPersonDetailsResponse.result);
     });
 
-    const result = await fetchPeople(invalidSearchQuery);
+    it('throws an error if response is not ok', async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: false,
+        status: 400,
+        statusText: 'Bad Request',
+      });
 
-    expect(fetch).toHaveBeenCalledWith(
-      'https://swapi.tech/api/people/?name=invalid'
-    );
-    expect(result).toEqual([]);
-  });
-
-  it('returns empty array if API response has no results', async () => {
-    mockFetch.mockResolvedValueOnce({
-      ok: true,
-      json: vi.fn().mockResolvedValue({ message: 'ok' }),
+      await expect(fetchPersonDetails(1)).rejects.toThrow(apiBadRequest);
     });
-
-    const result = await fetchPeople(invalidSearchQuery);
-
-    expect(fetch).toHaveBeenCalledWith(
-      'https://swapi.tech/api/people/?name=invalid'
-    );
-    expect(result).toEqual([]);
-  });
-
-  it('throws an error if response is not ok', async () => {
-    mockFetch.mockResolvedValueOnce({
-      ok: false,
-      status: 400,
-      statusText: 'Bad Request',
-    });
-
-    await expect(() => fetchPeople('Invalid')).rejects.toThrow(apiBadRequest);
   });
 });

@@ -1,31 +1,35 @@
 import type { ChangeEvent, FormEvent } from 'react';
 
 interface Props {
-  onSearch: (query: string) => void;
-  searchQuery: string;
-  onChange: (query: string) => void;
+  inputValue: string;
+  onInputChange: (query: string) => void;
+  onFormSubmit: (query: string) => void;
 }
 
-export const SearchBar = (props: Props) => {
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    props.onChange(e.target.value);
+export const SearchBar = ({
+  inputValue,
+  onInputChange,
+  onFormSubmit,
+}: Props) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onInputChange(e.target.value);
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleFormSubmit = (e: FormEvent) => {
     e.preventDefault();
-    props.onSearch(props.searchQuery.trim());
+    onFormSubmit(inputValue.trim());
   };
 
   return (
     <form
       className="search-bar flex gap-2"
-      onSubmit={handleSubmit}
+      onSubmit={handleFormSubmit}
       data-testid="search-form"
     >
       <input
         type="text"
-        value={props.searchQuery}
-        onChange={handleChange}
+        value={inputValue}
+        onChange={handleInputChange}
         placeholder="Search for Star Wars people..."
         className="flex-1 rounded border-1 border-zinc-400 px-3 py-2"
         data-testid="search-input"

@@ -9,12 +9,12 @@ export const ApiErrorMessage = (props: Props) => {
       className="flex h-full flex-col items-center justify-center gap-4"
       data-testid="api-error-message"
     >
-      <img src="/images/error.png" alt="Error" className="h-20" />
-      <h2 className="text-xl font-bold text-rose-600">
-        Oops! An Error Occurred.
+      <img src="/images/error-r2d2.webp" alt="Error" className="h-56" />
+      <h2 className="text-xl font-bold text-red-600">
+        Oops! An Error Occurred
       </h2>
-      <p className="font-thin">{errorMessage}</p>
-      <p className="font-thin">Please, try later.</p>
+      <p>{errorMessage}</p>
+      <p>Please, try later</p>
     </div>
   );
 };
