@@ -12,123 +12,71 @@ import type { PersonPreview } from '@/types/person';
 import { RESULTS_PER_PAGE, SEARCH_KEY } from '@/constants/common';
 
 export const Home = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = Number(searchParams.get('page')) || 1;
+
+  const [searchQuery, setSearchQuery] = useLocalStorage(SEARCH_KEY);
+
+  const [params, setParams] = useState<{ searchQuery: string; page: number }>({
+    searchQuery,
+    page: currentPage,
+  });
+
+  const [searchInputValue, setSearchInputValue] = useState<string>(searchQuery);
   const [people, setPeople] = useState<PersonPreview[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [searchInputValue, setSearchInputValue] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [totalPages, setTotalPages] = useState<number>(1);
 
-  // client side pagination for searched results
-  const [searchCurrentPage, setSearchCurrentPage] = useState<number>(1);
-
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [localStorageValue, setLocalStorageValue] = useLocalStorage(SEARCH_KEY);
-
-  const currentPage: number = Number(searchParams.get('page')) || 1;
-
   useEffect(() => {
-    setSearchQuery(localStorageValue);
-    setSearchInputValue(localStorageValue);
+    const loadData = async () => {
+      setLoading(true);
+      setError(null);
 
-    performSearch(localStorageValue);
-  }, []);
+      try {
+        if (params.searchQuery === '') {
+          const { data, totalPages } = await fetchAllPeople(params.page);
+          setPeople(data);
+          setTotalPages(totalPages);
+        } else {
+          const data = await fetchSearchedPeople(params.searchQuery);
+          setTotalPages(Math.ceil(data.length / RESULTS_PER_PAGE));
+          const start = (params.page - 1) * RESULTS_PER_PAGE;
+          const end = start + RESULTS_PER_PAGE;
+          setPeople(data.slice(start, end));
 
-  useEffect(() => {
-    if (searchQuery === '') {
-      setSearchCurrentPage(currentPage);
-      performSearch('');
-    }
-  }, [currentPage]);
-
-  const performSearch = (query: string) => {
-    if (query === '') {
-      loadAllData(currentPage);
-    } else {
-      loadSearchedData(query);
-    }
-  };
-
-  const loadAllData = (currentPage: number) => {
-    setLoading(true);
-    setError(null);
-
-    fetchAllPeople(currentPage)
-      .then(({ data, totalPages }) => {
-        setPeople(data);
-        setTotalPages(totalPages);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(error.message);
-        setLoading(false);
-      });
-  };
-
-  const loadSearchedData = (query: string) => {
-    setLoading(true);
-    setError(null);
-
-    fetchSearchedPeople(query)
-      .then((data) => {
-        setPeople(data);
-        setTotalPages(Math.ceil(data.length / RESULTS_PER_PAGE));
-        setLoading(false);
-
-        if (data.length === 0) {
-          setSearchParams({});
+          if (data.length === 0) {
+            setSearchParams({});
+          }
         }
-      })
-      .catch((error) => {
-        setError(error.message);
+      } catch (err) {
+        setError((err as Error).message);
+      } finally {
         setLoading(false);
-      });
-  };
+      }
+    };
 
-  const handleSearchInputValueChange = (value: string) => {
+    loadData();
+  }, [params]);
+
+  const handleSearchFormSubmit = (value: string) => {
+    setSearchQuery(value);
+    setParams({ searchQuery: value, page: 1 });
     setSearchInputValue(value);
-  };
-
-  const handleSearchFormSubmit = (searchValue: string) => {
-    setSearchQuery(searchValue);
-    setLocalStorageValue(searchValue);
-    setSearchInputValue(searchValue);
-
-    // client side pagination for searched results
     setSearchParams({ page: '1' });
-    setSearchCurrentPage(1);
-
-    performSearch(searchValue);
   };
 
   const handlePageChange = (page: number) => {
+    setParams((prev) => ({ ...prev, page }));
     setSearchParams({ page: String(page) });
-
-    if (searchQuery === '') {
-      loadAllData(page);
-    } else {
-      setSearchCurrentPage(page);
-    }
   };
-
-  // client side pagination for searched results
-  const getPaginatedData = (data: PersonPreview[], page: number) => {
-    const start = (page - 1) * RESULTS_PER_PAGE;
-    const end = start + RESULTS_PER_PAGE;
-    return data.slice(start, end);
-  };
-
-  const displayedPeople =
-    searchQuery === '' ? people : getPaginatedData(people, searchCurrentPage);
 
   return (
     <>
       <SearchBar
         inputValue={searchInputValue}
-        onInputChange={(value: string) => handleSearchInputValueChange(value)}
-        onFormSubmit={(searchValue: string) =>
-          handleSearchFormSubmit(searchValue)
-        }
+        onInputChange={setSearchInputValue}
+        onFormSubmit={handleSearchFormSubmit}
       />
 
       <div className="grow pt-4">
@@ -138,10 +86,10 @@ export const Home = () => {
           <div className="flex h-full flex-col">
             <div className="flex grow flex-row">
               <div className="relative flex flex-1 flex-col">
-                <ResultList people={displayedPeople} loading={loading} />
-                {people?.length > 0 && (
+                <ResultList people={people} loading={loading} />
+                {people.length > 0 && (
                   <Pagination
-                    currentPage={currentPage}
+                    currentPage={params.page}
                     totalPages={totalPages}
                     onPageChange={handlePageChange}
                   />

@@ -27,23 +27,23 @@ export const PersonDetails = () => {
     : undefined;
 
   useEffect(() => {
+    const loadPersonDetails = () => {
+      setLoading(true);
+      setError(null);
+
+      fetchPersonDetails(personId as number)
+        .then((data) => {
+          setPersonDetails(data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          setError(error.message);
+          setLoading(false);
+        });
+    };
+
     loadPersonDetails();
-  }, [params.detailsId]);
-
-  const loadPersonDetails = () => {
-    setLoading(true);
-    setError(null);
-
-    fetchPersonDetails(personId as number)
-      .then((data) => {
-        setPersonDetails(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(error.message);
-        setLoading(false);
-      });
-  };
+  }, [personId]);
 
   const handleDetailsClose = () => {
     navigate(`${ROUTES.HOME}${location.search}`);

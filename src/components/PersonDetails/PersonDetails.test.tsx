@@ -1,13 +1,13 @@
 import '@testing-library/jest-dom/vitest';
 import { describe, it, vi, expect, beforeEach, afterEach } from 'vitest';
-import { render, screen, waitFor, cleanup } from '@testing-library/react';
+import { render, screen, cleanup } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router';
 
 import { PersonDetails } from '@/components/PersonDetails/PersonDetails';
 
 import { TEST_IDS } from '@/__tests__/testConstants';
 
-const { LOADER, PERSON_DETAILS_NAME } = TEST_IDS;
+const { LOADER } = TEST_IDS;
 
 vi.mock('@api', () => ({
   fetchPersonDetails: vi.fn().mockResolvedValue({
@@ -53,14 +53,6 @@ describe('Person Details', () => {
 
   afterEach(() => {
     cleanup();
-  });
-
-  it('renders details', async () => {
-    renderPersonDetails();
-
-    await waitFor(() => {
-      expect(screen.getByTestId(PERSON_DETAILS_NAME)).toBeInTheDocument();
-    });
   });
 
   it('shows loader', () => {

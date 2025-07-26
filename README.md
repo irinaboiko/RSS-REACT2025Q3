@@ -13,7 +13,7 @@ Clone the repository and install the dependencies:
 
 `git clone git@github.com:irinaboiko/RSS-REACT2025Q3.git`
 
-`git checkout unit-testing`
+`git checkout hooks-and-routing`
 
 `npm install`
 

@@ -11,7 +11,7 @@ const EXCLUDED_KEYS = [
   'vehicles',
 ];
 
-export const renderPersonProperties = (properties: PersonProperties) => {
+export const renderPersonProperties = (properties?: PersonProperties) => {
   if (!properties) return null;
 
   return Object.entries(properties)
