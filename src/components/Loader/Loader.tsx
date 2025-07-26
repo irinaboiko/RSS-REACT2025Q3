@@ -1,7 +1,7 @@
 export const Loader = () => {
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-sky-300/10 backdrop-blur-[1px]"
+      className="absolute inset-0 z-50 flex items-center justify-center bg-stone-100 backdrop-blur-[1px]"
       data-testid="loader"
     >
       <div
@@ -10,7 +10,7 @@ export const Loader = () => {
       >
         <svg
           aria-hidden="true"
-          className="h-8 w-8 animate-spin fill-cyan-600 text-gray-200 dark:text-gray-600"
+          className="h-8 w-8 animate-spin fill-yellow-700 text-gray-200 dark:text-gray-600"
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

@@ -1,5 +1,6 @@
 export const ROUTES = {
-  HOME: '/',
+  HOME: '/home',
+  DETAILS: 'details/:detailsId',
   ABOUT: '/about',
   NOT_FOUND: '*',
 };

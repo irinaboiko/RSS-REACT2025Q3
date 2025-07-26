@@ -8,9 +8,7 @@ interface Props {
   loading: boolean;
 }
 
-export const ResultList = (props: Props) => {
-  const { people, loading } = props;
-
+export const ResultList = ({ people, loading }: Props) => {
   return (
     <div className="grow">
       {loading && <Loader />}
@@ -19,8 +17,8 @@ export const ResultList = (props: Props) => {
         <>
           {people.length > 0 ? (
             <>
-              <h2 className="mb-2 text-xl">Search Result</h2>
-              <div className="flex flex-wrap gap-3">
+              <h2 className="text-accent mb-2 text-xl">Search Result</h2>
+              <div className="flex flex-col gap-3">
                 {people.map((person) => (
                   <PersonPreviewCard key={person.uid} person={person} />
                 ))}

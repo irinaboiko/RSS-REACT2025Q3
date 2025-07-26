@@ -38,24 +38,18 @@ vi.mock('@/api', () => ({
   ]),
 }));
 
-vi.mock('@/hooks/useLocalStorage', () => ({
-  useLocalStorage: () => ({
-    getSearchQueryFromLocalStorage: () => '',
-    setSearchQueryToLocalStorage: vi.fn(),
-  }),
-}));
-
-const renderHome = (route: string = '/?page=1') =>
+const renderHome = (route: string = '/home?page=1') =>
   render(
     <MemoryRouter initialEntries={[route]}>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
       </Routes>
     </MemoryRouter>
   );
 
 describe('Home page', () => {
   beforeEach(() => {
+    localStorage.clear();
     vi.clearAllMocks();
   });
 
@@ -69,7 +63,7 @@ describe('Home page', () => {
   });
 
   it('calls fetchAllPeople with current page on mount', async () => {
-    renderHome('/?page=2');
+    renderHome('/home?page=2');
 
     await waitFor(() => {
       expect(fetchAllPeople).toHaveBeenCalledWith(2);
@@ -78,7 +72,7 @@ describe('Home page', () => {
 
   it('renders search result from API', async () => {
     renderHome();
-    expect(await screen.findByText('Luke Skywalker')).toBeInTheDocument();
+    expect(await screen.findByText(/luke skywalker/i)).toBeInTheDocument();
   });
 
   it('submits search and calls fetchSearchedPeople', async () => {
@@ -103,8 +97,8 @@ describe('Home page', () => {
   });
 
   it('renders correct pagination totalPages and currentPage', async () => {
-    renderHome('/?page=3');
-    expect(await screen.findByText('Luke Skywalker')).toBeInTheDocument();
-    expect(screen.getByText('3')).toBeInTheDocument(); // зависит от пагинации
+    renderHome('/home?page=3');
+    expect(await screen.findByText(/luke skywalker/i)).toBeInTheDocument();
+    expect(screen.getByText('3')).toBeInTheDocument();
   });
 });

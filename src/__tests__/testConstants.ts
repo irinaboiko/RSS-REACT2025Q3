@@ -8,6 +8,7 @@ export const TEST_IDS = {
   SEARCH_FORM: 'search-form',
   SEARCH_INPUT: 'search-input',
   SEARCH_BUTTON: 'search-button',
+  PERSON_DETAILS_NAME: 'person-details-name',
 };
 
 export const SEARCH_QUERIES = {

@@ -2,8 +2,9 @@ interface Props {
   errorMessage?: string;
 }
 
-export const ApiErrorMessage = (props: Props) => {
-  const { errorMessage = 'Unknown error occurred' } = props;
+export const ApiErrorMessage = ({
+  errorMessage = 'Unknown error occurred',
+}: Props) => {
   return (
     <div
       className="flex h-full flex-col items-center justify-center gap-4"

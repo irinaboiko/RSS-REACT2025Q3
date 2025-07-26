@@ -5,7 +5,7 @@ import type {
   SearchPeopleResponse,
 } from '@/types/api';
 
-const BASE_URL = 'https://swapi.tech/api/people';
+import { BASE_URL } from '@/constants/common';
 
 export async function fetchAllPeople(
   page: number = 1,

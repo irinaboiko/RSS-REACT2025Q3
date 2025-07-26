@@ -1,13 +1,20 @@
 import '@testing-library/jest-dom/vitest';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  act,
+  renderHook,
+} from '@testing-library/react';
 import { describe, it, expect, afterEach, vi, beforeEach } from 'vitest';
-import { renderHook } from '@testing-library/react';
 
 import { SearchBar } from '@/components/SearchBar';
 
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 
 import { TEST_IDS, SEARCH_QUERIES } from '@/__tests__/testConstants';
+import { SEARCH_KEY } from '@/constants/common';
 
 const { SEARCH_FORM, SEARCH_INPUT, SEARCH_BUTTON } = TEST_IDS;
 const { lukeSearchQuery, lukeSearchQueryWithWhitespaces } = SEARCH_QUERIES;
@@ -72,9 +79,9 @@ describe('SearchBar', () => {
   });
 
   it('shows empty input when no saved term exists', () => {
-    const { result } = renderHook(() => useLocalStorage());
+    const { result } = renderHook(() => useLocalStorage(SEARCH_KEY));
 
-    const value = result.current.getSearchQueryFromLocalStorage();
+    const [value] = result.current;
 
     render(
       <SearchBar
@@ -89,11 +96,13 @@ describe('SearchBar', () => {
   });
 
   it('displays previously saved search term from localStorage on mount', () => {
-    const { result } = renderHook(() => useLocalStorage());
+    const { result } = renderHook(() => useLocalStorage(SEARCH_KEY));
 
-    result.current.setSearchQueryToLocalStorage(lukeSearchQuery);
-    const searchQueryFromLS: string =
-      result.current.getSearchQueryFromLocalStorage();
+    act(() => {
+      const [, setValue] = result.current;
+      setValue(lukeSearchQuery);
+    });
+    const [searchQueryFromLS] = result.current;
 
     render(
       <SearchBar

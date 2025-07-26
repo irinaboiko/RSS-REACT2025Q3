@@ -12,9 +12,10 @@ export const Pagination = ({
   if (totalPages <= 1) return null;
 
   return (
-    <div className="mt-4 flex flex-wrap justify-center gap-3">
+    <div className="my-4 flex flex-wrap justify-center gap-3">
       {[...Array(totalPages)].map((_, index) => {
         const page = index + 1;
+
         return (
           <button
             key={page}

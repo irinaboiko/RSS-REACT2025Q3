@@ -7,8 +7,12 @@
   font-weight: 400;
 }
 
-.person-card {
-  @apply flex flex-col items-start justify-center rounded-md border-1 border-zinc-400 p-2 text-left break-words transition duration-200 hover:text-yellow-700;
+.person-preview-card {
+  @apply flex cursor-pointer flex-col items-start justify-center rounded-md border-1 border-zinc-400 p-2 text-left break-words transition duration-200 hover:border-yellow-700 hover:text-yellow-700;
+}
+
+.person-preview-card-active {
+  @apply border-1 border-yellow-500 bg-yellow-500 text-white;
 }
 
 .text-accent {

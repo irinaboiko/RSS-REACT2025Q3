@@ -1,23 +1,17 @@
-import { useCallback } from 'react';
+import { useEffect, useState } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 
-export const SEARCH_KEY = 'searchQuery';
+export const useLocalStorage = (
+  key: string
+): [string, Dispatch<SetStateAction<string>>] => {
+  const [localStorageValue, setLocalStorageValue] = useState((): string => {
+    const storedValue = localStorage.getItem(key);
+    return storedValue || '';
+  });
 
-export const useLocalStorage = () => {
-  const getSearchQueryFromLocalStorage = useCallback((): string => {
-    return localStorage.getItem(SEARCH_KEY) || '';
-  }, []);
+  useEffect(() => {
+    localStorage.setItem(key, localStorageValue);
+  }, [key, localStorageValue]);
 
-  const setSearchQueryToLocalStorage = useCallback((query: string): void => {
-    localStorage.setItem(SEARCH_KEY, query);
-  }, []);
-
-  const clearSearchQueryFromLocalStorage = useCallback((): void => {
-    localStorage.removeItem(SEARCH_KEY);
-  }, []);
-
-  return {
-    getSearchQueryFromLocalStorage,
-    setSearchQueryToLocalStorage,
-    clearSearchQueryFromLocalStorage,
-  };
+  return [localStorageValue, setLocalStorageValue];
 };

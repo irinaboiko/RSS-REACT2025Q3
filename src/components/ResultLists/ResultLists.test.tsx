@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom/vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import { describe, it, expect, afterEach } from 'vitest';
+import { MemoryRouter } from 'react-router';
 
 import { ResultList } from '@/components/ResultLists';
 
@@ -20,33 +21,49 @@ describe('ResultLists', () => {
   });
 
   it('renders Loader when loading is true', () => {
-    render(<ResultList people={[]} loading={true} />);
+    render(
+      <MemoryRouter>
+        <ResultList people={[]} loading={true} />
+      </MemoryRouter>
+    );
 
     const loader = screen.getByTestId(LOADER);
     expect(loader).toBeInTheDocument();
   });
 
   it('renders correct number of PersonPreviewCards', () => {
-    render(<ResultList people={mockPeople} loading={false} />);
+    render(
+      <MemoryRouter>
+        <ResultList people={mockPeople} loading={false} />{' '}
+      </MemoryRouter>
+    );
 
     const cards = screen.getAllByTestId(PERSON_PREVIEW_CARD);
     expect(cards.length).toBe(2);
   });
 
   it('displays items data correctly', () => {
-    render(<ResultList people={mockPeople} loading={false} />);
+    render(
+      <MemoryRouter>
+        <ResultList people={mockPeople} loading={false} />
+      </MemoryRouter>
+    );
 
     const resultHeader = screen.getByText(/search result/i);
     expect(resultHeader).toBeInTheDocument();
 
     for (const person of mockPeople) {
-      expect(screen.getByText(person.name)).toBeInTheDocument();
-      expect(screen.getByText(person.url)).toBeInTheDocument();
+      const cardText = `${person.uid} - ${person.name}`;
+      expect(screen.getByText(cardText)).toBeInTheDocument();
     }
   });
 
   it('displays "no results" message when data array is empty', () => {
-    render(<ResultList people={[]} loading={false} />);
+    render(
+      <MemoryRouter>
+        <ResultList people={[]} loading={false} />
+      </MemoryRouter>
+    );
 
     const noResultsMessage = screen.getByText(noSearchResults);
     expect(noResultsMessage).toBeInTheDocument();
