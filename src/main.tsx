@@ -1,8 +1,9 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router';
 
-import App from './App.tsx';
-import AppErrorBoundary from './components/error/AppErrorBoundary.tsx';
+import { AppRoutes } from '@/routes/AppRoutes';
+import { AppErrorBoundary } from '@/components/AppErrorBoundary';
 
 import './index.css';
 
@@ -11,8 +12,10 @@ if (!container) throw new Error('Root container not found');
 
 createRoot(container).render(
   <StrictMode>
-    <AppErrorBoundary>
-      <App />
-    </AppErrorBoundary>
+    <BrowserRouter>
+      <AppErrorBoundary>
+        <AppRoutes />
+      </AppErrorBoundary>
+    </BrowserRouter>
   </StrictMode>
 );

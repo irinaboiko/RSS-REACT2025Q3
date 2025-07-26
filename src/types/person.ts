@@ -4,23 +4,23 @@ export interface PersonPreview {
   url: string;
 }
 
-export interface Person {
+export interface PersonProperties {
+  created: string;
+  edited: string;
   name: string;
-  birth_year: string;
-  eye_color: string;
   gender: 'male' | 'female' | 'unknown' | 'n/a';
+  skin_color: string;
   hair_color: string;
   height: string;
+  eye_color: string;
   mass: string;
-  skin_color: string;
   homeworld: string;
+  birth_year: string;
+  url: string;
   films?: string[];
   species?: string[];
   starships?: string[];
   vehicles?: string[];
-  url: string;
-  created: string;
-  edited: string;
 }
 
 export interface FullPerson {
@@ -28,5 +28,5 @@ export interface FullPerson {
   description: string;
   _id: string;
   __v: number;
-  properties: Person;
+  properties: PersonProperties;
 }

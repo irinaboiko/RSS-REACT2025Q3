@@ -1,4 +1,4 @@
-import type { PersonPreview } from '../../types/person.ts';
+import type { FullPerson, PersonPreview } from '@/types/person';
 
 export const lukeSkywalker: PersonPreview = {
   uid: '1',
@@ -58,4 +58,25 @@ export const obiWanKenobi: PersonPreview = {
   uid: '10',
   name: 'Obi-Wan Kenobi',
   url: 'https://www.swapi.tech/api/people/10',
+};
+
+export const lukeSkywalkerDetails: FullPerson = {
+  properties: {
+    created: '2025-07-23T16:37:44.996Z',
+    edited: '2025-07-23T16:37:44.996Z',
+    name: 'Luke Skywalker',
+    gender: 'male',
+    skin_color: 'fair',
+    hair_color: 'blond',
+    height: '172',
+    eye_color: 'blue',
+    mass: '77',
+    homeworld: 'https://www.swapi.tech/api/planets/1',
+    birth_year: '19BBY',
+    url: 'https://www.swapi.tech/api/people/1',
+  },
+  _id: '5f63a36eee9fd7000499be42',
+  description: 'A person within the Star Wars universe',
+  uid: '1',
+  __v: 2,
 };

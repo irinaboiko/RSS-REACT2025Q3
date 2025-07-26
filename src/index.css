@@ -1,23 +1,48 @@
 @import 'tailwindcss';
 
 :root {
+  @apply bg-stone-100 text-gray-800;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 }
 
-.person-card {
-  @apply flex flex-col items-start justify-center rounded-md border-1 border-zinc-400 p-2 text-left break-words transition duration-200 hover:text-cyan-600;
+.person-preview-card {
+  @apply flex cursor-pointer flex-col items-start justify-center rounded-md border-1 border-zinc-400 p-2 text-left break-words transition duration-200 hover:border-yellow-700 hover:text-yellow-700;
+}
+
+.person-preview-card-active {
+  @apply border-1 border-yellow-500 bg-yellow-500 text-white;
+}
+
+.text-accent {
+  @apply font-bold text-yellow-500;
 }
 
 .btn {
   @apply cursor-pointer rounded px-4 py-2 transition;
 }
 
-.btn-cyan {
-  @apply bg-cyan-600 text-white hover:bg-cyan-700;
+.btn-rose {
+  @apply bg-red-700 text-white hover:bg-red-600;
 }
 
-.btn-rose {
-  @apply bg-rose-600 text-white hover:bg-rose-700;
+.btn-gray {
+  @apply bg-gray-800 text-white hover:bg-yellow-500;
+}
+
+.btn-active {
+  @apply bg-yellow-500;
+}
+
+.link {
+  @apply cursor-pointer hover:text-yellow-700;
+}
+
+.link-active {
+  @apply text-yellow-500 underline;
+}
+
+.link-accent {
+  @apply text-yellow-500 underline hover:text-yellow-700;
 }

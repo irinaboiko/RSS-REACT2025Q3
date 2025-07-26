@@ -1,9 +1,5 @@
-import { Component } from 'react';
+export const BrokenComponent = () => {
+  throw new Error('Simulated crash');
 
-export class BrokenComponent extends Component {
-  render() {
-    throw new Error('Simulated crash');
-
-    return <p>Brocken Component</p>;
-  }
-}
+  return <p>Brocken Component</p>;
+};
