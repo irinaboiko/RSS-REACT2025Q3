@@ -43,4 +43,21 @@ describe('AppErrorBoundary', () => {
 
     expect(screen.queryByTestId(APP_FALLBACK)).toBeInTheDocument();
   });
+
+  it('clears localStorage on Refresh button click', () => {
+    const localStorageClearSpy = vi
+      .spyOn(localStorage.__proto__, 'clear')
+      .mockImplementation(() => {});
+
+    render(
+      <AppErrorBoundary>
+        <BrokenComponent />
+      </AppErrorBoundary>
+    );
+
+    const refreshButton = screen.getByRole('button', { name: /refresh page/i });
+    refreshButton.click();
+
+    expect(localStorageClearSpy).toHaveBeenCalled();
+  });
 });

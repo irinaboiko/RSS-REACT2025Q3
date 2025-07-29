@@ -1,7 +1,9 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  @apply bg-stone-100 text-gray-800;
+  @apply bg-stone-50 text-gray-800 dark:bg-stone-700 dark:text-stone-50;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -13,6 +15,14 @@
 
 .person-preview-card-active {
   @apply border-1 border-yellow-500 bg-yellow-500 text-white;
+}
+
+.theme-switcher-button {
+  @apply cursor-pointer rounded-lg bg-stone-50 p-2 text-gray-500 shadow hover:text-black dark:bg-stone-400 dark:text-stone-500 dark:hover:text-white;
+}
+
+.theme-switcher-button-active {
+  @apply bg-white text-black dark:bg-stone-700 dark:text-white;
 }
 
 .text-accent {
@@ -28,7 +38,7 @@
 }
 
 .btn-gray {
-  @apply bg-gray-800 text-white hover:bg-yellow-500;
+  @apply bg-gray-800 text-white hover:bg-yellow-500 dark:bg-stone-300 dark:text-gray-800 dark:hover:text-white;
 }
 
 .btn-active {
