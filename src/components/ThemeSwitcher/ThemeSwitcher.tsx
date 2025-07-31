@@ -45,7 +45,7 @@ export const ThemeSwitcher = () => {
   const { theme, setTheme } = useTheme();
 
   return (
-    <div className="flex items-center gap-1 rounded-xl bg-stone-100 p-1 shadow-inner dark:bg-stone-500">
+    <div className="flex items-center gap-1 rounded-xl bg-stone-200 p-1 shadow-inner dark:bg-stone-500">
       {themeOptions.map(
         ({ value, label }: { value: ThemeOptions; label: string }) => {
           const isActive = theme === value;

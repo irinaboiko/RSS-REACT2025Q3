@@ -8,9 +8,10 @@ import {
 } from '@testing-library/react';
 import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest';
 import { MemoryRouter, Route, Routes } from 'react-router';
+import { Provider } from 'react-redux';
 
 import { Home } from '@/pages/Home';
-
+import { store } from '@/store';
 import { fetchAllPeople, fetchSearchedPeople } from '@/api';
 
 import { TEST_IDS, SEARCH_QUERIES } from '@/__tests__/testConstants';
@@ -40,11 +41,13 @@ vi.mock('@/api', () => ({
 
 const renderHome = (route: string = '/home?page=1') =>
   render(
-    <MemoryRouter initialEntries={[route]}>
-      <Routes>
-        <Route path="/home" element={<Home />} />
-      </Routes>
-    </MemoryRouter>
+    <Provider store={store}>
+      <MemoryRouter initialEntries={[route]}>
+        <Routes>
+          <Route path="/home" element={<Home />} />
+        </Routes>
+      </MemoryRouter>
+    </Provider>
   );
 
 describe('Home page', () => {

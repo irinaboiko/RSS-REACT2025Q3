@@ -1,4 +1,4 @@
-# RSS React App: Routing and Hooks
+# RSS React App: State Management and Context API
 
 ## Getting Started
 
@@ -13,7 +13,7 @@ Clone the repository and install the dependencies:
 
 `git clone git@github.com:irinaboiko/RSS-REACT2025Q3.git`
 
-`git checkout hooks-and-routing`
+`git checkout app-state-management`
 
 `npm install`
 

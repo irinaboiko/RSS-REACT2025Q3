@@ -10,7 +10,7 @@
 }
 
 .person-preview-card {
-  @apply flex cursor-pointer flex-col items-start justify-center rounded-md border-1 border-zinc-400 p-2 text-left break-words transition duration-200 hover:border-yellow-700 hover:text-yellow-700;
+  @apply flex cursor-pointer items-center justify-start gap-2 rounded-md border-1 border-zinc-400 p-2 text-left break-words transition duration-200 hover:border-yellow-700 hover:text-yellow-700;
 }
 
 .person-preview-card-active {
@@ -18,7 +18,7 @@
 }
 
 .theme-switcher-button {
-  @apply cursor-pointer rounded-lg bg-stone-50 p-2 text-gray-500 shadow hover:text-black dark:bg-stone-400 dark:text-stone-500 dark:hover:text-white;
+  @apply cursor-pointer rounded-lg bg-stone-100 p-2 text-gray-400 shadow hover:text-black dark:bg-stone-400 dark:text-stone-500 dark:hover:text-white;
 }
 
 .theme-switcher-button-active {

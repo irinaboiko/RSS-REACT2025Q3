@@ -1,14 +1,15 @@
 import '@testing-library/jest-dom/vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import { describe, it, expect, afterEach } from 'vitest';
+import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 
 import { ResultList } from '@/components/ResultLists';
-
 import type { PersonPreview } from '@/types/person';
 
 import { lukeSkywalker, c3po } from '@/__tests__/mocks/peopleMocks';
 import { TEST_IDS, MESSAGES } from '@/__tests__/testConstants';
+import { createTestStore } from '@/__tests__/utils/createTestStore';
 
 const { LOADER, PERSON_PREVIEW_CARD } = TEST_IDS;
 const { noSearchResults } = MESSAGES;
@@ -20,34 +21,31 @@ describe('ResultLists', () => {
     cleanup();
   });
 
-  it('renders Loader when loading is true', () => {
+  const renderWithStore = (people: PersonPreview[], loading: boolean) =>
     render(
-      <MemoryRouter>
-        <ResultList people={[]} loading={true} />
-      </MemoryRouter>
+      <Provider store={createTestStore()}>
+        <MemoryRouter>
+          <ResultList people={people} loading={loading} />
+        </MemoryRouter>
+      </Provider>
     );
+
+  it('renders Loader when loading is true', () => {
+    renderWithStore([], true);
 
     const loader = screen.getByTestId(LOADER);
     expect(loader).toBeInTheDocument();
   });
 
   it('renders correct number of PersonPreviewCards', () => {
-    render(
-      <MemoryRouter>
-        <ResultList people={mockPeople} loading={false} />{' '}
-      </MemoryRouter>
-    );
+    renderWithStore(mockPeople, false);
 
     const cards = screen.getAllByTestId(PERSON_PREVIEW_CARD);
     expect(cards.length).toBe(2);
   });
 
   it('displays items data correctly', () => {
-    render(
-      <MemoryRouter>
-        <ResultList people={mockPeople} loading={false} />
-      </MemoryRouter>
-    );
+    renderWithStore(mockPeople, false);
 
     const resultHeader = screen.getByText(/search result/i);
     expect(resultHeader).toBeInTheDocument();
@@ -59,11 +57,7 @@ describe('ResultLists', () => {
   });
 
   it('displays "no results" message when data array is empty', () => {
-    render(
-      <MemoryRouter>
-        <ResultList people={[]} loading={false} />
-      </MemoryRouter>
-    );
+    renderWithStore([], false);
 
     const noResultsMessage = screen.getByText(noSearchResults);
     expect(noResultsMessage).toBeInTheDocument();
