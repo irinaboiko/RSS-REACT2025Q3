@@ -1,14 +1,18 @@
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { clearAll } from '@/store/selectedPeopleSlice';
+import type { PersonPreview } from '@/types/person';
+import { downloadCsv } from '@/utils';
 
 export const Flyout = () => {
-  const selectedPeople = useAppSelector((state) => state.selectedPeople.people);
+  const selectedPeople: PersonPreview[] = useAppSelector(
+    (state) => state.selectedPeople.people
+  );
   const dispatch = useAppDispatch();
 
   if (selectedPeople.length === 0) return null;
 
   const handleDownloadClick = () => {
-    console.log(`DOWNLOAD ${selectedPeople.length} selected items`);
+    downloadCsv(selectedPeople);
   };
 
   return (

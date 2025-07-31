@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/vitest';
 import { describe, it, expect, afterEach } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 
-import { renderPersonProperties } from '@/utils/renderPersonProperties';
+import { renderPersonProperties } from '@/utils';
 
 import { lukeSkywalkerDetails } from '@/__tests__/mocks/peopleMocks';
 

@@ -1,15 +1,20 @@
 import '@testing-library/jest-dom/vitest';
 import { screen, fireEvent, cleanup, render } from '@testing-library/react';
-import { describe, it, afterEach, expect } from 'vitest';
+import { describe, it, afterEach, expect, vi } from 'vitest';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 
 import { Flyout } from '@/components/Flyout/Flyout';
 import { selectPerson } from '@/store/selectedPeopleSlice';
 import type { PersonPreview } from '@/types/person';
+import { downloadCsv } from '@/utils';
 
 import { createTestStore } from '@/__tests__/utils/createTestStore';
 import { lukeSkywalker, c3po } from '@/__tests__/mocks/peopleMocks';
+
+vi.mock('@/utils', () => ({
+  downloadCsv: vi.fn(),
+}));
 
 describe('Flyout', () => {
   afterEach(() => cleanup());
@@ -48,12 +53,21 @@ describe('Flyout', () => {
     expect(screen.getByText(/2 items are selected/i)).toBeInTheDocument();
   });
 
-  it('calls dispatch(clearAll) when "Unselect All" is clicked', () => {
+  it('clears selection on Unselect All click', () => {
     const { testStore } = renderWithStore([lukeSkywalker]);
 
     const unselectButton = screen.getByText(/unselect all/i);
     fireEvent.click(unselectButton);
 
     expect(testStore.getState().selectedPeople.people).toEqual([]);
+  });
+
+  it('calls downloadCsv on Download CSV click', () => {
+    renderWithStore([lukeSkywalker, c3po]);
+
+    const downloadButton = screen.getByText(/download csv/i);
+    fireEvent.click(downloadButton);
+
+    expect(downloadCsv).toHaveBeenCalledWith([lukeSkywalker, c3po]);
   });
 });

@@ -6,7 +6,7 @@ import { ApiErrorMessage } from '@/components/ApiErrorMessage';
 
 import { fetchPersonDetails } from '@/api';
 import type { FullPerson } from '@/types/person';
-import { renderPersonProperties } from '@/utils/renderPersonProperties';
+import { renderPersonProperties } from '@/utils';
 
 import { ROUTES } from '@/constants/routes';
 import { TEST_IDS } from '@/__tests__/testConstants';
