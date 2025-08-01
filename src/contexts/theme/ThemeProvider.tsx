@@ -3,21 +3,23 @@ import { type ReactNode, useEffect } from 'react';
 import { ThemeContext } from '@/contexts/theme';
 import { useLocalStorage } from '@/hooks';
 import type { ThemeOptions } from '@/types/theme';
-import { THEME_KEY } from '@/constants/common';
+import { DARK_THEME, LIGHT_THEME, THEME_KEY } from '@/constants/common';
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [storedTheme, setStoredTheme] = useLocalStorage(THEME_KEY);
 
   const theme: ThemeOptions =
-    storedTheme === 'dark' || storedTheme === 'light' ? storedTheme : 'light';
+    storedTheme === DARK_THEME || storedTheme === LIGHT_THEME
+      ? storedTheme
+      : LIGHT_THEME;
 
   useEffect(() => {
     const root = document.documentElement;
 
-    if (theme === 'dark') {
-      root.classList.add('dark');
+    if (theme === DARK_THEME) {
+      root.classList.add(DARK_THEME);
     } else {
-      root.classList.remove('dark');
+      root.classList.remove(DARK_THEME);
     }
 
     if (storedTheme !== theme) {
