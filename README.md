@@ -23,6 +23,10 @@ To start the development server:
 
 `npm run dev`
 
+## State Management
+
+The application uses **Redux (with Redux Toolkit)**. Redux logic (store, slices, etc.) is located in the `src/store` folder.
+
 ## Running Tests
 
 The project uses **Vitest** for testing and **@testing-library/react** for rendering components in tests.
