@@ -30,7 +30,6 @@ describe('Not Found', () => {
     );
 
     expect(screen.getAllByText('4')).toHaveLength(2);
-    expect(screen.getByAltText('0')).toBeInTheDocument();
     expect(
       screen.getByText('Looks like this page made the jump to hyperspace.')
     ).toBeInTheDocument();

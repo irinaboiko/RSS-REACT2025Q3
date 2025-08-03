@@ -6,7 +6,7 @@ import { ApiErrorMessage } from '@/components/ApiErrorMessage';
 
 import { fetchPersonDetails } from '@/api';
 import type { FullPerson } from '@/types/person';
-import { renderPersonProperties } from '@/utils/renderPersonProperties';
+import { renderPersonProperties } from '@/utils';
 
 import { ROUTES } from '@/constants/routes';
 import { TEST_IDS } from '@/__tests__/testConstants';
@@ -64,10 +64,10 @@ export const PersonDetails = () => {
           <button
             onClick={handleDetailsClose}
             aria-label="close"
-            className="link group absolute top-2 right-2 z-60 h-8 w-8 cursor-pointer rounded-full border border-gray-800 transition hover:rotate-90 hover:border-yellow-700"
+            className="link group dark:group absolute top-2 right-2 z-60 h-8 w-8 cursor-pointer rounded-full border border-gray-800 transition hover:rotate-90 hover:border-yellow-700 dark:border-white dark:hover:border-yellow-500"
           >
-            <span className="absolute top-1/2 left-1/2 h-[1px] w-5 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-gray-800 group-hover:bg-yellow-700"></span>
-            <span className="absolute top-1/2 left-1/2 h-[1px] w-5 -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-gray-800 group-hover:bg-yellow-700"></span>
+            <span className="absolute top-1/2 left-1/2 h-[1px] w-5 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-gray-800 group-hover:bg-yellow-700 dark:bg-white dark:group-hover:bg-yellow-500"></span>
+            <span className="absolute top-1/2 left-1/2 h-[1px] w-5 -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-gray-800 group-hover:bg-yellow-700 dark:bg-white dark:group-hover:bg-yellow-500"></span>
           </button>
 
           <h2

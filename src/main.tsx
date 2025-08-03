@@ -1,9 +1,13 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router';
 
-import { AppRoutes } from '@/routes/AppRoutes';
 import { AppErrorBoundary } from '@/components/AppErrorBoundary';
+import { AppRoutes } from '@/routes/AppRoutes';
+
+import { store } from '@/store';
+import { ThemeProvider } from '@/contexts/theme';
 
 import './index.css';
 
@@ -12,10 +16,14 @@ if (!container) throw new Error('Root container not found');
 
 createRoot(container).render(
   <StrictMode>
-    <BrowserRouter>
-      <AppErrorBoundary>
-        <AppRoutes />
-      </AppErrorBoundary>
-    </BrowserRouter>
+    <Provider store={store}>
+      <ThemeProvider>
+        <BrowserRouter>
+          <AppErrorBoundary>
+            <AppRoutes />
+          </AppErrorBoundary>
+        </BrowserRouter>
+      </ThemeProvider>
+    </Provider>
   </StrictMode>
 );

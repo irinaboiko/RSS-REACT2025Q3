@@ -1,5 +1,7 @@
 import { NavLink } from 'react-router';
 
+import { ThemeSwitcher } from '@/components/ThemeSwitcher';
+
 import { ROUTES } from '@/constants/routes';
 
 import { TEST_IDS } from '@/__tests__/testConstants';
@@ -19,7 +21,8 @@ export const Header = () => {
           />
         </NavLink>
       </div>
-      <nav>
+      <nav className="flex items-center gap-4">
+        <ThemeSwitcher />
         <NavLink
           to={ROUTES.ABOUT}
           className={({ isActive }) =>

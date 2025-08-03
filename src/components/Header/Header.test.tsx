@@ -25,8 +25,7 @@ describe('Header', () => {
       </MemoryRouter>
     );
 
-    const logo = screen.getByAltText('Star Wars Logo');
-    expect(logo).toBeInTheDocument();
+    expect(screen.getByAltText('Star Wars Logo')).toBeInTheDocument();
 
     const aboutLink = screen.getByRole('link', { name: /about/i });
     expect(aboutLink).toBeInTheDocument();

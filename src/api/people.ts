@@ -5,11 +5,15 @@ import type {
   SearchPeopleResponse,
 } from '@/types/api';
 
-import { BASE_URL } from '@/constants/common';
+import {
+  BASE_URL,
+  DEFAULT_PAGE_LIMIT_PARAM,
+  DEFAULT_PAGE_NUMBER_PARAM,
+} from '@/constants/common';
 
 export async function fetchAllPeople(
-  page: number = 1,
-  limit: number = 10
+  page: number = DEFAULT_PAGE_NUMBER_PARAM,
+  limit: number = DEFAULT_PAGE_LIMIT_PARAM
 ): Promise<{ data: PersonPreview[]; totalPages: number }> {
   const url = `${BASE_URL}?page=${page}&limit=${limit}`;
   const response = await fetch(url);
