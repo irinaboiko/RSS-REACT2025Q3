@@ -1,23 +1,33 @@
 import '@testing-library/jest-dom/vitest';
 import { screen, fireEvent, cleanup, render } from '@testing-library/react';
-import { describe, it, afterEach, expect, vi } from 'vitest';
+import { describe, it, afterEach, beforeEach, expect, vi } from 'vitest';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 
 import { Flyout } from '@/components/Flyout/Flyout';
 import { selectPerson } from '@/store/selectedPeopleSlice';
 import type { PersonPreview } from '@/types/person';
-import { downloadCsv } from '@/utils';
+import { generateCsvBlob } from '@/utils';
 
 import { createTestStore } from '@/__tests__/utils/createTestStore';
 import { lukeSkywalker, c3po } from '@/__tests__/mocks/peopleMocks';
 
 vi.mock('@/utils', () => ({
-  downloadCsv: vi.fn(),
+  generateCsvBlob: vi.fn(),
 }));
 
+const mockedGenerateCsvBlob = vi.mocked(generateCsvBlob);
+
 describe('Flyout', () => {
-  afterEach(() => cleanup());
+  beforeEach(() => {
+    global.URL.createObjectURL = vi.fn(() => 'blob:mock-url');
+    global.URL.revokeObjectURL = vi.fn();
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+    cleanup();
+  });
 
   const renderWithStore = (selectedPeople: PersonPreview[] = []) => {
     const testStore = createTestStore();
@@ -63,11 +73,19 @@ describe('Flyout', () => {
   });
 
   it('calls downloadCsv on Download CSV click', () => {
+    const mockBlob = new Blob(['csv test content'], { type: 'text/csv' });
+
+    mockedGenerateCsvBlob.mockReturnValue({
+      blob: mockBlob,
+      fileName: 'mock.csv',
+    });
+
     renderWithStore([lukeSkywalker, c3po]);
 
     const downloadButton = screen.getByText(/download csv/i);
     fireEvent.click(downloadButton);
 
-    expect(downloadCsv).toHaveBeenCalledWith([lukeSkywalker, c3po]);
+    expect(mockedGenerateCsvBlob).toHaveBeenCalledWith([lukeSkywalker, c3po]);
+    expect(global.URL.createObjectURL).toHaveBeenCalledWith(mockBlob);
   });
 });

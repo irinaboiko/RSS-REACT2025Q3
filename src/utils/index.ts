@@ -1,2 +1,2 @@
 export * from './renderPersonProperties';
-export * from './downloadCsv';
+export * from './generateCsvBlob';

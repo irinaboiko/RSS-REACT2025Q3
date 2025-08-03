@@ -1,10 +1,8 @@
-import { saveAs } from 'file-saver';
-
 import type { PersonPreview } from '@/types/person';
 
-export const downloadCsv = (people: PersonPreview[]) => {
-  if (!people.length) return;
-
+export const generateCsvBlob = (
+  people: PersonPreview[]
+): { blob: Blob; fileName: string } => {
   const sortedPeople: PersonPreview[] = [...people].sort(
     (a, b) => Number(a.uid) - Number(b.uid)
   );
@@ -21,5 +19,5 @@ export const downloadCsv = (people: PersonPreview[]) => {
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
   const fileName = `STAR_WARS_PEOPLE_${people.length}_item${people.length > 1 ? 's' : ''}.csv`;
 
-  saveAs(blob, fileName);
+  return { blob, fileName };
 };
