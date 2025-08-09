@@ -4,11 +4,14 @@ import * as path from 'path';
 
 export default defineConfig({
   plugins: [react()],
-  test: {
-    environment: 'jsdom',
+  resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },
+  },
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['./src/setupTests.ts'],
     coverage: {
       provider: 'v8',
       include: ['src/**/*.{js,jsx,ts,tsx}'],
@@ -21,6 +24,7 @@ export default defineConfig({
         'src/__tests__/**',
         'src/types/**',
         'src/main.tsx',
+        'src/store/index.ts',
       ],
       thresholds: {
         statements: 80,

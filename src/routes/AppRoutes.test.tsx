@@ -1,54 +1,44 @@
-import '@testing-library/jest-dom/vitest';
-import { cleanup, render, screen } from '@testing-library/react';
-import { describe, it, expect, afterEach } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
 import { MemoryRouter } from 'react-router';
 
 import { AppRoutes } from '@/routes/AppRoutes';
 import { ROUTES } from '@/constants/routes';
+import { createTestStore } from '@/__tests__/utils/createTestStore';
+import { Provider } from 'react-redux';
 
 describe('AppRoutes', () => {
-  afterEach(() => {
-    cleanup();
-  });
+  const renderWithStore = (initialEntries: string[] = ['/']) =>
+    render(
+      <Provider store={createTestStore()}>
+        <MemoryRouter initialEntries={initialEntries}>
+          <AppRoutes />
+        </MemoryRouter>
+      </Provider>
+    );
 
   it('redirects from "/" to "/home"', () => {
-    render(
-      <MemoryRouter initialEntries={['/']}>
-        <AppRoutes />
-      </MemoryRouter>
-    );
+    renderWithStore();
 
     const logo = screen.getByAltText('Star Wars Logo');
     expect(logo).toBeInTheDocument();
   });
 
   it('renders Home page for "/home"', () => {
-    render(
-      <MemoryRouter initialEntries={[ROUTES.HOME]}>
-        <AppRoutes />
-      </MemoryRouter>
-    );
+    renderWithStore([ROUTES.HOME]);
 
     const logo = screen.getByAltText('Star Wars Logo');
     expect(logo).toBeInTheDocument();
   });
 
   it('renders About page for "/about"', () => {
-    render(
-      <MemoryRouter initialEntries={[ROUTES.ABOUT]}>
-        <AppRoutes />
-      </MemoryRouter>
-    );
+    renderWithStore([ROUTES.ABOUT]);
 
     expect(screen.getByText(/about the author/i)).toBeInTheDocument();
   });
 
   it('renders NotFound page for unknown route', () => {
-    render(
-      <MemoryRouter initialEntries={['/random']}>
-        <AppRoutes />
-      </MemoryRouter>
-    );
+    renderWithStore(['/unknown']);
 
     expect(
       screen.getByText('Looks like this page made the jump to hyperspace.')

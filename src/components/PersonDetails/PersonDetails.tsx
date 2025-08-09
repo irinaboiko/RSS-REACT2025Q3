@@ -1,87 +1,101 @@
-import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
+import { skipToken } from '@reduxjs/toolkit/query';
 
 import { Loader } from '@/components/Loader';
 import { ApiErrorMessage } from '@/components/ApiErrorMessage';
 
-import { fetchPersonDetails } from '@/api';
-import type { FullPerson } from '@/types/person';
-import { renderPersonProperties } from '@/utils';
-
+import { useGetPersonByIdQuery } from '@/services';
+import { getErrorMessage, renderPersonProperties } from '@/utils';
 import { ROUTES } from '@/constants/routes';
 import { TEST_IDS } from '@/__tests__/testConstants';
 
 const { PERSON_DETAILS_NAME } = TEST_IDS;
 
 export const PersonDetails = () => {
-  const [personDetails, setPersonDetails] = useState<FullPerson>();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
   const navigate = useNavigate();
   const location = useLocation();
+  const { detailsId } = useParams();
 
-  const params = useParams();
-  const personId = params.detailsId
-    ? parseInt(params.detailsId, 10)
-    : undefined;
+  const { data, isFetching, isLoading, isError, error, refetch } =
+    useGetPersonByIdQuery(detailsId ?? skipToken);
 
-  useEffect(() => {
-    const loadPersonDetails = () => {
-      setLoading(true);
-      setError(null);
-
-      fetchPersonDetails(personId as number)
-        .then((data) => {
-          setPersonDetails(data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          setError(error.message);
-          setLoading(false);
-        });
-    };
-
-    loadPersonDetails();
-  }, [personId]);
+  const handleRefresh = () => {
+    refetch();
+  };
 
   const handleDetailsClose = () => {
     navigate(`${ROUTES.HOME}${location.search}`);
   };
 
-  const personProps = personDetails
-    ? renderPersonProperties(personDetails.properties)
-    : null;
+  const personProps = data ? renderPersonProperties(data.properties) : null;
 
   return (
     <div className="relative ml-4 flex-1 border-l-1 border-zinc-400">
-      {loading && <Loader />}
+      {isFetching && <Loader />}
 
-      {!loading && error && <ApiErrorMessage errorMessage={error} />}
+      {!isLoading && (
+        <div className="px-4 py-2">
+          <div className="flex items-center justify-end gap-3">
+            <button
+              onClick={handleRefresh}
+              aria-label="refresh"
+              className="btn btn-gray"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+                />
+              </svg>
+            </button>
+            <button
+              onClick={handleDetailsClose}
+              aria-label="close"
+              className="btn btn-gray"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18 18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
 
-      {!loading && personDetails && (
-        <div className="relative px-4 py-2">
-          <button
-            onClick={handleDetailsClose}
-            aria-label="close"
-            className="link group dark:group absolute top-2 right-2 z-60 h-8 w-8 cursor-pointer rounded-full border border-gray-800 transition hover:rotate-90 hover:border-yellow-700 dark:border-white dark:hover:border-yellow-500"
-          >
-            <span className="absolute top-1/2 left-1/2 h-[1px] w-5 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-gray-800 group-hover:bg-yellow-700 dark:bg-white dark:group-hover:bg-yellow-500"></span>
-            <span className="absolute top-1/2 left-1/2 h-[1px] w-5 -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-gray-800 group-hover:bg-yellow-700 dark:bg-white dark:group-hover:bg-yellow-500"></span>
-          </button>
+          {isError ? (
+            <ApiErrorMessage errorMessage={getErrorMessage(error)} />
+          ) : (
+            <>
+              <h2
+                className="text-accent text-2xl"
+                data-testid={PERSON_DETAILS_NAME}
+              >
+                {data?.properties?.name}
+              </h2>
 
-          <h2
-            className="text-accent text-2xl"
-            data-testid={PERSON_DETAILS_NAME}
-          >
-            {personDetails?.properties?.name}
-          </h2>
+              {data?.description && (
+                <p className="text-base">{data.description}</p>
+              )}
 
-          {personDetails?.description && (
-            <p className="text-base">{personDetails.description}</p>
+              <div className="mt-3">{personProps}</div>
+            </>
           )}
-
-          <div className="mt-3">{personProps}</div>
         </div>
       )}
     </div>

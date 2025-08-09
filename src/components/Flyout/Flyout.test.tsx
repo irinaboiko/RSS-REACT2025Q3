@@ -1,5 +1,4 @@
-import '@testing-library/jest-dom/vitest';
-import { screen, fireEvent, cleanup, render } from '@testing-library/react';
+import { screen, fireEvent, render } from '@testing-library/react';
 import { describe, it, afterEach, beforeEach, expect, vi } from 'vitest';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
@@ -26,7 +25,6 @@ describe('Flyout', () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
-    cleanup();
   });
 
   const renderWithStore = (selectedPeople: PersonPreview[] = []) => {

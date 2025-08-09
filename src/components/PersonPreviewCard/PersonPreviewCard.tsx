@@ -4,11 +4,11 @@ import { selectPerson, unselectPerson } from '@/store/selectedPeopleSlice';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import type { PersonPreview } from '@/types/person';
 
-interface Props {
+export interface PersonPreviewCardProps {
   person: PersonPreview;
 }
 
-export const PersonPreviewCard = ({ person }: Props) => {
+export const PersonPreviewCard = ({ person }: PersonPreviewCardProps) => {
   const location = useLocation();
 
   const selectedPeople = useAppSelector((state) => state.selectedPeople.people);

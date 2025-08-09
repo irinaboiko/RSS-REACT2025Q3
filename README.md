@@ -1,10 +1,10 @@
-# RSS React App: State Management and Context API
+# RSS React App: API Querying in React
 
 ## Getting Started
 
 Ensure you have the following installed on your machine:
 
-- [**Node.js**](https://nodejs.org/) (v18 or later recommended)
+- [**Node.js**](https://nodejs.org/) (v20 and later)
 - [**npm**](https://www.npmjs.com/)
 
 ## Installation
@@ -13,7 +13,7 @@ Clone the repository and install the dependencies:
 
 `git clone git@github.com:irinaboiko/RSS-REACT2025Q3.git`
 
-`git checkout app-state-management`
+`git checkout api-queries`
 
 `npm install`
 

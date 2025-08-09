@@ -1,14 +1,9 @@
-import '@testing-library/jest-dom/vitest';
-import { cleanup, render, screen } from '@testing-library/react';
-import { describe, it, expect, afterEach } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
 
 import { About } from '@/pages/About';
 
 describe('About page', () => {
-  afterEach(() => {
-    cleanup();
-  });
-
   it('renders heading and author info', () => {
     render(<About />);
 

@@ -1,6 +1,5 @@
-import '@testing-library/jest-dom/vitest';
-import { cleanup, render, screen } from '@testing-library/react';
-import { describe, it, expect, afterEach } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
 
 import { ApiErrorMessage } from '@/components/ApiErrorMessage';
 
@@ -10,10 +9,6 @@ const { API_ERROR_MESSAGE } = TEST_IDS;
 const { error, unknownError } = MESSAGES;
 
 describe('ApiErrorMessage', () => {
-  afterEach(() => {
-    cleanup();
-  });
-
   it('renders api error message component correctly', () => {
     render(<ApiErrorMessage errorMessage={error} />);
 

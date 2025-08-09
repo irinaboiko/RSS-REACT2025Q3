@@ -1,17 +1,12 @@
-import { describe, it, expect, afterEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 
 import { generateCsvBlob } from '@/utils';
 import type { PersonPreview } from '@/types/person';
 import { c3po, lukeSkywalker } from '@/__tests__/mocks/peopleMocks';
-import { cleanup } from '@testing-library/react';
 
 const mockPeople: PersonPreview[] = [lukeSkywalker, c3po];
 
 describe('generateCsvBlob', () => {
-  afterEach(() => {
-    cleanup();
-  });
-
   it('returns correct file name for single item', () => {
     const { fileName, blob } = generateCsvBlob([lukeSkywalker]);
 

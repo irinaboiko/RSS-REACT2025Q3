@@ -30,7 +30,7 @@
 }
 
 .btn {
-  @apply cursor-pointer rounded px-4 py-2 transition;
+  @apply cursor-pointer rounded px-2 py-2 transition;
 }
 
 .btn-rose {

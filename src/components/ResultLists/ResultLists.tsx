@@ -4,12 +4,12 @@ import { Flyout } from '@/components/Flyout';
 
 import type { PersonPreview } from '@/types/person';
 
-interface Props {
+export interface ResultListProps {
   people: PersonPreview[];
   loading: boolean;
 }
 
-export const ResultList = ({ people, loading }: Props) => {
+export const ResultList = ({ people, loading }: ResultListProps) => {
   return (
     <div className="flex grow flex-col">
       {loading && <Loader />}
