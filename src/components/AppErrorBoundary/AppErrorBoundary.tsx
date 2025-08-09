@@ -1,21 +1,24 @@
 import { Component } from 'react';
 import type { ErrorInfo, ReactNode } from 'react';
 
-interface Props {
+export interface AppErrorBoundaryProps {
   children?: ReactNode;
 }
 
-interface State {
+export interface AppErrorBoundaryState {
   hasError: boolean;
 }
 
-export class AppErrorBoundary extends Component<Props, State> {
-  constructor(props: Props) {
+export class AppErrorBoundary extends Component<
+  AppErrorBoundaryProps,
+  AppErrorBoundaryState
+> {
+  constructor(props: AppErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(): State {
+  static getDerivedStateFromError(): AppErrorBoundaryState {
     return { hasError: true };
   }
 

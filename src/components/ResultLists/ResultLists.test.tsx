@@ -1,6 +1,5 @@
-import '@testing-library/jest-dom/vitest';
-import { cleanup, render, screen } from '@testing-library/react';
-import { describe, it, expect, afterEach } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 
@@ -16,10 +15,6 @@ const { noSearchResults } = MESSAGES;
 
 describe('ResultLists', () => {
   const mockPeople: PersonPreview[] = [lukeSkywalker, c3po];
-
-  afterEach(() => {
-    cleanup();
-  });
 
   const renderWithStore = (people: PersonPreview[], loading: boolean) =>
     render(

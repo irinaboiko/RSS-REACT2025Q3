@@ -1,4 +1,4 @@
-interface Props {
+export interface PaginationProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
@@ -8,7 +8,7 @@ export const Pagination = ({
   currentPage,
   totalPages,
   onPageChange,
-}: Props) => {
+}: PaginationProps) => {
   if (totalPages <= 1) return null;
 
   return (

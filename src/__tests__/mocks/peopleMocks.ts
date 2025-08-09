@@ -80,3 +80,16 @@ export const lukeSkywalkerDetails: FullPerson = {
   uid: '1',
   __v: 2,
 };
+
+export const mockPeopleArray: PersonPreview[] = [
+  lukeSkywalker,
+  c3po,
+  r2d2,
+  darthVader,
+  leiaOrgana,
+  owenLars,
+  beruWhitesunLars,
+  r5d4,
+  biggsDarklighter,
+  obiWanKenobi,
+];

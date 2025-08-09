@@ -1,5 +1,4 @@
-import '@testing-library/jest-dom/vitest';
-import { cleanup, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest';
 
 import { AppErrorBoundary } from '@/components/AppErrorBoundary';
@@ -15,11 +14,11 @@ describe('AppErrorBoundary', () => {
     .mockImplementation(() => {});
 
   beforeEach(() => {
+    console.error = vi.fn();
     vi.resetAllMocks();
   });
 
   afterEach(() => {
-    cleanup();
     consoleErrorSpy.mockRestore();
   });
 

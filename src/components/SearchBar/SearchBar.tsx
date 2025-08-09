@@ -1,6 +1,6 @@
 import type { ChangeEvent, FormEvent } from 'react';
 
-interface Props {
+export interface SearchBarProps {
   inputValue: string;
   onInputChange: (query: string) => void;
   onFormSubmit: (query: string) => void;
@@ -10,7 +10,7 @@ export const SearchBar = ({
   inputValue,
   onInputChange,
   onFormSubmit,
-}: Props) => {
+}: SearchBarProps) => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     onInputChange(e.target.value);
   };

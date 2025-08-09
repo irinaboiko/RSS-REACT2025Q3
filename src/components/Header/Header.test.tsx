@@ -1,6 +1,5 @@
-import '@testing-library/jest-dom/vitest';
-import { cleanup, render, screen } from '@testing-library/react';
-import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import * as router from 'react-router';
 import { MemoryRouter } from 'react-router';
@@ -12,10 +11,6 @@ describe('Header', () => {
 
   beforeEach(() => {
     vi.spyOn(router, 'useNavigate').mockImplementation(() => mockedNavigation);
-  });
-
-  afterEach(() => {
-    cleanup();
   });
 
   it('renders header correctly', () => {

@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom/vitest';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';

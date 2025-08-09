@@ -1,13 +1,11 @@
-import '@testing-library/jest-dom/vitest';
 import {
-  cleanup,
   fireEvent,
   render,
   screen,
   act,
   renderHook,
 } from '@testing-library/react';
-import { describe, it, expect, afterEach, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 import { SearchBar } from '@/components/SearchBar';
 
@@ -22,10 +20,6 @@ const { lukeSearchQuery, lukeSearchQueryWithWhitespaces } = SEARCH_QUERIES;
 describe('SearchBar', () => {
   beforeEach(() => {
     localStorage.clear();
-  });
-
-  afterEach(() => {
-    cleanup();
   });
 
   it('renders search input and search button', () => {
