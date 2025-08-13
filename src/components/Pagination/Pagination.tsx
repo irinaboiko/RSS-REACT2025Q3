@@ -4,11 +4,11 @@ export interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-export const Pagination = ({
+export default function Pagination({
   currentPage,
   totalPages,
   onPageChange,
-}: PaginationProps) => {
+}: PaginationProps) {
   if (totalPages <= 1) return null;
 
   return (
@@ -28,4 +28,4 @@ export const Pagination = ({
       })}
     </div>
   );
-};
+}

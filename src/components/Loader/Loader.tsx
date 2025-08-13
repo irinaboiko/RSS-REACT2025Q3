@@ -1,9 +1,6 @@
-export const Loader = () => {
+export default function Loader() {
   return (
-    <div
-      className="absolute inset-0 z-50 flex items-center justify-center bg-stone-50 backdrop-blur-[1px] dark:bg-stone-700"
-      data-testid="loader"
-    >
+    <div className="absolute inset-0 z-50 flex items-center justify-center bg-stone-50 backdrop-blur-[1px] dark:bg-stone-700">
       <div
         role="status"
         className="absolute top-2/4 left-1/2 -translate-x-1/2 -translate-y-1/2"
@@ -27,4 +24,4 @@ export const Loader = () => {
       </div>
     </div>
   );
-};
+}

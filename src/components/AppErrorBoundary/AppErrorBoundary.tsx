@@ -9,7 +9,7 @@ export interface AppErrorBoundaryState {
   hasError: boolean;
 }
 
-export class AppErrorBoundary extends Component<
+export default class AppErrorBoundary extends Component<
   AppErrorBoundaryProps,
   AppErrorBoundaryState
 > {
@@ -37,10 +37,7 @@ export class AppErrorBoundary extends Component<
 
     if (hasError) {
       return (
-        <div
-          className="flex h-screen flex-col items-center justify-center gap-4 p-4"
-          data-testid="app-fallback"
-        >
+        <div className="flex h-screen flex-col items-center justify-center gap-4 p-4">
           <img
             src="/images/error-boundary-bb8.webp"
             alt="Error Illustration"

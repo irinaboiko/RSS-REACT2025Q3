@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { peopleApi } from '@/services';
+import { peopleApi } from '@/services/people';
 import selectedPeopleReducer from '@/store/selectedPeopleSlice';
 
 export const store = configureStore({

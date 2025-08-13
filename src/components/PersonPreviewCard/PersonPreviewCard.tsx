@@ -8,7 +8,7 @@ export interface PersonPreviewCardProps {
   person: PersonPreview;
 }
 
-export const PersonPreviewCard = ({ person }: PersonPreviewCardProps) => {
+export default function PersonPreviewCard({ person }: PersonPreviewCardProps) {
   const location = useLocation();
 
   const selectedPeople = useAppSelector((state) => state.selectedPeople.people);
@@ -29,7 +29,6 @@ export const PersonPreviewCard = ({ person }: PersonPreviewCardProps) => {
   return (
     <NavLink
       to={`details/${person.uid}${location.search}`}
-      data-testid="person-preview-card"
       className={({ isActive }) =>
         `person-preview-card ${isActive && 'person-preview-card-active'}`
       }
@@ -46,4 +45,4 @@ export const PersonPreviewCard = ({ person }: PersonPreviewCardProps) => {
       </p>
     </NavLink>
   );
-};
+}

@@ -5,7 +5,7 @@ import { clearAll } from '@/store/selectedPeopleSlice';
 import type { PersonPreview } from '@/types/person';
 import { generateCsvBlob } from '@/utils';
 
-export const Flyout = () => {
+export default function Flyout() {
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
   const fileNameRef = useRef<string>('');
   const downloadRef = useRef<HTMLAnchorElement>(null);
@@ -68,4 +68,4 @@ export const Flyout = () => {
       </div>
     </div>
   );
-};
+}

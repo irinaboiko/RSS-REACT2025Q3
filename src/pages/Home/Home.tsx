@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import { Outlet, useSearchParams } from 'react-router';
 
-import { SearchBar } from '@/components/SearchBar';
-import { ResultList } from '@/components/ResultLists';
-import { Pagination } from '@/components/Pagination';
-import { ApiErrorMessage } from '@/components/ApiErrorMessage';
+import SearchBar from '@/components/SearchBar/SearchBar';
+import ResultList from '@/components/ResultLists/ResultLists';
+import Pagination from '@/components/Pagination/Pagination';
+import ApiErrorMessage from '@/components/ApiErrorMessage/ApiErrorMessage';
 
-import { useGetAllPeopleQuery, useGetSearchedPeopleQuery } from '@/services';
+import {
+  useGetAllPeopleQuery,
+  useGetSearchedPeopleQuery,
+} from '@/services/people';
 import {
   useLocalStorage,
   usePaginationMeta,
@@ -15,7 +18,7 @@ import {
 import { RESULTS_PER_PAGE, SEARCH_KEY } from '@/constants/common';
 import { getErrorMessage } from '@/utils';
 
-export const Home = () => {
+export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
 
@@ -126,4 +129,4 @@ export const Home = () => {
       </div>
     </>
   );
-};
+}

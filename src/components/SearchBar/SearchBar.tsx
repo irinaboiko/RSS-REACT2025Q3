@@ -6,11 +6,11 @@ export interface SearchBarProps {
   onFormSubmit: (query: string) => void;
 }
 
-export const SearchBar = ({
+export default function SearchBar({
   inputValue,
   onInputChange,
   onFormSubmit,
-}: SearchBarProps) => {
+}: SearchBarProps) {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     onInputChange(e.target.value);
   };
@@ -21,26 +21,17 @@ export const SearchBar = ({
   };
 
   return (
-    <form
-      className="search-bar flex gap-2"
-      onSubmit={handleFormSubmit}
-      data-testid="search-form"
-    >
+    <form className="search-bar flex gap-2" onSubmit={handleFormSubmit}>
       <input
         type="text"
         value={inputValue}
         onChange={handleInputChange}
         placeholder="Search for Star Wars people..."
         className="flex-1 rounded border-1 border-zinc-400 px-3 py-2"
-        data-testid="search-input"
       />
-      <button
-        type="submit"
-        className="btn btn-gray"
-        data-testid="search-button"
-      >
+      <button type="submit" className="btn btn-gray">
         Search
       </button>
     </form>
   );
-};
+}

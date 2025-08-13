@@ -1,5 +1,5 @@
 import { RESULTS_PER_PAGE } from '@/constants/common';
-import type { PersonPreview } from '@/types/person';
+import { PersonPreview } from '@/types/person';
 
 export interface UsePaginationMetaProps {
   isSearching: boolean;

@@ -1,17 +1,14 @@
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { skipToken } from '@reduxjs/toolkit/query';
 
-import { Loader } from '@/components/Loader';
-import { ApiErrorMessage } from '@/components/ApiErrorMessage';
+import Loader from '@/components/Loader/Loader';
+import ApiErrorMessage from '@/components/ApiErrorMessage/ApiErrorMessage';
 
-import { useGetPersonByIdQuery } from '@/services';
+import { useGetPersonByIdQuery } from '@/services/people';
 import { getErrorMessage, renderPersonProperties } from '@/utils';
 import { ROUTES } from '@/constants/routes';
-import { TEST_IDS } from '@/__tests__/testConstants';
 
-const { PERSON_DETAILS_NAME } = TEST_IDS;
-
-export const PersonDetails = () => {
+export default function PersonDetails() {
   const navigate = useNavigate();
   const location = useLocation();
   const { detailsId } = useParams();
@@ -82,12 +79,7 @@ export const PersonDetails = () => {
             <ApiErrorMessage errorMessage={getErrorMessage(error)} />
           ) : (
             <>
-              <h2
-                className="text-accent text-2xl"
-                data-testid={PERSON_DETAILS_NAME}
-              >
-                {data?.properties?.name}
-              </h2>
+              <h2 className="text-accent text-2xl">{data?.properties?.name}</h2>
 
               {data?.description && (
                 <p className="text-base">{data.description}</p>
@@ -100,4 +92,4 @@ export const PersonDetails = () => {
       )}
     </div>
   );
-};
+}

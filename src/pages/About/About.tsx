@@ -1,4 +1,4 @@
-export const About = () => {
+export default function About() {
   return (
     <div className="mx-auto w-full px-4 py-8">
       <h1 className="mb-4 text-3xl font-bold">About the Author</h1>
@@ -57,4 +57,4 @@ export const About = () => {
       </div>
     </div>
   );
-};
+}

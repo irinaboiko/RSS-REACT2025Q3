@@ -1,4 +1,4 @@
-import type { FullPerson, PersonPreview } from './person.ts';
+import type { FullPerson, PersonPreview } from '@/types/person';
 
 export interface DefaultPeopleResponse {
   message: string;

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import type { FullPerson, PersonPreview } from '@/types/person';
+import { FullPerson, PersonPreview } from '@/types/person';
 import type {
   DefaultPeopleResponse,
   PersonDetailsResponse,

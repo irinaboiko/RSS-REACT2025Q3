@@ -41,7 +41,7 @@ const themeOptions: { value: ThemeOptions; label: string }[] = [
   { value: 'dark', label: 'Dark' },
 ];
 
-export const ThemeSwitcher = () => {
+export default function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
 
   return (
@@ -65,4 +65,4 @@ export const ThemeSwitcher = () => {
       )}
     </div>
   );
-};
+}

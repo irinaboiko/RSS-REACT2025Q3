@@ -1,6 +1,6 @@
-import { Loader } from '@/components/Loader';
-import { PersonPreviewCard } from '@/components/PersonPreviewCard';
-import { Flyout } from '@/components/Flyout';
+import Loader from '@/components/Loader/Loader';
+import PersonPreviewCard from '@/components/PersonPreviewCard/PersonPreviewCard';
+import Flyout from '@/components/Flyout/Flyout';
 
 import type { PersonPreview } from '@/types/person';
 
@@ -9,7 +9,7 @@ export interface ResultListProps {
   loading: boolean;
 }
 
-export const ResultList = ({ people, loading }: ResultListProps) => {
+export default function ResultList({ people, loading }: ResultListProps) {
   return (
     <div className="flex grow flex-col">
       {loading && <Loader />}
@@ -37,4 +37,4 @@ export const ResultList = ({ people, loading }: ResultListProps) => {
       )}
     </div>
   );
-};
+}

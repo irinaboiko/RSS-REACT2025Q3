@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router';
 
 import { ROUTES } from '@/constants/routes';
 
-export const NotFound = () => {
+export default function NotFound() {
   const navigate = useNavigate();
 
   const handleGoHome = () => {
@@ -62,4 +62,4 @@ export const NotFound = () => {
       </button>
     </div>
   );
-};
+}

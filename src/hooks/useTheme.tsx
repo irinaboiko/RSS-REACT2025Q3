@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { ThemeContext } from '@/contexts/theme';
+import { ThemeContext } from '@/contexts/theme/ThemeContext';
 import type { ThemeContextType } from '@/types/theme';
 import { LIGHT_THEME } from '@/constants/common';
 

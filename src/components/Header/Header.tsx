@@ -1,17 +1,12 @@
 import { NavLink } from 'react-router';
 
-import { ThemeSwitcher } from '@/components/ThemeSwitcher';
+import ThemeSwitcher from '@/components/ThemeSwitcher/ThemeSwitcher';
 
 import { ROUTES } from '@/constants/routes';
 
-import { TEST_IDS } from '@/__tests__/testConstants';
-
-export const Header = () => {
+export default function Header() {
   return (
-    <header
-      className="mb-8 flex items-center justify-between py-1"
-      data-testid={TEST_IDS.HEADER}
-    >
+    <header className="mb-8 flex items-center justify-between py-1">
       <div>
         <NavLink to={ROUTES.HOME}>
           <img
@@ -34,4 +29,4 @@ export const Header = () => {
       </nav>
     </header>
   );
-};
+}
