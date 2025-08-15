@@ -2,8 +2,10 @@ import { Metadata } from 'next';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 
-import { routing } from '@/i18n/routing';
 import Header from '@/components/Header/Header';
+
+import { routing } from '@/i18n/routing';
+import { ThemeProvider } from '@/contexts/theme/ThemeProvider';
 
 import './globals.css';
 
@@ -15,7 +17,6 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
   params,
-  // details,
 }: {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
@@ -29,11 +30,13 @@ export default async function RootLayout({
     <html lang={locale}>
       <body>
         <div id="root">
-          <NextIntlClientProvider>
-            <Header />
+          <ThemeProvider>
+            <NextIntlClientProvider>
+              <Header />
 
-            <main>{children}</main>
-          </NextIntlClientProvider>
+              <main>{children}</main>
+            </NextIntlClientProvider>
+          </ThemeProvider>
         </div>
       </body>
     </html>

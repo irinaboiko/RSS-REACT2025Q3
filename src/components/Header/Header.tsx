@@ -6,7 +6,7 @@ import { Link, usePathname } from '@/i18n/navigation';
 import LanguageSwitcher from '@/components/LanguageSwitcher/LanguageSwitcher';
 import { useTranslations } from 'next-intl';
 
-// import ThemeSwitcher from '@/components/ThemeSwitcher/ThemeSwitcher';
+import ThemeSwitcher from '@/components/ThemeSwitcher/ThemeSwitcher';
 
 export default function Header() {
   const pathname = usePathname();
@@ -25,6 +25,7 @@ export default function Header() {
       </div>
       <nav className="flex items-center gap-4">
         <LanguageSwitcher />
+        <ThemeSwitcher />
 
         <Link
           href="/about"

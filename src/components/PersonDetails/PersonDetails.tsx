@@ -1,7 +1,6 @@
 // import { useLocation, useNavigate, useParams } from 'react-router';
 // import { skipToken } from '@reduxjs/toolkit/query';
 
-import Loader from '@/components/Loader/Loader';
 import ApiErrorMessage from '@/components/ApiErrorMessage/ApiErrorMessage';
 
 // import { useGetPersonByIdQuery } from '@/services/people';
@@ -50,8 +49,6 @@ export default function PersonDetails() {
 
   return (
     <div className="relative ml-4 flex-1 border-l-1 border-zinc-400">
-      {/*{isFetching && <Loader />}*/}
-
       {/*{!isLoading && (*/}
       <div className="px-4 py-2">
         {/*<div className="flex items-center justify-end gap-3">*/}

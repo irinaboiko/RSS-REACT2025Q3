@@ -1,5 +1,8 @@
+'use client';
+
 import type { ThemeOptions } from '@/types/theme';
 import { useTheme } from '@/hooks';
+import { useEffect, useState } from 'react';
 
 const icons: Record<ThemeOptions, React.ReactElement> = {
   light: (
@@ -42,9 +45,14 @@ const themeOptions: { value: ThemeOptions; label: string }[] = [
 ];
 
 export default function ThemeSwitcher() {
+  const [isClient, setIsClient] = useState(false);
   const { theme, setTheme } = useTheme();
 
-  return (
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  return isClient ? (
     <div className="flex items-center gap-1 rounded-xl bg-stone-200 p-1 shadow-inner dark:bg-stone-500">
       {themeOptions.map(
         ({ value, label }: { value: ThemeOptions; label: string }) => {
@@ -64,5 +72,5 @@ export default function ThemeSwitcher() {
         }
       )}
     </div>
-  );
+  ) : null;
 }
