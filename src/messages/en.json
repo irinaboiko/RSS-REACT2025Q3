@@ -12,5 +12,9 @@
   },
   "links": {
     "about": "About"
+  },
+  "notFound": {
+    "subheading": "Looks like this page made the jump to hyperspace.",
+    "goHomeLink": "Go Home"
   }
 }

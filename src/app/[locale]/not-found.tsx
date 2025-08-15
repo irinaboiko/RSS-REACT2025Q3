@@ -1,13 +1,8 @@
-import { useNavigate } from 'react-router';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 
-import { ROUTES } from '@/constants/routes';
-
-export default function NotFound() {
-  const navigate = useNavigate();
-
-  const handleGoHome = () => {
-    navigate(ROUTES.HOME);
-  };
+export default function NotFoundPage() {
+  const t = useTranslations('notFound');
 
   return (
     <div className="flex h-screen flex-col items-center justify-center gap-8 dark:text-stone-300">
@@ -54,12 +49,10 @@ export default function NotFound() {
         </svg>
         <span className="text-9xl">4</span>
       </div>
-      <p className="text-2xl">
-        Looks like this page made the jump to hyperspace.
-      </p>
-      <button onClick={handleGoHome} className="btn btn-gray">
-        Go Home
-      </button>
+      <p className="text-2xl">{t('subheading')}</p>
+      <Link href="/" className="btn btn-gray">
+        {t('goHomeLink')}
+      </Link>
     </div>
   );
 }
