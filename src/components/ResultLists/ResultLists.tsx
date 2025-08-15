@@ -1,40 +1,35 @@
-import Loader from '@/components/Loader/Loader';
 import PersonPreviewCard from '@/components/PersonPreviewCard/PersonPreviewCard';
-import Flyout from '@/components/Flyout/Flyout';
+// import Flyout from '@/components/Flyout/Flyout';
 
 import type { PersonPreview } from '@/types/person';
+import { useTranslations } from 'next-intl';
 
 export interface ResultListProps {
   people: PersonPreview[];
-  loading: boolean;
 }
 
-export default function ResultList({ people, loading }: ResultListProps) {
+export default function ResultList({ people }: ResultListProps) {
+  const t = useTranslations('results');
+
   return (
     <div className="flex grow flex-col">
-      {loading && <Loader />}
+      <>
+        {people.length > 0 ? (
+          <>
+            <h2 className="text-accent mb-2 text-2xl">{t('heading')}</h2>
 
-      {!loading && (
-        <>
-          {people.length > 0 ? (
-            <>
-              <h2 className="text-accent mb-2 text-2xl">Search Result</h2>
+            <div className="flex grow flex-col gap-3">
+              {people.map((person) => (
+                <PersonPreviewCard key={person.uid} person={person} />
+              ))}
+            </div>
 
-              <div className="flex grow flex-col gap-3">
-                {people.map((person) => (
-                  <PersonPreviewCard key={person.uid} person={person} />
-                ))}
-              </div>
-
-              <Flyout />
-            </>
-          ) : (
-            <p className="text-xl">
-              No results found. Please try a different search.
-            </p>
-          )}
-        </>
-      )}
+            {/*<Flyout />*/}
+          </>
+        ) : (
+          <p className="text-xl">{t('noFoundMessage')}</p>
+        )}
+      </>
     </div>
   );
 }

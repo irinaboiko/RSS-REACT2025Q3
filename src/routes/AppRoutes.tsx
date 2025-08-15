@@ -3,7 +3,6 @@ import { Navigate, Route, Routes } from 'react-router';
 import { MainLayout } from '@/layouts/MainLayout/MainLayout';
 import Home from '@/pages/Home/Home';
 import PersonDetails from '@/components/PersonDetails/PersonDetails';
-import About from '@/pages/About/About';
 import NotFound from '@/pages/NotFound/404';
 
 import { ROUTES } from '@/constants/routes';
@@ -17,8 +16,6 @@ export default function AppRoutes() {
         <Route path={ROUTES.HOME} element={<Home />}>
           <Route path={ROUTES.DETAILS} element={<PersonDetails />} />
         </Route>
-
-        <Route path={ROUTES.ABOUT} element={<About />} />
       </Route>
 
       <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />

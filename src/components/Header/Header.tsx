@@ -1,31 +1,39 @@
-import { NavLink } from 'react-router';
+'use client';
 
-import ThemeSwitcher from '@/components/ThemeSwitcher/ThemeSwitcher';
+import clsx from 'clsx';
 
-import { ROUTES } from '@/constants/routes';
+import { Link, usePathname } from '@/i18n/navigation';
+import LanguageSwitcher from '@/components/LanguageSwitcher/LanguageSwitcher';
+import { useTranslations } from 'next-intl';
+
+// import ThemeSwitcher from '@/components/ThemeSwitcher/ThemeSwitcher';
 
 export default function Header() {
+  const pathname = usePathname();
+  const t = useTranslations('links');
+
   return (
     <header className="mb-8 flex items-center justify-between py-1">
       <div>
-        <NavLink to={ROUTES.HOME}>
+        <Link href="/">
           <img
             src="/images/header-star-wars-logo.webp"
             alt="Star Wars Logo"
             className="h-10"
           />
-        </NavLink>
+        </Link>
       </div>
       <nav className="flex items-center gap-4">
-        <ThemeSwitcher />
-        <NavLink
-          to={ROUTES.ABOUT}
-          className={({ isActive }) =>
-            `link text-xl ${isActive && 'link-active'}`
-          }
+        <LanguageSwitcher />
+
+        <Link
+          href="/about"
+          className={clsx('link text-xl', {
+            'link-active': pathname === '/about',
+          })}
         >
-          About
-        </NavLink>
+          {t('about')}
+        </Link>
       </nav>
     </header>
   );

@@ -13,6 +13,24 @@ import {
   DEFAULT_PAGE_NUMBER_PARAM,
 } from '@/constants/common';
 
+export async function fetchAllPeople(
+  page: number = DEFAULT_PAGE_NUMBER_PARAM,
+  limit: number = DEFAULT_PAGE_LIMIT_PARAM
+): Promise<{ people: PersonPreview[]; totalPages: number }> {
+  const url = `${BASE_URL}?page=${page}&limit=${limit}`;
+  const response = await fetch(url, {
+    next: { revalidate: 60 },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Api error ${response.status}: ${response.statusText}`);
+  }
+
+  const data: DefaultPeopleResponse = await response.json();
+
+  return { people: data.results, totalPages: data.total_pages || 1 };
+}
+
 export const peopleApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (build) => ({
