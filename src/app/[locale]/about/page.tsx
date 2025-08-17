@@ -1,4 +1,5 @@
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 
 export default function About() {
   const t = useTranslations('about');
@@ -65,7 +66,12 @@ export default function About() {
       </div>
 
       <div className="fixed right-1 bottom-2">
-        <img src="/images/about-baby-yoda.webp" alt="Baby Yoda" />
+        <Image
+          src="/images/about-baby-yoda.webp"
+          alt="Baby Yoda"
+          width={577}
+          height={433}
+        />
       </div>
     </div>
   );

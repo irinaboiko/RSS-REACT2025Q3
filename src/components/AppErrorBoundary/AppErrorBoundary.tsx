@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import type { ErrorInfo, ReactNode } from 'react';
+import Image from 'next/image';
 
 export interface AppErrorBoundaryProps {
   children?: ReactNode;
@@ -38,9 +39,11 @@ export default class AppErrorBoundary extends Component<
     if (hasError) {
       return (
         <div className="flex h-screen flex-col items-center justify-center gap-4 p-4">
-          <img
+          <Image
             src="/images/error-boundary-bb8.webp"
             alt="Error Illustration"
+            width={321}
+            height={500}
             className="h-48"
           />
           <h2 className="mb-2 text-3xl font-bold text-red-600">

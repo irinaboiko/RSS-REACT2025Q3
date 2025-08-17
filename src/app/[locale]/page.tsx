@@ -1,4 +1,4 @@
-import ResultList from '@/components/ResultLists/ResultLists';
+import ResultList from '@/components/ResultList/ResultList';
 import { fetchAllPeople } from '@/services/people';
 
 export default async function ListPage({
@@ -9,5 +9,9 @@ export default async function ListPage({
   const page = Number(searchParams.page || 1);
   const data = await fetchAllPeople(page);
 
-  return <ResultList people={data.people}></ResultList>;
+  return (
+    <>
+      <ResultList people={data.people}></ResultList>
+    </>
+  );
 }

@@ -1,5 +1,5 @@
 import PersonPreviewCard from '@/components/PersonPreviewCard/PersonPreviewCard';
-// import Flyout from '@/components/Flyout/Flyout';
+import Flyout from '@/components/Flyout/Flyout';
 
 import type { PersonPreview } from '@/types/person';
 import { useTranslations } from 'next-intl';
@@ -24,7 +24,7 @@ export default function ResultList({ people }: ResultListProps) {
               ))}
             </div>
 
-            {/*<Flyout />*/}
+            <Flyout />
           </>
         ) : (
           <p className="text-xl">{t('noFoundMessage')}</p>

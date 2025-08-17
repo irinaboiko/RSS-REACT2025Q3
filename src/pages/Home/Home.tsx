@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Outlet, useSearchParams } from 'react-router';
 
 import SearchBar from '@/components/SearchBar/SearchBar';
-import ResultList from '@/components/ResultLists/ResultLists';
+import ResultList from '@/components/ResultList/ResultList';
 import Pagination from '@/components/Pagination/Pagination';
 import ApiErrorMessage from '@/components/ApiErrorMessage/ApiErrorMessage';
 
@@ -111,7 +111,7 @@ export default function Home() {
                 <ApiErrorMessage errorMessage={getErrorMessage(error)} />
               ) : (
                 <>
-                  <ResultList people={people} loading={isLoading} />
+                  <ResultList people={people} />
                   {people.length > 0 && (
                     <Pagination
                       currentPage={currentPage}

@@ -1,23 +1,25 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 import clsx from 'clsx';
 
-import { Link, usePathname } from '@/i18n/navigation';
-import LanguageSwitcher from '@/components/LanguageSwitcher/LanguageSwitcher';
-import { useTranslations } from 'next-intl';
-
 import ThemeSwitcher from '@/components/ThemeSwitcher/ThemeSwitcher';
+import LanguageSwitcher from '@/components/LanguageSwitcher/LanguageSwitcher';
+import { Link, usePathname } from '@/i18n/navigation';
 
 export default function Header() {
   const pathname = usePathname();
   const t = useTranslations('links');
 
   return (
-    <header className="mb-8 flex items-center justify-between py-1">
+    <header className="mb-8 flex h-12 items-center justify-between py-1">
       <div>
         <Link href="/">
-          <img
+          <Image
             src="/images/header-star-wars-logo.webp"
+            width={93}
+            height={40}
             alt="Star Wars Logo"
             className="h-10"
           />

@@ -6,6 +6,7 @@ import Header from '@/components/Header/Header';
 
 import { routing } from '@/i18n/routing';
 import { ThemeProvider } from '@/contexts/theme/ThemeProvider';
+import Providers from '@/store/Providers';
 
 import './globals.css';
 
@@ -29,14 +30,16 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body>
-        <div id="root">
-          <ThemeProvider>
-            <NextIntlClientProvider>
-              <Header />
+        <div id="root" className="px-5 py-4">
+          <Providers>
+            <ThemeProvider>
+              <NextIntlClientProvider>
+                <Header />
 
-              <main>{children}</main>
-            </NextIntlClientProvider>
-          </ThemeProvider>
+                <main>{children}</main>
+              </NextIntlClientProvider>
+            </ThemeProvider>
+          </Providers>
         </div>
       </body>
     </html>
