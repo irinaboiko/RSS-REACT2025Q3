@@ -16,5 +16,9 @@
   "notFound": {
     "subheading": "Looks like this page made the jump to hyperspace.",
     "goHomeLink": "Go Home"
+  },
+  "error": {
+    "heading": "Oh, no! Our shields are down.",
+    "retry": "Try Again"
   }
 }

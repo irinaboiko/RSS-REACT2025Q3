@@ -23,6 +23,7 @@ export default async function RootLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
@@ -30,13 +31,13 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body>
-        <div id="root" className="px-5 py-4">
+        <div id="root" className="flex h-screen flex-col px-5 py-4">
           <Providers>
             <ThemeProvider>
               <NextIntlClientProvider>
                 <Header />
 
-                <main>{children}</main>
+                <main className="flex h-full grow flex-col">{children}</main>
               </NextIntlClientProvider>
             </ThemeProvider>
           </Providers>

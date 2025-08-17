@@ -17,7 +17,7 @@ export async function fetchAllPeople(
 ): Promise<{ people: PersonPreview[]; totalPages: number }> {
   const url = `${BASE_URL}?page=${page}&limit=${limit}`;
   const response = await fetch(url, {
-    next: { revalidate: 60 },
+    next: { revalidate: 60, tags: ['people', `people:${page}`] },
   });
 
   if (!response.ok) {

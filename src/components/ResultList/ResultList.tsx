@@ -1,8 +1,9 @@
+import { useTranslations } from 'next-intl';
+
 import PersonPreviewCard from '@/components/PersonPreviewCard/PersonPreviewCard';
 import Flyout from '@/components/Flyout/Flyout';
 
 import type { PersonPreview } from '@/types/person';
-import { useTranslations } from 'next-intl';
 
 export interface ResultListProps {
   people: PersonPreview[];

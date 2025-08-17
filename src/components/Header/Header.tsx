@@ -22,6 +22,7 @@ export default function Header() {
             height={40}
             alt="Star Wars Logo"
             className="h-10"
+            priority
           />
         </Link>
       </div>

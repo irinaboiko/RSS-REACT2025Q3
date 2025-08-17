@@ -32,7 +32,7 @@ export default function Flyout() {
   if (selectedPeople.length === 0) return null;
 
   const handleDownloadClick = async () => {
-    const res = await fetch('/api/selected-csv', {
+    const res = await fetch('/api/selectedCsv', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ selectedPeople }),

@@ -1,17 +1,30 @@
+import { Suspense } from 'react';
+import Loading from '@/app/[locale]/loading';
+
 import ResultList from '@/components/ResultList/ResultList';
+import Pagination from '@/components/Pagination/Pagination';
+
 import { fetchAllPeople } from '@/services/people';
 
 export default async function ListPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const page = Number(searchParams.page || 1);
-  const data = await fetchAllPeople(page);
+  const sp = await searchParams;
+  const currentPage = Number(sp.page ?? 1);
+  const { people, totalPages } = await fetchAllPeople(currentPage);
 
   return (
     <>
-      <ResultList people={data.people}></ResultList>
+      <Suspense fallback={<Loading />}>
+        <ResultList people={people}></ResultList>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          searchParams={sp}
+        />
+      </Suspense>
     </>
   );
 }

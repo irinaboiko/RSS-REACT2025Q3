@@ -14,8 +14,6 @@ export interface SearchPeopleResponse {
   result: FullPerson[];
 }
 
-export type PeopleResponse = DefaultPeopleResponse;
-
 export interface PersonDetailsResponse {
   message: string;
   result: FullPerson;
