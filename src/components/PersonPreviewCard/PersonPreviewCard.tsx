@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from 'react-router';
+'use client';
 
 import { selectPerson, unselectPerson } from '@/store/selectedPeopleSlice';
 import { useAppDispatch, useAppSelector } from '@/hooks';
@@ -8,9 +8,7 @@ export interface PersonPreviewCardProps {
   person: PersonPreview;
 }
 
-export const PersonPreviewCard = ({ person }: PersonPreviewCardProps) => {
-  const location = useLocation();
-
+export default function PersonPreviewCard({ person }: PersonPreviewCardProps) {
   const selectedPeople = useAppSelector((state) => state.selectedPeople.people);
   const dispatch = useAppDispatch();
 
@@ -18,7 +16,7 @@ export const PersonPreviewCard = ({ person }: PersonPreviewCardProps) => {
     (p: PersonPreview): boolean => p.uid === person.uid
   );
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSelectionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
       dispatch(selectPerson(person));
     } else {
@@ -27,23 +25,17 @@ export const PersonPreviewCard = ({ person }: PersonPreviewCardProps) => {
   };
 
   return (
-    <NavLink
-      to={`details/${person.uid}${location.search}`}
-      data-testid="person-preview-card"
-      className={({ isActive }) =>
-        `person-preview-card ${isActive && 'person-preview-card-active'}`
-      }
-    >
+    <div className={'person-preview-card'}>
       <input
         type="checkbox"
         className="h-4 w-4 rounded border-zinc-400"
         checked={isSelected}
-        onChange={handleChange}
+        onChange={handleSelectionChange}
         onClick={(e) => e.stopPropagation()}
       />
       <p>
         {person.uid} - {person.name}
       </p>
-    </NavLink>
+    </div>
   );
-};
+}

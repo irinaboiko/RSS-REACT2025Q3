@@ -1,8 +1,10 @@
+'use client';
+
 import { type ReactNode, useEffect } from 'react';
 
-import { ThemeContext } from '@/contexts/theme';
+import { ThemeContext } from '@/contexts/theme/ThemeContext';
 import { useLocalStorage } from '@/hooks';
-import type { ThemeOptions } from '@/types/theme';
+import { ThemeOptions } from '@/types/theme';
 import { DARK_THEME, LIGHT_THEME, THEME_KEY } from '@/constants/common';
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {

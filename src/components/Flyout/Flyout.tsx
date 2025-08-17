@@ -1,11 +1,12 @@
+'use client';
+
 import { useEffect, useRef, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { clearAll } from '@/store/selectedPeopleSlice';
 import type { PersonPreview } from '@/types/person';
-import { generateCsvBlob } from '@/utils';
 
-export const Flyout = () => {
+export default function Flyout() {
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
   const fileNameRef = useRef<string>('');
   const downloadRef = useRef<HTMLAnchorElement>(null);
@@ -30,9 +31,16 @@ export const Flyout = () => {
 
   if (selectedPeople.length === 0) return null;
 
-  const handleDownloadClick = () => {
-    const { blob, fileName } = generateCsvBlob(selectedPeople);
-    fileNameRef.current = fileName;
+  const handleDownloadClick = async () => {
+    const res = await fetch('/api/selectedCsv', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ selectedPeople }),
+    });
+
+    const blob = await res.blob();
+
+    fileNameRef.current = `STAR_WARS_PEOPLE_${selectedPeople.length}_item${selectedPeople.length > 1 ? 's' : ''}.csv`;
 
     const url = URL.createObjectURL(blob);
 
@@ -50,11 +58,7 @@ export const Flyout = () => {
         <button className="btn btn-gray" onClick={() => dispatch(clearAll())}>
           Unselect All
         </button>
-        <button
-          className="btn btn-gray"
-          onClick={handleDownloadClick}
-          disabled={!selectedPeople.length}
-        >
+        <button className="btn btn-gray" onClick={handleDownloadClick}>
           Download CSV
         </button>
         <a
@@ -68,4 +72,4 @@ export const Flyout = () => {
       </div>
     </div>
   );
-};
+}

@@ -1,0 +1,24 @@
+{
+  "about": {
+    "title": "About the Author",
+    "intro": "Hi there! My name is <accent>Iryna Baiko</accent>.",
+    "roleLocation": "I'm a <accent>frontend developer</accent> based in <accent>Minsk, Belarus</accent>.",
+    "course": "This app was built as part of the <link>RS School React Course</link>.",
+    "contact": "Feel free to contact me via <gh>GitHub</gh> or <dc>Discord</dc>!"
+  },
+  "results": {
+    "heading": "Search Result",
+    "noFoundMessage": "No results found. Please try a different search."
+  },
+  "links": {
+    "about": "About"
+  },
+  "notFound": {
+    "subheading": "Looks like this page made the jump to hyperspace.",
+    "goHomeLink": "Go Home"
+  },
+  "error": {
+    "heading": "Oh, no! Our shields are down.",
+    "retry": "Try Again"
+  }
+}

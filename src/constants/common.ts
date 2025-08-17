@@ -4,7 +4,6 @@ export const DEFAULT_PAGE_LIMIT_PARAM = 10;
 
 export const RESULTS_PER_PAGE = 10;
 
-export const SEARCH_KEY = 'searchQuery';
 export const THEME_KEY = 'theme-mode';
 
 export const LIGHT_THEME = 'light';

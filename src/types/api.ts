@@ -1,4 +1,4 @@
-import type { FullPerson, PersonPreview } from './person.ts';
+import type { FullPerson, PersonPreview } from '@/types/person';
 
 export interface DefaultPeopleResponse {
   message: string;
@@ -13,8 +13,6 @@ export interface SearchPeopleResponse {
   message: string;
   result: FullPerson[];
 }
-
-export type PeopleResponse = DefaultPeopleResponse;
 
 export interface PersonDetailsResponse {
   message: string;

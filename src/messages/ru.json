@@ -1,0 +1,24 @@
+{
+  "about": {
+    "title": "Об Авторе",
+    "intro": "Привет! Меня зовут <accent>Ирина Бойко</accent>.",
+    "roleLocation": "Я <accent>frontend developer</accent> из <accent>Минска, Беларусь</accent>.",
+    "course": "Это приложение было создано в рамках курса <link>React в RS School</link>.",
+    "contact": "Вы можете связаться со мной через <gh>GitHub</gh> или <dc>Discord</dc>!"
+  },
+  "results": {
+    "heading": "Результат поиска",
+    "noFoundMessage": "Ничего не найдено. Попробуйте изменить запрос."
+  },
+  "links": {
+    "about": "Об Авторе"
+  },
+  "notFound": {
+    "subheading": "Похоже, эта страница ушла в гиперпространство.",
+    "goHomeLink": "Вернуться домой"
+  },
+  "error": {
+    "heading": "О нет! Наши щиты пали!",
+    "retry": "Попробовать еще раз"
+  }
+}
