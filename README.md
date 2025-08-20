@@ -3,6 +3,7 @@
 ## Getting Started
 
 Ensure you have the following installed on your machine:
+
 - [**Node.js**](https://nodejs.org/) (v20 and later)
 - [**npm**](https://www.npmjs.com/)
 

@@ -1,7 +1,15 @@
+import { UsersList } from '@/components/UsersList';
+
 function App() {
   return (
     <>
-      <p>Forms Main Page</p>
+      <div>
+        <button>Open Controlled Modal</button>
+        <button>Open Uncontrolled Modal</button>
+      </div>
+      <div>
+        <UsersList />
+      </div>
     </>
   );
 }
