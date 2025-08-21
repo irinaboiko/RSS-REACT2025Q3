@@ -1,11 +1,19 @@
-import type { User } from '@/types/users';
+import { useState } from 'react';
+
+import type { UserRow } from '@/types/users';
 import { formatCreatedAt } from '@/utils/formatDate';
 
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import { clsx } from 'clsx';
+
 export interface UserCardProps {
-  user: User;
+  user: UserRow;
+  isNew: boolean;
 }
 
-export const UserCard = ({ user }: UserCardProps) => {
+export const UserCard = ({ user, isNew }: UserCardProps) => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const imageUrl: string = user.pictureUrl
     ? user.pictureUrl
     : user.gender === 'male'
@@ -13,7 +21,27 @@ export const UserCard = ({ user }: UserCardProps) => {
       : '/images/user-icon-female.png';
 
   return (
-    <div className="my-2 rounded-lg border-2 p-4">
+    <div
+      className={clsx(
+        'relative my-2 rounded-lg border-2 p-4',
+        isNew && 'border-emerald-600'
+      )}
+    >
+      {isNew && (
+        <div className="absolute -top-3 -left-3 flex h-10 w-10 items-center justify-center rounded-full bg-emerald-600 text-white italic">
+          New
+        </div>
+      )}
+
+      <div
+        className={clsx(
+          'absolute top-2 right-2 rounded-full px-2',
+          user.source === 'controlled' ? 'bg-cyan-500' : 'bg-amber-400'
+        )}
+      >
+        {user.source}
+      </div>
+
       <div className="mb-3 flex items-start justify-start gap-2">
         <div>
           <img src={imageUrl} alt={user.name} />
@@ -30,22 +58,37 @@ export const UserCard = ({ user }: UserCardProps) => {
         </div>
       </div>
       <p>
-        <span className="inline-block w-30 text-gray-500">Reach me at:</span>{' '}
+        <span className="inline-block w-30 text-gray-500">Reach me at:</span>
         {user.email}
       </p>
+      <p className="flex items-center">
+        <span className="w-30 text-gray-500">Password: </span>
+        <button
+          type="button"
+          onClick={() => setShowPassword((prev) => !prev)}
+          className="mr-2 cursor-pointer text-sm text-gray-500 hover:underline"
+        >
+          {showPassword ? (
+            <EyeSlashIcon className="size-5" />
+          ) : (
+            <EyeIcon className="size-5" />
+          )}
+        </button>
+        {showPassword ? user.password : '•'.repeat(user.password.length)}
+      </p>
       <p>
-        <span className="inline-block w-30 text-gray-500">Based in:</span>{' '}
+        <span className="inline-block w-30 text-gray-500">Based in:</span>
         {user.country}
       </p>
       <p>
-        <span className="inline-block w-30 text-gray-500">Identifies as:</span>{' '}
+        <span className="inline-block w-30 text-gray-500">Identifies as:</span>
         {user.gender}
       </p>
       <p>
         <span className="inline-block w-30 text-gray-500">Age:</span> {user.age}
       </p>
       <p>
-        <span className="inline-block w-30 text-gray-500">Joined on:</span>{' '}
+        <span className="inline-block w-30 text-gray-500">Joined on:</span>
         {formatCreatedAt(user.createdAt)}
       </p>
     </div>

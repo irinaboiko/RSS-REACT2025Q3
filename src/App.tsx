@@ -1,15 +1,35 @@
+import { useState } from 'react';
+
+import { FormsButtonsBar } from '@/components/FormsButtonsBar';
 import { UsersList } from '@/components/UsersList';
+import { Modal } from '@/components/Modal';
+
+import useModal from '@/hooks/useModal';
+import type { FormType } from '@/types/forms';
 
 function App() {
+  const [formType, setFormType] = useState<FormType>('controlled');
+  const { isOpen, openModal, closeModal } = useModal();
+
+  function handleModalOpen(formType: FormType) {
+    setFormType(formType);
+    openModal();
+  }
+
   return (
     <>
-      <div>
-        <button>Open Controlled Modal</button>
-        <button>Open Uncontrolled Modal</button>
-      </div>
-      <div>
-        <UsersList />
-      </div>
+      <FormsButtonsBar openModal={handleModalOpen} />
+
+      <UsersList />
+
+      <Modal
+        isOpen={isOpen}
+        title="Add User"
+        formType={formType}
+        closeModal={closeModal}
+      >
+        This is My Modal
+      </Modal>
     </>
   );
 }

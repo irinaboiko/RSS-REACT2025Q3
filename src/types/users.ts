@@ -1,3 +1,5 @@
+import type { FormType } from '@/types/forms';
+
 export type Gender = 'male' | 'female';
 
 export interface User {
@@ -12,3 +14,5 @@ export interface User {
   country: string;
   createdAt: string;
 }
+
+export type UserRow = User & { source: FormType };

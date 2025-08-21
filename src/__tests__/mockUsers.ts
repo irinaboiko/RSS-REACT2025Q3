@@ -1,6 +1,6 @@
-import type { User } from '@/types/users';
+import type { UserRow } from '@/types/users';
 
-export const users: User[] = [
+export const mockUsers: UserRow[] = [
   {
     id: '123',
     name: 'Masha',
@@ -12,6 +12,7 @@ export const users: User[] = [
     pictureUrl: undefined,
     country: 'Belarus',
     createdAt: '2025-08-20T14:27:53.123Z',
+    source: 'controlled',
   },
   {
     id: '124',
@@ -24,5 +25,6 @@ export const users: User[] = [
     pictureUrl: undefined,
     country: 'Belarus',
     createdAt: '2025-08-20T14:29:08.123Z',
+    source: 'uncontrolled',
   },
 ];
