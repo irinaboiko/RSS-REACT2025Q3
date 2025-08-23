@@ -6,6 +6,8 @@ import { Modal } from '@/components/Modal';
 
 import useModal from '@/hooks/useModal';
 import type { FormType } from '@/types/forms';
+import { FormControlled } from '@/components/FormControlled';
+import { FormUncontrolled } from '@/components/FormUncontrolled';
 
 function App() {
   const [formType, setFormType] = useState<FormType>('controlled');
@@ -28,7 +30,11 @@ function App() {
         formType={formType}
         closeModal={closeModal}
       >
-        This is My Modal
+        {formType === 'controlled' ? (
+          <FormControlled />
+        ) : (
+          <FormUncontrolled closeModal={closeModal} />
+        )}
       </Modal>
     </>
   );

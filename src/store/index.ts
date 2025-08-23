@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import usersReducer from '@/store/usersSlice';
+import countriesReducer from '@/store/countriesSlice';
 
 export const store = configureStore({
   reducer: {
     users: usersReducer,
+    countries: countriesReducer,
   },
 });
 

@@ -10,7 +10,7 @@ interface UserSliceState {
 
 const initialState: UserSliceState = {
   users: [],
-  recentlyAddedId: '123',
+  recentlyAddedId: null,
 };
 
 const usersSlice = createSlice({

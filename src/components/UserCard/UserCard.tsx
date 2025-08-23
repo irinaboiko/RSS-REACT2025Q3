@@ -43,7 +43,7 @@ export const UserCard = ({ user, isNew }: UserCardProps) => {
       </div>
 
       <div className="mb-3 flex items-start justify-start gap-2">
-        <div>
+        <div className="w-24">
           <img src={imageUrl} alt={user.name} />
         </div>
 

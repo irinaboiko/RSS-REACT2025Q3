@@ -39,7 +39,10 @@ export const formSchema: ObjectSchema<FormValues> = object({
 
   picture: mixed<File>()
     .nullable()
-    .optional()
+    .transform((value) => {
+      return value instanceof File && value.size === 0 ? null : value;
+    })
+    .required('Please upload an image')
     .test(
       'fileSize',
       'File is too large',

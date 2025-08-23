@@ -6,3 +6,15 @@
   line-height: 1.5;
   font-weight: 400;
 }
+
+.form-row {
+  @apply mt-1 mb-2 flex h-20 flex-col;
+}
+
+.form-input {
+  @apply rounded-lg border-2 p-2;
+}
+
+.text-error {
+  @apply text-xs text-red-600;
+}

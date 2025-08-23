@@ -14,8 +14,9 @@ export const UsersList = () => {
 
   if (users.length === 0) {
     return (
-      <div className="py-4">
-        <p className="text-center text-3xl">
+      <div className="mt-16 flex flex-col items-center justify-center gap-7 py-4">
+        <img src="/images/no-found.png" alt="No users" />
+        <p className="text-center text-xl">
           There are no users yet — why not create the first one?
         </p>
       </div>
