@@ -1,15 +1,16 @@
 import { useState } from 'react';
-import type { FormEvent, ChangeEvent } from 'react';
+import type { FormEvent } from 'react';
+import { ValidationError } from 'yup';
+import { clsx } from 'clsx';
 
+import { PasswordStrength } from '@/components/PasswordStrength';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import type { FormValues } from '@/types/forms';
-import type { Gender, UserRow } from '@/types/users';
+import type { Gender, UserRecord } from '@/types/users';
 import type { Country } from '@/types/countries';
 import { addUser, clearRecentlyAdded } from '@/store/usersSlice';
-import { mapFormToUser, fileToBase64 } from '@/utils';
-import { formSchema } from '@/validation/formSchema';
-import { clsx } from 'clsx';
-import { ValidationError } from 'yup';
+import { mapFormToUser } from '@/utils';
+import { buildFormSchema } from '@/validation/formSchema';
 
 export interface FormUncontrolledProps {
   closeModal: () => void;
@@ -21,10 +22,7 @@ export const FormUncontrolled = ({ closeModal }: FormUncontrolledProps) => {
     (state) => state.countries.countries
   );
 
-  const [passwordStrength, setPasswordStrength] = useState(
-    'Please enter your password'
-  );
-  const [passwordStrengthColor, setPasswordStrengthColor] = useState('');
+  const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<
     Partial<Record<keyof FormValues, string>>
   >({});
@@ -39,7 +37,10 @@ export const FormUncontrolled = ({ closeModal }: FormUncontrolledProps) => {
     const ageRaw = String(formData.get('age') ?? '');
     const age: number | undefined = ageRaw === '' ? undefined : Number(ageRaw);
 
-    const picture = (formData.get('picture') as File) || null;
+    const pictureInput = form.elements.namedItem(
+      'picture'
+    ) as HTMLInputElement | null;
+    const pictureFiles: FileList | null = pictureInput?.files ?? null;
 
     const values: FormValues = {
       name: formData.get('name') as string,
@@ -49,24 +50,21 @@ export const FormUncontrolled = ({ closeModal }: FormUncontrolledProps) => {
       confirmPassword: formData.get('confirmPassword') as string,
       gender: formData.get('gender') as Gender,
       acceptTnC: formData.get('acceptTnC') === 'on',
-      picture,
-      pictureBase64: undefined,
+      picture: pictureFiles,
       country: formData.get('country') as string,
     };
 
-    if (picture && picture.size > 0) {
-      values.pictureBase64 = await fileToBase64(picture);
-    }
-
     try {
-      await formSchema.validate(values, { abortEarly: false });
+      await buildFormSchema(countries).validate(values, { abortEarly: false });
 
-      const newUser: UserRow = {
-        ...mapFormToUser(values),
+      const newUser = await mapFormToUser(values);
+
+      const newUserRecord: UserRecord = {
+        ...newUser,
         source: 'uncontrolled',
       };
 
-      dispatch(addUser(newUser));
+      dispatch(addUser(newUserRecord));
       setTimeout(() => dispatch(clearRecentlyAdded()), 4000);
 
       form.reset();
@@ -84,39 +82,6 @@ export const FormUncontrolled = ({ closeModal }: FormUncontrolledProps) => {
         }
         setErrors(next);
       }
-    }
-  }
-
-  function checkPasswordStrength(event: ChangeEvent<HTMLInputElement>) {
-    const passwordValue = event.currentTarget.value;
-    let score = 0;
-
-    if (!passwordValue) {
-      setPasswordStrength('Please enter your password');
-      setPasswordStrengthColor('');
-
-      return;
-    }
-
-    if (/[a-z]/.test(passwordValue)) score += 1;
-    if (/[A-Z]/.test(passwordValue)) score += 1;
-    if (/\d/.test(passwordValue)) score += 1;
-    if (/[^A-Za-z0-9]/.test(passwordValue)) score += 1;
-
-    switch (score) {
-      case 0:
-      case 1:
-      case 2:
-        setPasswordStrength('Weak');
-        setPasswordStrengthColor('text-red-600');
-        return;
-      case 3:
-        setPasswordStrength('Medium');
-        setPasswordStrengthColor('text-amber-400');
-        return;
-      case 4:
-        setPasswordStrength('Strong');
-        setPasswordStrengthColor('text-emerald-600');
     }
   }
 
@@ -172,18 +137,16 @@ export const FormUncontrolled = ({ closeModal }: FormUncontrolledProps) => {
           Password *
         </label>
         <input
-          type="text"
+          type="password"
+          autoComplete="off"
           id="password"
           name="password"
-          onChange={checkPasswordStrength}
+          onChange={(e) => setPassword(e.target.value)}
           aria-invalid={Boolean(errors.password)}
           className={clsx('form-input', errors.password && 'border-red-600')}
           placeholder="Enter Your Password"
         />
-        <p className="text-sm">
-          Password strength:{' '}
-          <span className={passwordStrengthColor}>{passwordStrength}</span>
-        </p>
+        <PasswordStrength password={password} />
         {errors.password && <p className="text-error">{errors.password}</p>}
       </div>
 
@@ -192,7 +155,8 @@ export const FormUncontrolled = ({ closeModal }: FormUncontrolledProps) => {
           Confirm Password *
         </label>
         <input
-          type="text"
+          type="password"
+          autoComplete="off"
           id="confirmPassword"
           name="confirmPassword"
           aria-invalid={Boolean(errors.confirmPassword)}
@@ -241,7 +205,7 @@ export const FormUncontrolled = ({ closeModal }: FormUncontrolledProps) => {
 
       <div className="mt-2 mb-6 h-20">
         <label htmlFor="picture" className="cursor-pointer">
-          Profile picture * (PNG/JPEG, up to 2MB)
+          Profile picture (PNG/JPEG, up to 2MB)
         </label>
         <input
           id="picture"

@@ -1,14 +1,14 @@
 import { useAppSelector } from '@/hooks';
-import type { UserRow } from '@/types/users';
+import type { UserRecord } from '@/types/users';
 import { UserCard } from '@/components/UserCard';
 
 export const UsersList = () => {
-  const users: UserRow[] = useAppSelector((state) => state.users.users);
+  const users: UserRecord[] = useAppSelector((state) => state.users.users);
   const recentlyAddedId: string | null = useAppSelector(
     (state) => state.users.recentlyAddedId
   );
 
-  const sortedUsers: UserRow[] = [...users].sort(
+  const sortedUsers: UserRecord[] = [...users].sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
 
@@ -28,7 +28,7 @@ export const UsersList = () => {
       <h2 className="text-center text-3xl">Users List</h2>
 
       <div className="mt-4 grid [grid-template-columns:repeat(auto-fill,minmax(345px,1fr))] gap-4">
-        {sortedUsers.map((user: UserRow) => (
+        {sortedUsers.map((user: UserRecord) => (
           <UserCard
             key={user.id}
             user={user}

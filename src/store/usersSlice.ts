@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import type { UserRow } from '@/types/users';
+import type { UserRecord } from '@/types/users';
 
 interface UserSliceState {
-  users: UserRow[];
+  users: UserRecord[];
   recentlyAddedId: string | null;
 }
 
@@ -17,7 +17,7 @@ const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    addUser: (state, action: PayloadAction<UserRow>) => {
+    addUser: (state, action: PayloadAction<UserRecord>) => {
       state.users.push(action.payload);
       state.recentlyAddedId = action.payload.id;
     },

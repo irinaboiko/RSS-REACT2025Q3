@@ -1,13 +1,13 @@
 import { useState } from 'react';
 
-import type { UserRow } from '@/types/users';
+import type { UserRecord } from '@/types/users';
 import { formatCreatedAt } from '@/utils/formatDate';
 
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { clsx } from 'clsx';
 
 export interface UserCardProps {
-  user: UserRow;
+  user: UserRecord;
   isNew: boolean;
 }
 

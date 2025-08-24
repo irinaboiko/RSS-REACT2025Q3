@@ -1,6 +1,6 @@
-import type { UserRow } from '@/types/users';
+import type { UserRecord } from '@/types/users';
 
-export const mockUsers: UserRow[] = [
+export const mockUsers: UserRecord[] = [
   {
     id: '123',
     name: 'Masha',

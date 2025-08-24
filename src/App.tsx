@@ -31,7 +31,7 @@ function App() {
         closeModal={closeModal}
       >
         {formType === 'controlled' ? (
-          <FormControlled />
+          <FormControlled closeModal={closeModal} />
         ) : (
           <FormUncontrolled closeModal={closeModal} />
         )}

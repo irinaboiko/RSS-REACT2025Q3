@@ -15,4 +15,4 @@ export interface User {
   createdAt: string;
 }
 
-export type UserRow = User & { source: FormType };
+export type UserRecord = User & { source: FormType };
