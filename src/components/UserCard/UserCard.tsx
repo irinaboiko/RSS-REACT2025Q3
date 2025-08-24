@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import type { UserRecord } from '@/types/users';
-import { formatCreatedAt } from '@/utils/formatDate';
+import { formatDate } from '@/utils/formatDate';
 
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { clsx } from 'clsx';
@@ -65,8 +65,11 @@ export const UserCard = ({ user, isNew }: UserCardProps) => {
         <span className="w-30 text-gray-500">Password: </span>
         <button
           type="button"
+          aria-pressed={showPassword}
+          aria-label={showPassword ? 'Hide password' : 'Show password'}
           onClick={() => setShowPassword((prev) => !prev)}
           className="mr-2 cursor-pointer text-sm text-gray-500 hover:underline"
+          data-testid="user-card"
         >
           {showPassword ? (
             <EyeSlashIcon className="size-5" />
@@ -89,7 +92,7 @@ export const UserCard = ({ user, isNew }: UserCardProps) => {
       </p>
       <p>
         <span className="inline-block w-30 text-gray-500">Joined on:</span>
-        {formatCreatedAt(user.createdAt)}
+        {formatDate(user.createdAt)}
       </p>
     </div>
   );

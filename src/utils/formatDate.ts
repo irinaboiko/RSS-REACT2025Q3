@@ -1,4 +1,4 @@
-export function formatCreatedAt(isoString: string): string {
+export function formatDate(isoString: string): string {
   const date = new Date(isoString);
 
   return date.toLocaleString('en-US', {

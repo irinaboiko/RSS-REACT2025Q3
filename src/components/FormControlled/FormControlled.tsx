@@ -25,6 +25,7 @@ export const FormControlled = ({ closeModal }: FormControlledProps) => {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors, isValid },
   } = useForm<FormValues>({
     resolver: yupResolver(buildFormSchema(countries)),
@@ -43,6 +44,7 @@ export const FormControlled = ({ closeModal }: FormControlledProps) => {
     dispatch(addUser(newUserRecord));
     setTimeout(() => dispatch(clearRecentlyAdded()), 4000);
 
+    reset();
     closeModal();
   });
 

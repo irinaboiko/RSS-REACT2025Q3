@@ -1,10 +1,12 @@
-import { createPortal } from 'react-dom';
 import { useEffect, useRef } from 'react';
 import type { ReactNode, KeyboardEvent } from 'react';
+import { createPortal } from 'react-dom';
+import { clsx } from 'clsx';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
 import { FORM_TYPES_LABELS, type FormType } from '@/types/forms';
-import { clsx } from 'clsx';
+
+import { getFocusable } from '@/utils';
 
 export interface ModalProps {
   isOpen: boolean;
@@ -12,22 +14,6 @@ export interface ModalProps {
   formType: FormType;
   closeModal: () => void;
   children: ReactNode;
-}
-
-function getFocusable(root: HTMLElement | null): HTMLElement[] {
-  if (!root) return [];
-  const selectors = [
-    'a[href]',
-    'button:not([disabled])',
-    'input:not([disabled]):not([type="hidden"])',
-    'select:not([disabled])',
-    'textarea:not([disabled])',
-    '[tabindex]:not([tabindex="-1"])',
-  ].join(',');
-  const nodes = Array.from(root.querySelectorAll<HTMLElement>(selectors));
-  return nodes.filter(
-    (el) => !el.hasAttribute('disabled') && !el.getAttribute('aria-hidden')
-  );
 }
 
 export const Modal = ({
@@ -57,13 +43,13 @@ export const Modal = ({
     }
 
     if (event.key === 'Tab') {
-      const focusables = getFocusable(contentRef.current);
-      if (focusables.length === 0) {
+      const focusable = getFocusable(contentRef.current);
+      if (focusable.length === 0) {
         event.preventDefault();
         return;
       }
-      const first = focusables[0];
-      const last = focusables[focusables.length - 1];
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
       const active = document.activeElement as HTMLElement | null;
 
       if (
