@@ -1,21 +1,21 @@
 import type { CO2Data } from '@/types/table';
 
-import { CountriesListHeader } from '@/components/CountriesListHeader';
-import { CountryListRow } from '@/components/CountryListRow';
+import { DataTableHeader } from '@/components/DataTableHeader';
+import { DataTableRow } from '@/components/DataTableRow';
 
-export interface CountriesListProps {
+export interface DataTableProps {
   countries: CO2Data;
 }
 
-export const CountriesList = ({ countries }: CountriesListProps) => {
+export const DataTable = ({ countries }: DataTableProps) => {
   const countriesNames = Object.keys(countries);
 
   return (
     <div className="relative rounded-lg border-1 border-gray-200">
-      <CountriesListHeader />
+      <DataTableHeader />
 
       {countriesNames.map((countryName) => (
-        <CountryListRow
+        <DataTableRow
           key={countryName}
           countryName={countryName}
           countryData={countries[countryName]}
