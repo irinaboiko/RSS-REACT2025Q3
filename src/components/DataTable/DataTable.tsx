@@ -11,7 +11,7 @@ export const DataTable = ({ countries }: DataTableProps) => {
   const countriesNames = Object.keys(countries);
 
   return (
-    <div className="relative rounded-lg border-1 border-gray-200">
+    <div className="bottom-10 border-1 border-gray-200 text-sm">
       <DataTableHeader />
 
       {countriesNames.map((countryName) => (

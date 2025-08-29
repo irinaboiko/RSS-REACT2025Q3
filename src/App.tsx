@@ -1,6 +1,7 @@
 import { use } from 'react';
 
-import { DataTable } from './components/DataTable';
+import { ColumnSelector } from '@/components/ColumnSelector';
+import { DataTable } from '@/components/DataTable';
 
 import { getData } from '@/api/co2Data';
 import type { CO2Data } from '@/types/table';
@@ -14,8 +15,10 @@ export const App = () => {
         CO<sub>2</sub> Data
       </h1>
 
-      <div>
-        <button>Configure Years Tables</button>
+      <div className="flex justify-between gap-2 py-1">
+        <div>Filters</div>
+
+        <ColumnSelector />
       </div>
 
       <DataTable countries={data} />

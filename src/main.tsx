@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 
 import App from '@/App';
 import { Loader } from '@/components/Loader';
+import { SelectedColumnsProvider } from '@/providers/selectedColumnsProvider';
 
 import '@/index.css';
 
@@ -12,7 +13,9 @@ if (!container) throw new Error('Root container not found');
 createRoot(container).render(
   <StrictMode>
     <Suspense fallback={<Loader />}>
-      <App />
+      <SelectedColumnsProvider>
+        <App />
+      </SelectedColumnsProvider>
     </Suspense>
   </StrictMode>
 );

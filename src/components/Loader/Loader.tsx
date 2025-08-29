@@ -1,16 +1,13 @@
 export const Loader = () => {
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-stone-400 backdrop-blur-[1px]"
-      data-testid="loader"
-    >
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-400 backdrop-blur-[1px]">
       <div
         role="status"
         className="absolute top-2/4 left-1/2 -translate-x-1/2 -translate-y-1/2"
       >
         <svg
           aria-hidden="true"
-          className="h-20 w-20 animate-spin fill-amber-600 text-gray-200"
+          className="h-20 w-20 animate-spin fill-blue-300 text-gray-200"
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
