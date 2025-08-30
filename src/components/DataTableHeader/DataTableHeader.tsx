@@ -1,8 +1,9 @@
 import { ColumnSortControl } from '@/components/ColumnSortControl';
+
 import { useSelectedColumns } from '@/hooks/useSelectedColumns';
 import { SORTABLE_COLUMNS } from '@/config/constants';
-import type { ColumnKey } from '@/config/columns';
 import { getLabelByKey } from '@/utils/renderTableData';
+import type { ColumnKey } from '@/config/columns';
 
 export const DataTableHeader = () => {
   const { selectedColumns } = useSelectedColumns();

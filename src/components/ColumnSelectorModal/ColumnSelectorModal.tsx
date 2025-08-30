@@ -5,7 +5,7 @@ export const ColumnSelectorModal = () => {
   const { selectedColumns, toggleColumn } = useSelectedColumns();
 
   return (
-    <div className="absolute top-8 -right-1 z-10 w-80 border-1 border-gray-300 bg-gray-200 p-2">
+    <div className="absolute top-8 -right-1 z-10 w-80 border-1 border-gray-300 bg-gray-200 p-2 shadow-lg">
       {COLUMNS.map((column) => {
         const isChecked = selectedColumns.includes(column.key);
 

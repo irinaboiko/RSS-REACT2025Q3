@@ -7,7 +7,7 @@ export const ColumnSortControl = () => {
 
   return (
     <button type="button" className="cursor-pointer" onClick={toggleDirection}>
-      <img src={`/${image}.svg`} alt="Sort" className="h-5 w-5" />
+      <img src={`/${image}.svg`} alt="Sort" className="h-4 w-4" />
     </button>
   );
 };
