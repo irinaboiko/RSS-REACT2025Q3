@@ -1,4 +1,6 @@
+import { ColumnSortControl } from '@/components/ColumnSortControl';
 import { useSelectedColumns } from '@/hooks/useSelectedColumns';
+import { SORTABLE_COLUMNS } from '@/config/constants';
 import type { ColumnKey } from '@/config/columns';
 import { getLabelByKey } from '@/utils/renderTableData';
 
@@ -12,14 +14,21 @@ export const DataTableHeader = () => {
 
   return (
     <div className={headerClassName} style={headerStyle}>
-      {selectedColumns.map((columnKey: ColumnKey) => (
-        <div
-          key={columnKey}
-          className="border-gray-200 px-2 not-last:border-r-1"
-        >
-          {getLabelByKey(columnKey)}
-        </div>
-      ))}
+      {selectedColumns.map((columnKey: ColumnKey) => {
+        const label = getLabelByKey(columnKey);
+        const isSortable = SORTABLE_COLUMNS.includes(columnKey);
+
+        return (
+          <div
+            key={columnKey}
+            className="flex items-center justify-between border-gray-200 px-2 not-last:border-r-1"
+          >
+            <span>{label}</span>
+
+            {isSortable && <ColumnSortControl />}
+          </div>
+        );
+      })}
     </div>
   );
 };

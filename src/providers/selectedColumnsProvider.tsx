@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 import { SelectedColumnsContext } from '@/context/selectedColumnsContext';
 import { REQUIRED_KEYS } from '@/config/columns';

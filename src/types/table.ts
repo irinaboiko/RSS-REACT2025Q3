@@ -12,3 +12,5 @@ export type CountryData = {
 };
 
 export type CO2Data = Record<string, CountryData>;
+
+export type SortDirection = 'asc' | 'desc';
