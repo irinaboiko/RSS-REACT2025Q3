@@ -5,6 +5,6 @@ export const filterCountries = (
   if (!filterValue) return countries;
 
   return countries.filter((country) =>
-    country.toLowerCase().includes(filterValue)
+    country.toLowerCase().includes(filterValue.toLowerCase().trim())
   );
 };
