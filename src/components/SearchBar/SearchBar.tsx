@@ -1,6 +1,8 @@
+import { memo } from 'react';
+
 import { useSearchBar } from '@/hooks/useSearchBar';
 
-export const SearchBar = () => {
+export const SearchBar = memo(function SearchBar() {
   const { searchValue, onSearchChange, clearSearchValue } = useSearchBar();
 
   return (
@@ -17,4 +19,4 @@ export const SearchBar = () => {
       </button>
     </div>
   );
-};
+});

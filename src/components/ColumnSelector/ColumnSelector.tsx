@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 
 import { ColumnSelectorModal } from '@/components/ColumnSelectorModal';
 
-export const ColumnSelector = () => {
+export const ColumnSelector = memo(function ColumnSelector() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = () => setIsOpen((prev) => !prev);
@@ -22,4 +22,4 @@ export const ColumnSelector = () => {
       {isOpen && <ColumnSelectorModal />}
     </div>
   );
-};
+});

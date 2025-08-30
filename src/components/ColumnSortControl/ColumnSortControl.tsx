@@ -1,6 +1,8 @@
+import { memo } from 'react';
+
 import { useColumnsSort } from '@/hooks/useColumnsSort';
 
-export const ColumnSortControl = () => {
+export const ColumnSortControl = memo(function ColumnSortControl() {
   const { direction, toggleDirection } = useColumnsSort();
 
   const image = direction === 'asc' ? 'bars-arrow-up' : 'bars-arrow-down';
@@ -10,4 +12,4 @@ export const ColumnSortControl = () => {
       <img src={`/${image}.svg`} alt="Sort" className="h-4 w-4" />
     </button>
   );
-};
+});

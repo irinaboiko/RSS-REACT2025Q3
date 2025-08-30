@@ -1,32 +1,39 @@
-import type { CO2Data } from '@/types/table';
+import { useMemo } from 'react';
+
 import { DataTableHeader } from '@/components/DataTableHeader';
 import { DataTableRow } from '@/components/DataTableRow';
+
 import { useColumnsSort } from '@/hooks/useColumnsSort';
 import { sortColumn } from '@/utils/sortColumn';
 import { useSearchBar } from '@/hooks/useSearchBar';
 import { filterCountries } from '@/utils/filterCountries';
+import type { CO2Data } from '@/types/table';
 
 export interface DataTableProps {
   countries: CO2Data;
 }
 
 export const DataTable = ({ countries }: DataTableProps) => {
-  const { searchValue } = useSearchBar();
+  const { debouncedValue } = useSearchBar();
   const { direction } = useColumnsSort();
 
-  const countriesNames: string[] = Object.keys(countries);
-  const filteredCountriesNames: string[] = filterCountries(
-    countriesNames,
-    searchValue
+  const countriesNames: string[] = useMemo(
+    () => Object.keys(countries),
+    [countries]
+  );
+
+  const filteredCountriesNames: string[] = useMemo(
+    () => filterCountries(countriesNames, debouncedValue),
+    [countriesNames, debouncedValue]
+  );
+
+  const sortedCountriesNames: string[] = useMemo(
+    () => sortColumn(filteredCountriesNames, direction),
+    [filteredCountriesNames, direction]
   );
 
   if (filteredCountriesNames.length === 0)
     return <p>No countries match your search.</p>;
-
-  const sortedCountriesNames: string[] = sortColumn(
-    filteredCountriesNames,
-    direction
-  );
 
   return (
     <div className="bottom-10 border-1 border-gray-200 text-sm">

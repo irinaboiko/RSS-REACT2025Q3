@@ -15,15 +15,15 @@ const container = document.getElementById('root');
 if (!container) throw new Error('Root container not found');
 
 createRoot(container).render(
-  <Suspense fallback={<Loader />}>
-    <YearSelectionProvider>
-      <SelectedColumnsProvider>
-        <SearchBarProvider>
-          <ColumnsSortProvider>
+  <YearSelectionProvider>
+    <SelectedColumnsProvider>
+      <SearchBarProvider>
+        <ColumnsSortProvider>
+          <Suspense fallback={<Loader />}>
             <App />
-          </ColumnsSortProvider>
-        </SearchBarProvider>
-      </SelectedColumnsProvider>
-    </YearSelectionProvider>
-  </Suspense>
+          </Suspense>
+        </ColumnsSortProvider>
+      </SearchBarProvider>
+    </SelectedColumnsProvider>
+  </YearSelectionProvider>
 );

@@ -1,3 +1,5 @@
+import { memo, useMemo } from 'react';
+
 import { ColumnSortControl } from '@/components/ColumnSortControl';
 
 import { useSelectedColumns } from '@/hooks/useSelectedColumns';
@@ -5,12 +7,16 @@ import { SORTABLE_COLUMNS } from '@/config/constants';
 import { getLabelByKey } from '@/utils/renderTableData';
 import type { ColumnKey } from '@/config/columns';
 
-export const DataTableHeader = () => {
+export const DataTableHeader = memo(function DataTableHeader() {
   const { selectedColumns } = useSelectedColumns();
 
-  const headerStyle = {
-    gridTemplateColumns: `repeat(${selectedColumns.length}, minmax(0, 1fr))`,
-  };
+  const headerStyle = useMemo(
+    () => ({
+      gridTemplateColumns: `repeat(${selectedColumns.length}, minmax(0, 1fr))`,
+    }),
+    [selectedColumns.length]
+  );
+
   const headerClassName = `grid border-b-1 border-gray-200 bg-gray-50 py-1 bg-gray-100`;
 
   return (
@@ -32,4 +38,4 @@ export const DataTableHeader = () => {
       })}
     </div>
   );
-};
+});

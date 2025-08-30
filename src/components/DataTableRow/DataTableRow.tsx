@@ -1,24 +1,27 @@
+import { memo, useMemo } from 'react';
+
 import { useSelectedColumns } from '@/hooks/useSelectedColumns';
-import type { CountryData, YearRow } from '@/types/table';
-import { renderCell } from '@/utils/renderTableData';
 import { useYearSelection } from '@/hooks/useYearSelection';
+import { renderCell } from '@/utils/renderTableData';
+import type { CountryData, YearRow } from '@/types/table';
 
 export interface DataTableRowProps {
   countryName: string;
   countryData: CountryData;
 }
 
-export const DataTableRow = ({
+export const DataTableRow = memo(function DataTableRow({
   countryName,
   countryData,
-}: DataTableRowProps) => {
+}: DataTableRowProps) {
   const { currentYear } = useYearSelection();
   const { selectedColumns } = useSelectedColumns();
 
   let currentYearData: YearRow | undefined;
 
-  currentYearData = countryData.data.find(
-    (yearData) => yearData.year === currentYear
+  currentYearData = useMemo(
+    () => countryData.data.find((yearData) => yearData.year === currentYear),
+    [countryData.data, currentYear]
   );
 
   if (!currentYearData) {
@@ -30,9 +33,13 @@ export const DataTableRow = ({
     };
   }
 
-  const rowStyle = {
-    gridTemplateColumns: `repeat(${selectedColumns.length}, minmax(0, 1fr))`,
-  };
+  const rowStyle = useMemo(
+    () => ({
+      gridTemplateColumns: `repeat(${selectedColumns.length}, minmax(0, 1fr))`,
+    }),
+    [selectedColumns.length]
+  );
+
   const rowClassName = `grid border-gray-200 py-3 not-last:border-b-1 odd:bg-gray-100`;
 
   return (
@@ -51,4 +58,4 @@ export const DataTableRow = ({
       </div>
     </>
   );
-};
+});

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 
 import { SelectedColumnsContext } from '@/context/selectedColumnsContext';
@@ -15,16 +15,20 @@ export const SelectedColumnsProvider = ({
   const [selectedColumns, setSelectedColumns] =
     useState<ColumnKey[]>(REQUIRED_KEYS);
 
-  const toggleColumn = (key: ColumnKey, required: boolean) => {
+  const toggleColumn = useCallback((key: ColumnKey, required: boolean) => {
     if (required) return;
-
     setSelectedColumns((prev) =>
       prev.includes(key) ? prev.filter((col) => col !== key) : [...prev, key]
     );
-  };
+  }, []);
+
+  const value = useMemo(
+    () => ({ selectedColumns, toggleColumn }),
+    [selectedColumns, toggleColumn]
+  );
 
   return (
-    <SelectedColumnsContext.Provider value={{ selectedColumns, toggleColumn }}>
+    <SelectedColumnsContext.Provider value={value}>
       {children}
     </SelectedColumnsContext.Provider>
   );

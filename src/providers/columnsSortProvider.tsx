@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 
 import { ColumnsSortContext } from '@/context/columnsSortContext';
@@ -11,12 +11,17 @@ export interface ColumnsSortProviderProps {
 export const ColumnsSortProvider = ({ children }: ColumnsSortProviderProps) => {
   const [direction, setDirection] = useState<SortDirection>('asc');
 
-  const toggleDirection = () => {
+  const toggleDirection = useCallback(() => {
     setDirection(direction === 'asc' ? 'desc' : 'asc');
-  };
+  }, [direction]);
+
+  const value = useMemo(
+    () => ({ direction, toggleDirection }),
+    [direction, toggleDirection]
+  );
 
   return (
-    <ColumnsSortContext.Provider value={{ direction, toggleDirection }}>
+    <ColumnsSortContext.Provider value={value}>
       {children}
     </ColumnsSortContext.Provider>
   );

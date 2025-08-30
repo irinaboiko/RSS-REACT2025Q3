@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 
 export function useFlashOnChange<T>(value: T, duration = 800) {
   const [flash, setFlash] = useState(false);
-  const first = useRef(true);
+  const firstRender = useRef(true);
 
   useEffect(() => {
-    if (first.current) {
-      first.current = false;
+    if (firstRender.current) {
+      firstRender.current = false;
       return;
     }
 
