@@ -1,3 +1,6 @@
+import type { JSX } from 'react';
+
+import { FlashCell } from '@/components/FlashCell';
 import { COLUMNS } from '@/config/columns';
 import { formatNumber } from '@/utils/formatNumber';
 import { type ColumnKey } from '@/config/columns';
@@ -12,25 +15,30 @@ export const renderCell = (
   countryName: string,
   iso_code: string | undefined,
   yearData: YearRow
-): string => {
+): JSX.Element => {
   switch (key) {
     case 'name':
-      return countryName;
+      return <FlashCell rawValue={countryName}>{countryName}</FlashCell>;
 
     case 'iso_code':
-      return iso_code ?? 'N/A';
+      return <FlashCell rawValue={iso_code}>{iso_code ?? 'N/A'}</FlashCell>;
 
-    case 'year':
-      return yearData.year.toString() ?? 'N/A';
+    case 'year': {
+      const value = yearData.year.toString() ?? 'N/A';
+      return <FlashCell rawValue={value}>{value}</FlashCell>;
+    }
 
-    case 'population':
-      return yearData.population != null
+    case 'population': {
+      const value = yearData.population
         ? formatNumber(yearData.population)
         : 'N/A';
+      return <FlashCell rawValue={value}>{value}</FlashCell>;
+    }
 
     default: {
       const value = yearData[key];
-      return value ? formatNumber(value, 1) : 'N/A';
+      const formattedValue = value ? formatNumber(value, 1) : 'N/A';
+      return <FlashCell rawValue={formattedValue}>{formattedValue}</FlashCell>;
     }
   }
 };

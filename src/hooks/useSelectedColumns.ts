@@ -1,8 +1,7 @@
-import {
-  SelectedColumnsContext,
-  type SelectedColumnsContextType,
-} from '@/context/selectedColumnsContext';
 import { useContext } from 'react';
+
+import { SelectedColumnsContext } from '@/context/selectedColumnsContext';
+import type { SelectedColumnsContextType } from '@/context/selectedColumnsContext';
 
 export const useSelectedColumns = (): SelectedColumnsContextType => {
   const context = useContext(SelectedColumnsContext);

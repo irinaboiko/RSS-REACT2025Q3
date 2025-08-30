@@ -5,6 +5,7 @@ import { DataTable } from '@/components/DataTable';
 
 import { getData } from '@/api/co2Data';
 import type { CO2Data } from '@/types/table';
+import { YearSelection } from '@/components/YearSelection';
 
 export const App = () => {
   const data: CO2Data = use(getData());
@@ -16,7 +17,7 @@ export const App = () => {
       </h1>
 
       <div className="flex justify-between gap-2 py-1">
-        <div>Filters</div>
+        <YearSelection />
 
         <ColumnSelector />
       </div>

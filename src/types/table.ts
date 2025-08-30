@@ -1,9 +1,9 @@
 export type YearRow = {
   year: number;
-  population: number;
-  co2: number;
-  co2_per_capita: number;
-  [key: string]: number;
+  population: number | null;
+  co2: number | null;
+  co2_per_capita: number | null;
+  [key: string]: number | null;
 };
 
 export type CountryData = {
