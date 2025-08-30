@@ -7,9 +7,7 @@ export const useColumnsSort = (): ColumnsSortContextType => {
   const context = useContext(ColumnsSortContext);
 
   if (!context) {
-    throw new Error(
-      'useYearSelection must be used within a YearSelectionProvider'
-    );
+    throw new Error('useColumnsSort must be used within a ColumnsSortProvider');
   }
 
   return context;

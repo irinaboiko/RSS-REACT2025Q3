@@ -7,6 +7,7 @@ import { Loader } from '@/components/Loader';
 import { YearSelectionProvider } from '@/providers/yearSelectionProvider';
 import { SelectedColumnsProvider } from '@/providers/selectedColumnsProvider';
 import { ColumnsSortProvider } from '@/providers/columnsSortProvider';
+import { SearchBarProvider } from '@/providers/searchBarProvider';
 
 import '@/index.css';
 
@@ -17,9 +18,11 @@ createRoot(container).render(
   <Suspense fallback={<Loader />}>
     <YearSelectionProvider>
       <SelectedColumnsProvider>
-        <ColumnsSortProvider>
-          <App />
-        </ColumnsSortProvider>
+        <SearchBarProvider>
+          <ColumnsSortProvider>
+            <App />
+          </ColumnsSortProvider>
+        </SearchBarProvider>
       </SelectedColumnsProvider>
     </YearSelectionProvider>
   </Suspense>

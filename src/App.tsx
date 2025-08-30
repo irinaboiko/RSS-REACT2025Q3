@@ -1,11 +1,12 @@
 import { use } from 'react';
 
+import { YearSelection } from '@/components/YearSelection';
+import { SearchBar } from '@/components/SearchBar';
 import { ColumnSelector } from '@/components/ColumnSelector';
 import { DataTable } from '@/components/DataTable';
 
 import { getData } from '@/api/co2Data';
 import type { CO2Data } from '@/types/table';
-import { YearSelection } from '@/components/YearSelection';
 
 export const App = () => {
   const data: CO2Data = use(getData());
@@ -16,8 +17,11 @@ export const App = () => {
         CO<sub>2</sub> Data
       </h1>
 
-      <div className="flex justify-between gap-2 py-1">
-        <YearSelection />
+      <div className="flex items-center justify-between gap-2 py-1">
+        <div className="flex items-center gap-8">
+          <YearSelection />
+          <SearchBar />
+        </div>
 
         <ColumnSelector />
       </div>
